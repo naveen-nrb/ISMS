@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" class="loading">-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head> 
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+            
+        <!--CSS-->
+        <link href="../resources/bs/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="../resources/bs-md/css/bootstrap-material-design.min.css" rel="stylesheet" />
+        <link href="../resources/bs-md/css/ripples.css" rel="stylesheet" />
+        <link href="../resources/offcanvas/css/jasny-bootstrap.css" rel="stylesheet" />
+        <link href="../resources/bs-md/css/icon.css" rel="stylesheet" />
+        <link href="../resources/bs-dp/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+            
+        <title>
+            HOME PAGE
+        </title>
+        
+        <!--Script-->
+        <script src="../resources/jquery-1.12.1.min.js" type="text/javascript"></script>
+        <script src="../resources/sys/js/scripts.js"></script>
+        
+        <!--CSS inline code--> 
+        <style>
+            
+        </style>
+        
+    </head>
+    <body> 
+        <div style="background-color:white; border-radius: 20px 20px; padding:20px 20px;">
+            <object width="10" height="10" id="thisAudio" >
+                <param name="audio" value="doorbell-1.swf">
+                    <param name="autoplay" value="false">
+                        <embed src="../resources/sys/audio/doorbell_.swf" width="110" height="110" id="thisEmAudio"
+                               autostart="false" controls="ControlPanel">        
+                        </embed>
+            </object>
+        </div>
+        
+        
+        <p>----------------</p>
+        <button onclick="DingDong()" >PLAY SOUND!</button>
+        <button onclick="DingDong2()" >STOP SOUND!</button>
+         
+    </body>
+
+   
+</html>

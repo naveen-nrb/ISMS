@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                            <div class="col-lg-12">
+                                <h2 class="page-header">
+                                   User Management
+                                    <!--<small>Spice 1</small>-->
+                                </h2>
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                    </li>
+                                    <li>
+                                            <i class="fa fa-list"></i> <a href="userMgmtTable.html">Management List</a>
+                                    </li>
+                                    <li class="active">
+                                         <i class="fa fa-edit fa-fw"></i> <a href="#">User Management</a>
+                                    </li>
+                                </ol>
+                            </div>
+                        
+                        <div class="col-md-12">
+                             <div class="mandatorytext">
+                                 <span>All with (*) are mandatory</span>
+                             </div>
+                         </div>
+                        
+                        <div class="row s_row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    
+                                <form data-toggle="validator" role="form"> 
+                                    
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <h2 id="grid-nesting">
+                                                Information
+                                            </h2>
+                                        </div> 
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">First Name<span class="mandatory">*</span></label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Last Name<span class="mandatory">*</span></label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group numberTextBox">
+                                                        <label for="txtlabel">ID Number<span class="mandatory">*</span></label>
+                                                        <input type="number" class="form-control" id="txtlabel" placeholder="" required>
+                                                    </div>
+                                                </div>
+<!--                                                 <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Middle Name</label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                    </div>
+                                                </div>-->
+                                                 
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <div class="col-md-3">
+                                                    <div class="form-group numberTextBox">
+                                                        <label for="txtlabel">Mobile Number<span class="mandatory">*</span></label>
+                                                        <input type="number" class="form-control" id="txtlabel" placeholder="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Email Address<span class="mandatory">*</span></label>
+                                                        <input type="email" class="form-control" id="txtlabel" placeholder="" data-error="Email address is invalid" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Activation Date/Time<span class="mandatory">*</span></label>
+                                                         <div class="form-group">
+                                                            <div class="input-group date" id="datetimepicker6">
+                                                                <input type="text" class="form-control" required>
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Expiration Date/Time<span class="mandatory">*</span></label>
+                                                        <div class="form-group">
+                                                            <div class='input-group date' id='datetimepicker7'>
+                                                                <input type='text' class="form-control" required>
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="col-md-3">
+                                                    <div class="form-group numberTextBox">
+                                                        <label for="txtlabel">PIN Number<span class="mandatory">*</span></label>
+                                                        <!--<button type="submit" class="btn btn-primary btn-sm">S</button>-->
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="" required>
+<!--                                                        <div class="input-group">
+                                                            <div class="icon-addon">
+                                                                <input type="number"class="form-control" placeholder="" required>
+                                                            </div>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-warning glyphicon glyphicon-refresh" type="button"></button>
+                                                            </span>
+                                                        </div>-->
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="txtlabel">Card<span class="mandatory">*</span></label>
+                                                            <select class="form-control" name="optCard" id="optCard" >
+                                                                <option value="0" >-- Please Select Card --</option>
+                                                                <option th:each="recData : ${cardDataList}" th:value="${recData.CardID}" th:text="${recData.CardNo}"  ></option>
+                                                            </select>
+                                                        </div>
+                                                            
+                                                </div>
+<!--                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Note</label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                    </div>
+                                                </div>-->
+                                                <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="txtlabel">Designation<span class="mandatory">*</span></label>
+                                                            <select class="form-control" name="optDesignation" id="optDesignation" >
+                                                                <option value="0" >-- Please Select Designation --</option>
+                                                                <option th:each="recData : ${designationDataList}" th:value="${recData.DesignationId}" th:text="${recData.Name}"  ></option>
+                                                            </select>
+                                                        </div>
+                                                            
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                  
+                                    </div><!-- end panel body information -->
+                                    
+                                    <!-- Permission list -->
+                                    <div class="panel-body" style="border-top:1px solid #eeeeee; border-bottom:1px solid #e7e7e7;">
+                                        <div class="col-md-12">
+                                            <h2 id="grid-nesting">
+                                               Door Permission List
+                                            </h2>
+                                        </div>  
+                                        
+                                        <div class="col-md-12">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr class="success">
+                                                        <!--<th width="10%">No.</th>-->
+                                                        <th>Group Name</th>
+                                                        <th width="10%"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="doorPermissionList">
+                                                    
+                                                    
+<!--                                                    doorPermissionList
+                                                    <tr >
+                                                        <td>1</td>
+                                                        <td>Door Group one</td>
+                                                        <td><button type = "button" class = "btn btn-danger">REMOVE</button></td>
+                                                    </tr>-->
+                                                    
+                                                    
+<!--                                                    <tr>
+                                                        <td>2</td>
+                                                         <td>Door Group one</td>
+                                                        <td><button type = "button" class = "btn btn-danger">Remove</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                          <td>Door Group Three</td>
+                                                        <td><button type = "button" class = "btn btn-danger">Remove</button></td>
+                                                    </tr>-->
+
+
+                                                </tbody>
+                                            </table>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary col-md-2 col-xs-12 pull-right" data-toggle="modal" data-target="#AddGroup">ADD</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end permission list -->
+                                    
+                                    
+                                     <!-- Web Access -->
+                                     <div class="panel-body">
+                                        <div class="col-md-12">
+                                                <h2 id="grid-nesting">
+                                                    Web Access
+                                                </h2>
+                                        </div>  
+                                         <div class="row">
+                                            <div class="container-fluid">
+                                                <div class="col-md-12">
+                                                    <div class="form-check pull-left checkBoxWeb" style="margin:5px 5px;">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input checkboxtext" type="checkbox" id="inlineCheckbox1" value="option1"> 
+                                                               &nbsp;  Enable Web Access
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>
+                                         
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">
+<!--                                                <div class="form-group">
+                                                    <label for="txtlabel">System ID<span class="mandatory">*</span></label>
+                                                    <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                </div>-->
+                                                 <div class="form-group">
+                                                    <label for="txtlabel">System ID<span class="mandatory">*</span></label>
+                                                    <select class="form-control">
+                                                        <!--<option>System Administrator</option>-->
+                                                        <option th:each="recData : ${userTypeDataList}" th:value="${recData.SystemUserTypeID}" th:text="${recData.Name}" ></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Log ID<span class="mandatory">*</span></label>
+                                                    <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Password<span class="mandatory">*</span></label>
+                                                    <input type="password" class="form-control" id="txtlabel" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Confirm Password<span class="mandatory">*</span></label>
+                                                    <input type="password" class="form-control" id="txtlabel" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <!--End Web Access -->
+                                    
+                                 
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <button  type="submit" class="btn btn-success col-md-2 col-xs-12 pull-right">SAVE</button>
+                                        <!--<button  type="submit" class="btn btn-success col-md-2 col-xs-12 pull-right" data-toggle="modal" data-target="#SavePop">Save</button>-->
+                                    </div>
+                                </div>
+                                </form>   
+                                
+                                <br/>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    
+    
+    <!--MODAL SECTION--> 
+    <div class="modal fade" id="SavePop" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>
+                            Save Successful!
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    <!--MODAL SECTION Save pop--> 
+    <div class="modal fade" id="AddGroup" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Access Group</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <div style="max-height: 200px; overflow:auto;">
+                            <table  class="table-striped table-hover" width="100%">
+                                <tbody>
+                                    <tr th:each="recData : ${doorListDataList}">
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input class="doorList" type="checkbox" th:id="'chkDoor_'+${recData.AccessPointId}" th:value="${recData.AccessPointId}" th:text="${recData.Name}" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>                                           
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="putCheckBoxToTable()" >Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    
+    
+    
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+   <script th:inline="javascript">
+        /*<![CDATA[*/
+        
+            function putCheckBoxToTable(){
+                
+                $("#doorPermissionList").empty();
+                
+                $('input:checkbox.doorList').each(function () {
+//                    var sThisVal = (this.checked ? $(this).val() : "");
+                    if(this.checked){
+                        //$(this).val();
+//                        $("input[name='PrePayment']")[0].nextSibling.nodeValue;
+                        
+//                        console.log("+"+$(this).val());
+//                        console.log("+"+$(this)[0].nextSibling.nodeValue);
+                        
+                        var id = $(this).val();
+                        var text = $(this)[0].nextSibling.nodeValue;
+                        
+//                        var htmlstr = "<tr><td>"+id+"</td><td>"+text+"</td><td><button type=\"button\" class=\"btn btn-danger\"  onclick=\"removeDoor("+id+")\"  >REMOVE</button></td></tr>";
+                        var htmlstr = "<tr><td>"+text+"</td><td><button type=\"button\" class=\"btn btn-danger\"  onclick=\"removeDoor("+id+")\"  >REMOVE</button></td></tr>";
+                        
+                        $("#doorPermissionList").append(htmlstr);
+                        
+                    }
+                    
+                    
+               });
+                
+            }
+            
+            function removeDoor(id){
+                $('#chkDoor_'+id).prop('checked', false);
+                putCheckBoxToTable();
+                
+            }
+        
+        
+        
+            //   DATEPICKER START DATE
+                $('#datetimepicker6').datetimepicker({ 
+                    minDate:new Date(),
+                    format: 'YYYY-MM-DD'
+                });
+
+                //DATEPICKER END DATE
+                $('#datetimepicker7').datetimepicker({
+                    minDate:new Date(),
+                     format: 'YYYY-MM-DD',
+                    useCurrent: false //Important! See issue #1075
+                });
+
+                //BOOTSTRAP VALIDATOR
+                $("#datetimepicker6").on("dp.change", function (e) {
+                    $('#datetimepicker6').bootstrapValidator('revalidateField', 'startdateSched');
+                    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker7").on("dp.change", function (e) {
+                    $('#datetimepicker7').bootstrapValidator('revalidateField', 'enddateSched');
+                    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                });
+
+        /*]]>*/
+    </script>
+
+    <!-- end script -->
+</body>
+
+</html>

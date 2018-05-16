@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<meta http-equiv="refresh" content="30">-->
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                DashBoard
+                                <button onclick="callRefresh()" style="visibility: hidden;">Call Refresh</button>
+<!--                                <small>Spice 1 and Spice 3</small>-->
+                                    <!--<span class="onDutyText"><b>On Duty Engineer:</b> <span th:text="${username}"> John Smith</span></span>-->  
+                                    <span class="onDutyText" th:each="tempOnDuty : ${onDuty}"><b>Duty Engineer:</b> 
+                                        <!--<span th:text="${username}"> John Smith</span>-->
+                                        <span th:text="${tempOnDuty.Name}" id="whosOnDuty"></span>
+                                    </span>  
+                            </h2>
+                            
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!-- table -->
+                    <div class="row s_row">
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3 id="grid-nesting">SPICE 1</h3>
+                                    
+                                    <!--CRAC-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">CRAC</h4>
+                                            <div class="row" id="divSP1Crac">
+                                                <div class="col-md-6" th:each="tempData : ${cracDataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusRed">Off</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusGreen">On</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '02'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '03'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--FCU-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">FCU</h4>
+                                             <div class="row" id="divSP1fcu">
+<!--                                                <div class="col-md-6" th:each="tempData : ${fcuDataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusRed">Off</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusGreen">On</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '02'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '03'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--UPS SPICE 1-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">UPS</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='upsSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP1ups" style="text-align: center;">
+<!--                                                <div class="col-md-6" th:each="tempData : ${upsDataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alert</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '122'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '113'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                     <!--CARD ACCESS SPICE 1-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">DOOR ACCESS</h4>
+                                            <div class="row" id="divSP1card">
+                                                <div class="col-md-6" th:each="tempData : ${drDataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == '39'" class="statusRed">Open</span>
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == '16'" class="statusGreen">Closed</span>
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == '2'" class="statusGreen">Closed</span>
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == null" class="statusRed">NO DATA</span>
+                                                    <!--<span th:text="${tempData.Description}" class="statusRed">Close</span>-->
+                                                    <!--<span th:text="${tempData.LastStatusId}" class="statusRed">NO DATA</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                      <!--WATER-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">WATER</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='waterStatusSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP1Water" style="text-align: center;">
+<!--                                                <div class="col-md-6" th:each="tempData : ${wtrDataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                      
+                                   <!--TEMMPERATURE SC1--> 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">TEMPERATURE</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP1temp">
+                                                <div class="col-md-6" th:each="tempData : ${tempDataList}">
+                                                    <span th:text="${tempData.ZoneName}"></span>:
+                                                    <span th:text="${tempData.ZoneValue}" class="statusGreen"></span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                      
+                                   <!--HUMIDITY SC1-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">HUMIDITY</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP1hum">
+                                                <div class="col-md-6" th:each="tempData : ${humidDataList}">
+                                                    <span th:text="${tempData.ZoneName}"></span>:
+                                                    <span th:text="${tempData.ZoneValue}" class="statusGreen"></span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                   <!--PDU ELECTRICAL SPICE 1-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">ELECTRICAL / PDU </h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='pduSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP1elec" style="text-align: center;"> 
+<!--                                                <div class="col-md-6" th:each="tempData : ${pduDataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">On</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Off</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                   <!--FIRE ALARM-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">FIRE ALARM</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='fireAlarmSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP1fire" style="text-align: center;">
+<!--                                                <div class="col-md-6" th:each="tempData : ${fmDataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '02'" class="statusRed">Fault Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!--Spice 3--> 
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3 id="grid-nesting">SPICE 3</h3>
+                                    
+                                    <!--CRAC-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">CRAC</h4>
+                                            <div class="row" id="divSP3Crac">
+                                                <div class="col-md-6" th:each="tempData : ${crac3DataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusRed">Off</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusGreen">On</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '02'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '03'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--FCU-->
+                                    <div class="row" style="display:none;">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">FCU</h4>
+                                             <div class="row" id="divSP3fcu">
+                                                <div class="col-md-6" th:each="tempData : ${fcu3DataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusRed">Off</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusGreen">On</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '02'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '03'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--UPS SPICE 3-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">UPS</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='upsSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP3ups" style="text-align: center;">
+<!--                                                <div class="col-md-6" th:each="tempData : ${ups3DataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alert</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '122'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '113'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                     <!--CARD ACCESS DOORS SPICE 3-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">DOOR ACCESS</h4>
+                                            <div class="row" id="divSP3card">
+                                                <div class="col-md-6" th:each="tempData : ${dr3DataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == '39'" class="statusRed">Open</span>
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == '16'" class="statusGreen">Closed</span>
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == '2'" class="statusGreen">Closed</span>
+                                                    <span th:if="${#strings.trim(tempData.LastStatusId)} == null" class="statusRed">NO DATA</span>
+                                                    <!--<span th:text="${tempData.Description}" class="statusRed">Close</span>-->
+                                                    <!--<span th:text="${tempData.LastStatusId}" class="statusRed">NO DATA</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                      <!--WATER SPC3-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">WATER</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='waterStatusSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP3Water" style="text-align: center;">
+<!--                                                <div class="col-md-6" th:each="tempData : ${wtr3DataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                      
+                                   <!--TEMMPERATURE SC3-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">TEMPERATURE</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP3temp">
+                                                <div class="col-md-6" th:each="tempData : ${temp3DataList}">
+                                                    <span th:text="${tempData.ZoneName}"></span>:
+                                                    <span th:text="${tempData.ZoneValue}" class="statusGreen"></span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                      
+                                   <!--HUMIDITY SC3-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">HUMIDITY</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP3hum">
+                                                <div class="col-md-6" th:each="tempData : ${humid3DataList}">
+                                                    <span th:text="${tempData.ZoneName}"></span>:
+                                                    <span th:text="${tempData.ZoneValue}" class="statusGreen"></span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                   <!--PDU ELECTRICAL-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">ELECTRICAL / PDU</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='pduSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP3elec" style="text-align: center;">
+<!--                                                <div class="col-md-6" th:each="tempData : ${pdu3DataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">On</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Off</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                   <!--FIRE ALARM-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">FIRE ALARM</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='fireAlarmSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="divSP3fire" style="text-align: center;">
+<!--                                                <div class="col-md-6" th:each="tempData : ${fm3DataList}">
+                                                    <span th:text="${tempData.DeviceName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alarm</span>
+													<span th:if="${#strings.trim(tempData.Status)} == '02'" class="statusRed">Fault Alarm</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == null" class="statusRed">NO DATA</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- end table -->
+                    </div>
+                    
+                          
+                        <div class="row">
+                            <div class="container-fluid">
+                                <div class="col-md-12">
+                                    <span>Generation Time : </span><span th:text="${generationTime}" id="TimeGeneration"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+            
+        <!--TIMER-->
+        <span id="SecondsUntilExpire"></span>
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+    
+    <script th:inline="javascript">
+    /*<![CDATA[*/ 
+    
+    $(document).ready(function () { 
+        fnTimer();
+    });
+    
+    window.load = callRefresh();
+    
+//            AUTO READ STATUS EVERY SECOND CALL THIS FUNCTION  DWR 
+            setInterval(function(){ 
+//                console.log('call this function every 8 seconds!');
+                 callRefresh();
+                }, 8000);
+
+             function callRefresh() {
+                    console.log("Call DWR REFRESH!");
+
+                    dwr.util.useLoadingMessage();
+                    
+                     OperationDwr.getonDuty(function(data){
+//                          console.log("====ON DUTY=====");
+//                          console.log(data);
+                          for(var i=0; i<data.length; i++){
+                           var row = data[i];
+//                             console.log('GET THE NAME ON DUTY');
+//                             console.log(row.Name);
+                             var nameOnduty = row.Name;
+//                             console.log(nameOnduty);
+                            document.getElementById("whosOnDuty").innerHTML= nameOnduty;
+                          }
+                    });
+                    
+                    
+                    
+                    
+//                    WATER SPICE 1 and 3 
+                     OperationDwr.getwtr1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1Water").innerHTML="";
+                          var divrows = ""; 
+                           if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : ALARM </span></div>"; 
+                            }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : NORMAL </span></div>"; 
+                            } 
+                          document.getElementById("divSP1Water").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.getwtr3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3Water").innerHTML="";
+                          var divrows = "";
+                          
+                          if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : ALARM </span></div>"; 
+                            }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : NORMAL </span></div>"; 
+                            }  
+                          document.getElementById("divSP3Water").innerHTML=divrows;
+                    });
+                    
+//                    CRAC SPICE 1 and 3
+                     OperationDwr.getcrac1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1Crac").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.DeviceName+"</span>: ";
+                                if(row.Status==null){
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }else if(row.Status=='00'){
+                                    rowStr += "<span class=\"statusRed\">Off</span>";
+                                }else if(row.Status=='01'){
+                                    rowStr += "<span class=\"statusGreen\">On</span>";
+                                }else if(row.Status=='02'){
+                                    rowStr += "<span class=\"statusRed\">Alarm</span>";
+                                }else if(row.Status=='03'){
+                                    rowStr += "<span class=\"statusGreen\">Normal</span>";
+                                }else{
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }
+                                //rowStr = rowStr + "</div>";
+                                rowStr += "</div>";                            
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP1Crac").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.getcrac3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3Crac").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.DeviceName+"</span>: ";
+                                if(row.Status==null){
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }else if(row.Status=='00'){
+                                    rowStr += "<span class=\"statusRed\">Off</span>";
+                                }else if(row.Status=='01'){
+                                    rowStr += "<span class=\"statusGreen\">On</span>";
+                                }else if(row.Status=='02'){
+                                    rowStr += "<span class=\"statusRed\">Alarm</span>";
+                                }else if(row.Status=='03'){
+                                    rowStr += "<span class=\"statusGreen\">Normal</span>";
+                                }else{
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }
+                                //rowStr = rowStr + "</div>";
+                                rowStr += "</div>";                            
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP3Crac").innerHTML=divrows;
+                    });
+                    
+                    
+                    //  FCU SPICE 1 and 3  
+                     OperationDwr.getfcu1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1fcu").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.DeviceName+"</span>: ";
+                                if(row.Status==null){
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }else if(row.Status=='01'){
+                                    rowStr += "<span class=\"statusGreen\">On</span>";
+                                }else if(row.Status=='00'){
+                                    rowStr += "<span class=\"statusRed\">Off</span>";
+                                }else{
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }
+                                //rowStr = rowStr + "</div>";
+                                rowStr += "</div>";                            
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP1fcu").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.getfcu3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3fcu").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.DeviceName+"</span>: ";
+                                if(row.Status==null){
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }else if(row.Status=='01'){
+                                    rowStr += "<span class=\"statusGreen\">Alert</span>";
+                                }else if(row.Status=='00'){
+                                    rowStr += "<span class=\"statusRed\">Normal</span>";
+                                }else{
+                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+                                }
+                                //rowStr = rowStr + "</div>";
+                                rowStr += "</div>";                            
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP3fcu").innerHTML=divrows;
+                    });
+                    
+                    
+                    //                    UPS SPICE 1 and 3
+                     OperationDwr.getups1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1ups").innerHTML="";
+                          var divrows = ""; 
+                          
+                           if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : ALARM </span></div>"; 
+                           }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : NORMAL </span></div>"; 
+                           } 
+ 
+                          document.getElementById("divSP1ups").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.getups3DataList(function(data){
+                          //console.log(data);
+                        document.getElementById("divSP3ups").innerHTML="";
+                        var divrows = "";
+
+                            if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : ALARM </span></div>"; 
+                            }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : NORMAL </span></div>"; 
+                            }  
+
+                        document.getElementById("divSP3ups").innerHTML=divrows;
+                    });
+                    
+                    //                   CardAccess 1 and 3
+                     OperationDwr.getcard1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1card").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.DeviceName+"</span>: ";
+//                                if(row.LastStatusId==null){
+//                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+//                                }else if(row.LastStatusId=='39'){
+//                                    rowStr += "<span class=\"statusRed\">Open</span>";
+//                                }else if(row.LastStatusId=='16'){
+//                                    rowStr += "<span class=\"statusGreen\">Closed</span>";
+//                                }else{
+//                                    rowStr += "<span class=\"statusGreen\">Closed</span>";
+//                                }
+
+                                if(row.LastStatusId=='39'){
+                                    rowStr += "<span class=\"statusRed\">Open</span>";
+                                }else if(row.LastStatusId=='16'||row.LastStatusId=='53'||row.LastStatusId=='2'){
+                                    rowStr += "<span class=\"statusGreen\">Closed</span>";
+                                }else{
+                                    rowStr += "<span class=\"statusRed\">Open</span>";
+                                }
+//                                
+                                //rowStr = rowStr + "</div>";
+                                rowStr += "</div>";                            
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP1card").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.getcard3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3card").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.DeviceName+"</span>: ";
+//                                if(row.LastStatusId==null){
+//                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+//                                }else if(row.LastStatusId=='39'){
+//                                    rowStr += "<span class=\"statusRed\">Open</span>";
+//                                }else if(row.LastStatusId=='16'){
+//                                    rowStr += "<span class=\"statusGreen\">Closed</span>";
+//                                }else{
+//                                    rowStr += "<span class=\"statusRed\">NO DATA</span>";
+//                                }
+                                if(row.LastStatusId=='39'){
+                                    rowStr += "<span class=\"statusRed\">Open</span>";
+                                }else if(row.LastStatusId=='16'||row.LastStatusId=='53'||row.LastStatusId=='2'){
+                                    rowStr += "<span class=\"statusGreen\">Closed</span>";
+                                }else{
+                                    rowStr += "<span class=\"statusRed\">Open</span>";
+                                }
+//                                
+                                //rowStr = rowStr + "</div>";
+                                rowStr += "</div>";                            
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP3card").innerHTML=divrows;
+                    });
+                    
+                    
+                    //                    TEMP SPICE 1 and 3
+                     OperationDwr.gettemp1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1temp").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null && row.ZoneValue>=28){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusRed\">"+row.ZoneValue+"</span><span style=font:bold>&#8451;</span>";
+                                
+                                rowStr += "</div>";                            
+                            }
+                            else
+                            {
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusGreen\">"+row.ZoneValue+"</span><span style=font:bold>&#8451;</span>";
+                                
+                                rowStr += "</div>";
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP1temp").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.gettemp3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3temp").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null && row.ZoneValue>=28){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusRed\">"+row.ZoneValue+"</span><span style=font:bold>&#8451;</span>";
+                                 
+                                rowStr += "</div>";                            
+                            }
+                            else 
+                            {
+                            var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusGreen\">"+row.ZoneValue+"</span><span style=font:bold>&#8451;</span>";
+                                 
+                                rowStr += "</div>";
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP3temp").innerHTML=divrows;
+                    });
+                    
+                    //                    TEMP SPICE 1 and 3
+                     OperationDwr.gethumid1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1hum").innerHTML="";
+                          var divrows = "";
+                          
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null && (row.ZoneValue>=80 || row.ZoneValue<=40)){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusRed\">"+row.ZoneValue+"</span><span style=font:bold>%</span>";
+                                
+                                rowStr += "</div>";                            
+                            }
+                            else{
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusGreen\">"+row.ZoneValue+"</span><span style=font:bold>%</span>";
+                                
+                                rowStr += "</div>"; 
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP1hum").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.gethumid3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3hum").innerHTML="";
+                          var divrows = "";
+                          for(var i=0; i<data.length; i++){
+                              var row = data[i];
+                              if(row!=null && (row.ZoneValue>=80 || row.ZoneValue<=40)){
+                              
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusRed\">"+row.ZoneValue+"</span><span style=font:bold>%</span>";
+                                 
+                                rowStr += "</div>";                            
+                            }
+                            else{
+                                var rowStr = "<div class=\"col-md-6\" ><span >"+row.ZoneName+"</span>: ";
+                                    rowStr += "<span class=\"statusGreen\">"+row.ZoneValue+"</span><span style=font:bold>%</span>";
+                                 
+                                rowStr += "</div>"; 
+                            }
+                              divrows+=rowStr;
+                          }
+                          document.getElementById("divSP3hum").innerHTML=divrows;
+                    });
+                    
+                //                    ELECTRICAL SPICE 1 and 3
+                     OperationDwr.getelec1DataList(function(data){
+                          console.log("+++++++++++++++++++++++++++++++");
+                          console.log("+++++++++++++++++++++++++++++++");
+                          console.log("+++++++++++++++++++++++++++++++");
+                          console.log(data);
+                          
+                          document.getElementById("divSP1elec").innerHTML="";
+                          var divrows = "";  
+                          
+                           if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : OFF </span></div>"; 
+                           }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : ON </span></div>"; 
+                           } 
+                          document.getElementById("divSP1elec").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.getelec3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3elec").innerHTML="";
+                          var divrows = "";
+                          
+                           if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : OFF</span></div>"; 
+                           }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : ON </span></div>"; 
+                           } 
+                          document.getElementById("divSP3elec").innerHTML=divrows;
+                    });  
+                    
+                    //                    FIRE ALARM SPICE 1 and 3
+                     OperationDwr.getfire1DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP1fire").innerHTML="";
+                          var divrows = "";
+                          
+                          if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : ALARM</span></div>"; 
+                           }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : NORMAL </span></div>"; 
+                           }  
+                          document.getElementById("divSP1fire").innerHTML=divrows;
+                    });
+                    
+                    OperationDwr.getfire3DataList(function(data){
+                          //console.log(data);
+                          document.getElementById("divSP3fire").innerHTML="";
+                          var divrows = ""; 
+                          
+                           if (data == true){
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusRed\"> STATUS : ALARM</span></div>"; 
+                           }else {
+                                var divrows = "<div class=\"col-md-12\" ><span class=\"statusGreen\"> STATUS : NORMAL </span></div>"; 
+                          }  
+                          document.getElementById("divSP3fire").innerHTML=divrows;
+                    });
+                    
+                    
+                    //                    Time Reset 
+                    OperationDwr.getlatestTime(function(data){
+                        console.log("THE LATEST GENERATION TIME: " +data);
+                        
+                         document.getElementById("TimeGeneration").innerHTML = data;
+                        
+                    });
+                    
+                    
+            }
+     /*]]>*/
+    </script>
+    <!-- end script -->
+    
+</body>
+
+</html>

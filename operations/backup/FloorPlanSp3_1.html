@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+        
+        <!--CSS inline code--> 
+        <style>
+            
+        .ThisIcon {
+            padding:3px 3px;
+        }
+            
+        .StatusIconNormal {
+            background-color:#A9DFBF;
+        }
+        
+        .StatusIconAlert {
+            background-color:#F5B7B1;
+        }
+        
+         #draggable {
+            width:auto;
+          }
+          
+          
+          .tooltiptext {
+                /*visibility: hidden;*/
+                visibility: inline;
+/*                width: 250px;
+                background-color: black;
+                color: #fff;
+                text-align: left;
+                border-radius: 6px;
+                padding: 5px 5px;
+                position:absolute !important;*/
+            }
+            
+        </style>
+        
+    </head>
+
+<body>
+   
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Floor Plan 
+                                <small>Spice 3</small>
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <i class="glyphicon glyphicon-picture"></i> <a href="#">Floor Plan Spice 3</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!-- table -->
+                    <div class="row s_row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="col-md-2">
+                                        <h2 id="grid-nesting">
+                                            Spice 3
+                                        </h2>
+                                    </div>  
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="ViewSelect">Select option to view</label>
+                                            <select id="ViewSelect" class="form-control">
+                                                <option value='17,18,19,20,21,22,23,24'>View All Devices</option>
+                                                <option value='17'>Temprature</option>
+                                                <option value='17'>Humidity</option>
+                                                <option value='19'>FCU</option>
+                                                <option value='20'>CRAC</option>
+                                                <option value='21'>UPS</option>
+                                                <option value='22'>PDU</option>
+                                                <option value='23'>WaterFlood</option>
+                                                <option value='24'>FM</option>
+                                            </select> 
+                                        </div>
+                                        
+<!--                                        <div class="form-group">
+                                            <label for="txtlabel">Select Device<span class="mandatory"></span></label>
+                                            <select class="form-control" id="devicelist" name="devicelist" required onchange="loadStaff();">
+                                                <option value =" ">Select Device...</option>
+                                                <option th:each="tempData : ${deviceDataList}" 
+                                                th:value="${tempData.DesignationID}" 
+                                                th:text="${tempData.Name}" th:select="${tempData.AccessPointDeviceTypeID}">Select Name...</option>
+                                            </select>
+                                        </div>-->
+                                        
+                                    </div>
+                                    
+                                    <div class="col-md-5 col-md-push-2 tooltiptext" id="thisToolTip">
+                                        <div class="container-fluid s_infopanel">
+                                             <b>Device Name:</b>  <span>SC3-OPS/COMPUTER-RN-DR</span>
+                                             <br/>
+                                             <b>Status:</b>  <span>Closed</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <br/><br/>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="FloorPlan">
+                                                   <img style="width:100%" src="../resources/sys/images/SingaporeFloorPlan.png"/>
+                                                   
+                                                    <div id="MapContainer"> 
+                                                        
+                                                        <!--UPS Device-->
+                                                        <div class="ThisIcon StatusIconNormal" id="draggable">
+                                                           <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                        
+                                                        <!-- CCTV Device -->
+                                                        <div class="ThisIcon StatusIconNormal" id="draggable2">
+                                                           <img src="../resources/sys/svg/cctv.svg" width="20"/>
+                                                        </div>
+                                                        
+                                                        <!-- Aircon Device -->
+                                                        <div class="ThisIcon StatusIconNormal" id="draggable3">
+                                                           <img src="../resources/sys/svg/fan-tool.svg" width="20"/>
+                                                        </div>
+                                                        
+                                                         <!-- Fire Alarm Device -->
+                                                        <div class="ThisIcon StatusIconNormal" id="draggable4">
+                                                           <img src="../resources/sys/svg/fire-alarm.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         <!-- Door must have right click and Open Door Function  -->
+                                                        <div class="ThisIcon StatusIconNormal" id="draggableClick" data-toggle="context" data-target="context-menu3" >
+                                                           <img src="../resources/sys/svg/opened-door-aperture.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         <span class="context-menu-one btn">right click me</span>
+                                                         
+                                                         <div class="noPadOrMarg">
+                                                            <div id="svgCanvas">
+                                                              <g>
+                                                                <rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)"></rect>
+                                                              </g>
+                                                            </div>
+                                                        </div>
+                                                         
+                                                         <div id="context-menu2">
+                                                            <ul class="dropdown-menu" role="menu">
+                                                                <li><a tabindex="-1">Action</a></li>
+                                                                <li><a tabindex="-1">Another action</a></li>
+                                                                <li><a tabindex="-1">Something else here</a></li>
+                                                                <li class="divider"></li>
+                                                                <li><a tabindex="-1">Separated link</a></li>
+                                                            </ul>
+                                                          </div>
+                                                         
+                                                    </div>
+                                                   
+                                                   <!--CONTEXT MENU RIGHT CLICK-->
+                                                    <div id="context-menu3">
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li><a tabindex="-1"  onclick="OpenDoor()">Open Door</a></li>
+                                                        </ul>
+                                                    </div>
+                                                
+                                                </div>
+                                            <br/><br/>
+                                            </div>
+                                            Ledger :
+                                            <div class="col-md-12 s_ledger">
+                                               <div class="row">
+                                                    <div class="container-fluid pull-right">
+                                                         <button class="btn btn-primary" onclick="saveDD()">Save</button> 
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/server.svg"/>  UPS</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/cctv.svg"/>  CCTV</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fan-tool.svg"/>  Aircon</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fire-alarm.svg"/>  Fire Alarm</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/opened-door-aperture.svg"/>  Door</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <br/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                        <!-- end table -->
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+     <script src="../resources/sys/js/jquery-ui.min.js"></script>
+     <script src="../resources/sys/js/bootstrap-contextmenu.js"></script>
+     <script th:inline="javascript">
+        /*<![CDATA[*/
+            $(function () {
+//                if ($('#idlockicon').is(":checked")) {
+//                    $(".divDrag").draggable('disable');
+//                    $(".divDrag2").draggable('disable');
+//                };
+                
+                $( "#draggable" ).draggable();
+                $( "#draggable2" ).draggable();
+                $( "#draggable3" ).draggable();
+                $( "#draggable4" ).draggable();
+                $( "#draggableClick" ).draggable();
+                
+                
+//                $(document).bind("contextmenu",function(e){
+//                    $('.alert').fadeToggle();
+//                    return false;
+//                });
+                
+            });
+          /*]]>*/
+    </script>
+    <!-- end script -->
+    
+    
+    
+</body>
+
+</html>

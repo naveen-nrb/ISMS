@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+    
+    <style>
+        
+        .close {
+            display:none;
+        }
+        
+        .fc-time{
+            display : none;
+         }
+        #calendar {
+		/*max-width: 900px;*/
+		max-width: 700px;
+		margin: 0 auto;
+	}
+        .fc-resource-area td {
+		cursor: pointer;
+	}
+        
+        #success_message{ display: none;}
+        
+        .buttonShade {
+            position: absolute;
+            right:20px;
+            bottom:20px;
+            
+        }
+        
+        .highlight{
+            background-color:green !important;
+        }
+        
+        #theBtnStaffAssign {
+            display:none;
+        }
+        
+    </style>
+
+<body>
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Duty Roster
+                                <!--<small>Spice 1</small>-->
+                                <!--<small>Spice 1</small>-->
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li class="active">
+                                    <i class="glyphicon glyphicon-phone"></i> <a href="#">Duty Roster</a>
+                                </li>
+                            </ol>
+                        </div>
+
+                        
+                        <div style="background-color:green; position:absolute; left:230px; top:350px; z-index:9; visibility: hidden;">
+                            start date: <input type="text" id="GetStartDate" value="" disabled="true"><br/>
+                            end date: <input type="text" id="GetEndDate" value="" disabled="true">
+                        </div>
+                        <!--------------- main body content ----------------->
+                        <div class="row s_row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">    
+                                        <!--------------- content ----------------->
+                                    
+                                        <!--Calendar here-->
+                                        <div id='calendar'></div>
+                                        <br/>
+                                        
+                                        <!-------------- end content ----------------->
+                                         <div class="col-md-4 col-md-offset-4 text-center col-xs-12">
+                                            <div class="form-group" id="theBtnStaffAssign">
+                                                <!--<button type="button" class="btn btn-primary" style="width:100%;" data-toggle="modal" data-target="#schedulePop" id="schedClear">STAFF ASSIGN</button>-->
+                                                <button type="button" class="btn btn-primary" style="width:100%;" data-toggle="modal" data-target="#schedulePop" id="assignDetails">STAFF ASSIGN</button>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!--------------- end main body content ----------------->
+                       
+                        
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+            
+        <!--INFORMATION DATA PUT--> 
+        <div class="informationPut" style="background-color:red; position: absolute; top:200px; left:600px; visibility:hidden;">
+            <p id="displayHere"></p>
+        </div>
+    </div>
+    
+    
+    
+    <!--MODAL SECTION--> 
+    <div class="modal fade" id="schedulePop" role="dialog" >
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Set Staff Assignment</h4>
+                </div>
+                
+                <!--hidden textbox that gets the ID to Delete-->
+                <div style="position:absolute; background-color:green; height:100px; width:100px; visibility: hidden;">
+                    <input type="text" class="form-control" id="thiID">
+                </div>
+                
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        
+                        <form id="schedAssignForm">
+                            <!--Hide this no use--> 
+                            <!-- <div class="alert alert-success" role="alert" id="success_message">Success<i class="glyphicon glyphicon-thumbs-up">
+                                </i> You have successfully assign!
+                            </div>-->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtlabel">Start Date<span class="mandatory">*</span></label>
+                                     <div class="form-group">
+                                        <div class="input-group date" id="datetimepicker6">
+                                            <input type="hidden" id="dutyschedid" name="dutyschedid" >
+                                            <input type="text" class="form-control" id="dateStartSched" name="startdateSched" required disabled>
+                                            <span class="input-group-addon" id="iconStartDate">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                               <div class="form-group">
+                                    <label for="txtlabel">End Date<span class="mandatory">*</span></label>
+                                     <div class="form-group">
+                                        <div class="input-group date" id="datetimepicker7">
+                                            <input type="text" class="form-control" id="dateEndSched" name="enddateSched" required disabled> 
+                                            <span class="input-group-addon" id="iconEndDate">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+<!--                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="txtlabel">Designation<span class="mandatory">*</span></label>
+                                    <select class="form-control" name="optDesignation" id="optDesignation" onchange="loadStaff();" >
+                                        <option value="0" >-- Please Select Designation --</option>
+                                        <option th:each="recData : ${designationDataList}" th:value="${recData.DesignationId}" th:text="${recData.Name}"  ></option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="txtlabel">Name<span class="mandatory">*</span></label>
+<!--                                    <select class="form-control" id="nameSetSched" name="nameSched" required>
+                                        <option value ="">Select Name...</option>
+                                        <option value ="lorem ipsum">name 1</option>
+                                        <option value ="mark Herra">name 2</option>
+                                    </select>-->
+                                    <select class="form-control" id="pName" name="pName" required>
+                                        <option value ="">---Select Staff---</option>
+                                        <option th:each="recData : ${staffDataList}"  th:text="${recData.Name}" th:value="${recData.StaffID}" ></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="position:absolute; top:530px; left:-100000px;">
+                                <div class="form-group">
+                                    <label for="txtlabel">Duty Time Slot<span class="mandatory">*</span></label>
+                                    <select class="form-control" id="slotSched" name="slotSched" required>
+                                        <option value="">Select Slot...</option>
+                                        <option th:each="recData : ${timeDataList}"  th:text="${recData.Name}" th:value="${recData.DutyTimeSlotID}" ></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="fnclose()">CLOSE</button>
+                                <button class="btn btn-success" id="assignPerson" onclick="fnAssign()" >ASSIGN</button>
+                                <button class="btn btn-primary" id="updateassign" onclick="fnUpdate()" >UPDATE</button>
+                                <button class="btn btn-danger" id="removeEvent" onclick="fnDelete()" >DELETE</button>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+                <br/>
+<!--                <div class="modal-footer">
+                    Footer
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    <!--MODAL SECTION Save pop--> 
+    <div class="modal fade" id="AddGroup" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Access Group</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <div style="max-height: 200px; overflow:auto;">
+                            <table  class="table-striped table-hover" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> Door Group 1
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox">  Door Group 2
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>                                           
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    <div class="buttonShade" style="visibility: hidden;">
+    <!--<div class="buttonShade" style="visibility: hidden;">-->
+        <button onclick="shadeDate()">shade the Date</button>
+        <button onclick="fnStartDut()">show startDate</button>
+        <button onclick="fnEndDut()">show endDate</button>
+    </div>
+    
+
+    <!--TIMER-->
+    <span id="SecondsUntilExpire"></span>
+    
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+    <script src="../resources/sys/js/jquery-ui.min.js"></script>
+   
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            $(document).ready(function(){
+                
+               fnTimer();
+                
+                
+                fnStartDut();
+                fnEndDut();
+                
+                 $('#iconStartDate').css('visibility','hidden');
+                 $('#iconEndDate').css('visibility','hidden');
+                 
+                $('#theBtnStaffAssign').hide();
+                
+                $('#dateStartSched').keypress(function (e){
+                    e.preventDefault();
+                });
+                
+                $('#dateEndSched').keypress(function (e){
+                    e.preventDefault();
+                });
+                
+                
+//                call the Holiday schedules
+                shadeDate();
+                
+                $("#removeEvent").hide();
+                $("#updateassign").hide();
+                
+                //sample validation forma
+                $('#schedAssignForm').bootstrapValidator({
+                    excluded: ':disabled',
+                    feedbackIcons: {
+                        //valid: 'glyphicon glyphicon-ok',
+                        //invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                            startdateSched: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The start date is required'
+                                    },
+                                    date: {
+                                        format: 'YYYY-MM-DD',
+                                        message: 'Please set your Start Date'
+                                    }
+                                }
+                            },
+                            enddateSched: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'The end date is required'
+                                    },
+                                    date: {
+                                        format: 'YYYY-MM-DD',
+                                        message: 'Please set your End Date'
+                                    }
+                                }
+                            },
+                             designation: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Please select designation'
+                                    }
+                                }
+                            },
+                            nameSetSched: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Please Select Name'
+                                    }
+                                }
+                            },
+                            slotSched: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Please Select Slot'
+                                    }
+                                }
+                            }
+                            
+                        }
+                    });
+//                            .on('success.form.bv', function(e) {
+//// Prevent form submission
+//                                e.preventDefault();
+//
+//                                $('#schedulePop').modal('hide'); 
+//// Get the form instance
+////                                var $form = $(e.target);
+////
+////                                // Get the BootstrapValidator instance
+////                                var bv = $form.data('bootstrapValidator');
+////
+////                                // Use Ajax to submit form data
+//                                 
+////                                $.post($form.attr('action'), $form.serialize(), function(result) {
+////                                    console.log(result);
+////                                }, 'json');
+//                    });
+                    
+               
+                //   DATEPICKER START DATE
+                $('#datetimepicker6').datetimepicker({ 
+                    minDate:new Date(),
+                    format: 'YYYY-MM-DD',
+                });
+
+                //DATEPICKER END DATE
+                $('#datetimepicker7').datetimepicker({
+                    minDate:new Date(),
+                     format: 'YYYY-MM-DD',
+                    useCurrent: false //Important! See issue #1075
+                });
+                
+                
+
+                //BOOTSTRAP VALIDATOR
+                $("#datetimepicker6").on("dp.change", function (e) {
+                    $('#datetimepicker6').bootstrapValidator('revalidateField', 'startdateSched');
+                    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker7").on("dp.change", function (e) {
+                    $('#datetimepicker7').bootstrapValidator('revalidateField', 'enddateSched');
+                    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                });
+                    
+                //CALENDAR SECTION 
+                   $('#calendar').fullCalendar({
+			header: {
+                            left:   'title',
+                            center: '',
+                            right:  'today prev,next',
+                            navLinks: true// can click day/week names to navigate views
+			},
+//                        theme: true,
+			navLinks: false, // can click day/week names to navigate views
+                        disableDragging: false,
+                        editable: false,
+			eventLimit: false, // allow "more" link when too many events
+//                        eventOrder: "priority",
+                        allDay: true,
+                        selectable: true,
+//                        selectHelper: true,
+			events: [
+//                                ENTERED DATE AND OTHER INFORMATION FOR SCHEDULE   
+                                
+//                                    {
+//					title: 'testestt',
+//					start: '2017-05-22T11:00:00',
+//					end: '2017-05-25T09:00:00',
+//                                    },
+//                                    {
+//                                        title: 'Test2',
+//                                       start: '2017-05-22T11:00:00',
+//					end: '2017-05-25T09:00:00',
+//                                        backgroundColor: '#80ACED',
+//                                    }
+                                    
+			],
+                        unselect: function (event){
+//                            alert(view);
+//                             $('#theBtnStaffAssign').hide('fast');
+//                                    $('#GetStartDate').val("");
+//                                    $('#GetEndDate').val("");
+//                                $('#theBtnStaffAssign').css('display','none');
+                                $('#theBtnStaffAssign').prop("disabled",true);
+                                console.log('disabled the Button staff Assign');
+                        },
+                        select: function(start, end, allDay) {
+                        
+                           console.log('-----------start---------');
+                           console.log(start);
+                           console.log('-----------end---------');
+                           console.log(end);
+                           console.log('-----------allDay---------');
+                           console.log(allDay);
+ 
+                        var d = new Date();
+                        
+                        var month = d.getMonth()+1;
+                        var day = d.getDate();
+                        
+                        var output = d.getFullYear() + '-' +
+                        (month<10 ? '0' : '') + month + '-' +
+                        (day<10 ? '0' : '') + day;
+                
+                        console.log("----------- CURRENT DAY : " +output); 
+                            
+                        var startD = start.format();
+                        
+//                        var startDate = new Date(start);
+//                        var endDate = new Date(end);
+                            
+//                        GET START DATE
+                        var startDateFormat = start.format('YYYY-MM-DD');
+                        console.log("--------- START DATE : " +startDateFormat);
+                        
+//                        subtract end date by 1
+                        var endDateFormat = end.format('YYYY-MM-DD');
+                        var newEndDate = new Date(endDateFormat);
+                        newEndDate.setDate(newEndDate.getDate() - 1);
+                        console.log("End Date :" +newEndDate);
+                        
+//                      CHANGE FORMAT JQUERY UI 
+                        var a = new Date(newEndDate);
+                        var strEndDate = $.datepicker.formatDate('yy-mm-dd', a);
+                        
+                        console.log("--------- END DATE : " +strEndDate);
+                        
+        //   -------- START DATE start here
+//                        var theSTime = " 00:00:00";
+//        //                concat 2
+//                        var theDateSTime = startDateFormat.concat(theSTime);
+        
+              
+        //  -------------END DATE  Start here
+//                        var theETime = " 24:00:00";
+//        //                Concat 2
+//                        var theDateETime = strEndDate.concat(theETime);
+                        
+                          
+                            if(startD < output)
+                            {
+                                // Previous Day. show message if you want otherwise do nothing.
+                                // So it will be unselectable
+                                $('#theBtnStaffAssign').hide('fast');
+                                alert('Not allowed to select lower than the todays date!');
+                                location.href='staffAssign.html';
+                            }
+                            else
+                            {
+                                    // Its a right date
+                                    // Do something)
+                                    console.log('correct dates! Show button STAFF ASSIGN');
+                                    //AUTO POPULATE AND SHOW BUTTON
+
+                                    var GetStartDate = $('#GetStartDate').val(startDateFormat);
+                                    var GetEndDate =  $('#GetEndDate').val(strEndDate);
+                                    
+                                    
+//                                    TWEEK WITH TIME
+//                                    var GetStartDate = $('#GetStartDate').val(theDateSTime);
+//                                    var GetEndDate =  $('#GetEndDate').val(theDateETime);
+
+//                                     VALIDATE IF GOT DATE AFFECTED
+//                                    OperationDwr.getStartDutySched(function (data) {
+//                                        console.log( "datalen:"+data.length );
+//                                         if(data!=null){
+//                                                console.log( "datalen:"+data.length );
+//                                                for(var ctr0=0; ctr0<data.length; ctr0++){
+//
+//                                                    console.log("data["+ctr0+"].FromDate:"+data[ctr0].FromDate);
+//                                                    var dbStartDate = data[ctr0].FromDate;
+//                            //                      CHANGE FORMAT JQUERY UI 
+//                                                    var adbStartDate = new Date(dbStartDate);
+//                                                    var CondbStartDate = $.datepicker.formatDate('yy-mm-dd', adbStartDate);
+//                                                    console.log('CondbStartDate ---' +CondbStartDate);
+//                                                }
+//                                            }
+//                                        });
+                                            
+//                                    $.each( obj, function( key, value ) {
+//                                    alert( key + ": " + value );
+//                                  });
+//                                    
+
+                                    
+                                    if (startDateFormat != strEndDate ) {
+                                        console.log('sh0w the button!')
+                                        $('#theBtnStaffAssign').show('fast');
+                                    }else {
+                                        console.log('hide the button!!')
+//                                        Clear DATA 
+                                        $('#GetStartDate').val("");
+                                        $('#GetEndDate').val("");
+                                        $('#theBtnStaffAssign').hide('fast');
+                                    }
+                                    
+                            }
+                            
+                            
+                            
+                          },
+//                        selectOverlap: function(event) {
+//                            console.log('OVERLAP!=====' +event);
+//                            return event.rendering === 'background';
+//                        },
+//            ===========================================================================
+                    eventClick: function(calEvent, jsEvent, view) {
+                        var evento = calEvent;
+                        var elemento = jsEvent;
+                        var viewo = view;
+                        
+//                        START DATE
+                        var sdate = calEvent._start._i;
+                        var edate = calEvent._end._i;
+                        
+                        var displaySdate = sdate.substr(0,10);
+                        var displayEdate = edate.substr(0,10);
+//                        END DATE
+                            
+                        var sched_id = calEvent.id;
+                        var evento_id = calEvent._id;
+                        var evento_name = calEvent.title;
+                        
+//                        LATEST
+                        var evento_start = displaySdate;
+                        var evento_end = displayEdate;
+                        
+                        var evento_slot = calEvent.description;
+                        var staffId = calEvent.staffId;
+                        var designationID = calEvent.designationID;
+                          
+                        console.log(evento);
+                        console.log(elemento);
+                        console.log(viewo);
+                        
+                        console.log("====================");
+                        console.log(sched_id);
+                        console.log(evento_id);
+                        console.log(evento_name);
+                        console.log(evento_start);
+                        console.log(evento_end);
+                        console.log(evento_slot);
+                        console.log(staffId);
+                        console.log("designationID:"+designationID);
+                        console.log("====================");
+
+                        // Auto Populate data
+                        $('#thiID').val(evento_id);
+                        $(".modal-body #nameSetSched select").val( evento_name );
+                        $(".modal-body #dateStartSched").val( evento_start );
+                        $(".modal-body #dateEndSched").val( evento_end );
+                        $(".modal-body #slotSched").val( evento_slot );
+                        $(".modal-body #optDesignation").val( designationID );
+                        //loadStaff();
+                        $(".modal-body #pName").val( staffId );
+                        $(".modal-body #dutyschedid").val( sched_id );
+                        
+                        
+                        
+                        console.log('disabled  start the date!!');
+                        $('#dateStartSched').attr("disabled", true);
+                        $('#iconStartDate').css('visibility','hidden');
+                        
+//                        $('#datetimepicker6').attr("disabled", true);
+//                        $('#dateEndSched').attr("disabled", true);
+                        
+                        //show buttons
+                        $('#removeEvent').show();
+                        $("#updateassign").show();
+                        
+                        //hide button
+                        $("#assignPerson").hide();
+                        
+                        //Show modal 
+                        $("#schedulePop").modal();
+                    },
+//                        ====================================================================
+                });
+                //END FULLCALENDAR SECTION  
+                
+                $('.fc-today-button').click(function(){
+                    console.log('prev is clicked, do something');
+                    $('#GetStartDate').val("");
+                    $('#GetEndDate').val("");
+                    $('#theBtnStaffAssign').hide('fast');
+                });
+                
+                $('.fc-prev-button').click(function(){
+                    console.log('prev is clicked, do something');
+                    $('#GetStartDate').val("");
+                    $('#GetEndDate').val("");
+                    $('#theBtnStaffAssign').hide('fast');
+                });
+
+                $('.fc-next-button').click(function(){
+                    console.log('nextis clicked, do something');
+                    $('#GetStartDate').val("");
+                    $('#GetEndDate').val("");
+                    $('#theBtnStaffAssign').hide('fast');
+                });
+
+                //TAKE DATA from DB
+                
+//                    $('#displayHere').text(dateStartSched +" , "+dateEndSched+" , "+nameSetSched+" , "+slotSched );
+//                        var updateEvent = {
+//                            title: nameSetSched,
+//                            start: dateStartSched,
+//                            end: dateEndSched,
+//                            description: slotSched
+//                        };
+//                    
+////                  PUT THE LATEST INFORMATION FROM THE EVENT CALENDAR
+//                    $('#calendar').fullCalendar( 'updateEvent', updateEvent);  
+                
+                try{
+                    OperationDwr.getDutySchedules( function (data) {
+                        if(data!=null){
+                            console.log( "datalen:"+data.length );
+                            
+                            for(var ctr0=0; ctr0<data.length; ctr0++){
+                                
+                                console.log( "data["+ctr0+"].FromDate:"+data[ctr0].FromDate2 );
+                                
+                                var dateSdisplay = data[ctr0].FromDate2;
+                                var dateEdisplay = data[ctr0].ToDate2;
+                                console.log("++++++++++++++++++++++++++++++");
+                                
+//                                var displaySdate = dateSdisplay.substr(0,10);
+//                                var displayEdate = dateEdisplay.substr(0,10);
+                                console.log("---- start date dsiplay ----------");
+//                                console.log(displaySdate);
+                                
+                                console.log("---- end date dsiplay ----------");
+//                                console.log(displayEdate);
+                                
+                                console.log("++++++++++++++++++++++++++++++");
+                                
+//                                ORIGINAL
+//                                 var dateStartSched = data[ctr0].FromDate2;
+//                                var dateEndSched = data[ctr0].ToDate2;
+
+//                                LATEST
+//                                var dateStartSched = displaySdate;
+//                                var dateEndSched = displayEdate;
+                                var dateStartSched = dateSdisplay;
+                                var dateEndSched = dateEdisplay;
+
+                                var nameSetSched = data[ctr0].Name;
+                                var staffIdSetSched = data[ctr0].StaffID;
+                                var slotSched = data[ctr0].Slot;
+                                var id = data[ctr0].DutySchedulerID;
+                                var designationID = data[ctr0].DesignationID;
+                                    
+                                console.log(dateStartSched +" , "+dateEndSched+" , "+nameSetSched+" , "+slotSched+" , "+designationID );
+                                    
+                
+                                try{
+//                                    $('#displayHere').text(dateStartSched +" , "+dateEndSched+" , "+nameSetSched+" , "+slotSched );
+                                    var newEvent = {
+                                        id: id,
+                                        staffId:staffIdSetSched,
+                                        designationID:designationID,
+                                        title: nameSetSched,
+                                        start: dateStartSched,
+                                        end: dateEndSched,
+                                        description: slotSched,
+                                        
+                                    };
+
+                //                  PUT THE LATEST INFORMATION FROM THE EVENT CALENDAR
+                                    $('#calendar').fullCalendar( 'renderEvent', newEvent , 'stick');   
+                                
+                                }catch(err){ console.log(err) }
+                            }
+                            
+                        }
+
+                    });
+                }catch(err){}
+                
+                
+                
+                
+            });
+            // END DOCUMENT READY
+
+                    
+            //MODAL PREVENT CLOSING ONCLICK OUTSIDE
+//            $('#schedulePop').modal({
+//                backdrop: 'static',
+//                keyboard: 'false'
+//            });
+
+              
+ //         ASSIGN FUNCTION BUTTON
+            $('#assignPerson').click(function(){
+                
+//          HIDE BUTTON IF ASSIGN BUTTON ONCLICK
+                $('#removeEvent').hide();
+
+                // GRAB THE INFORMATION NEEDED
+                var nameSetSched = $("#nameSetSched").val();
+                var dateStartSched = $("#dateStartSched").val();
+                var dateEndSched = $("#dateEndSched").val();
+                var slotSched = $("#slotSched").val();
+                
+                console.log(nameSetSched);
+                console.log(dateStartSched);
+                console.log(dateEndSched);
+                console.log(slotSched);
+                
+                if (nameSetSched == ""  || dateStartSched == "" || dateEndSched == "" || slotSched == "") {
+                    return;
+                }else if (dateStartSched == " ") {
+                    return;
+                }else {
+                     //  GET the data from pop up 
+                    $('#displayHere').text(dateStartSched +" , "+dateEndSched+" , "+nameSetSched+" , "+slotSched );
+                    var newEvent = {
+                        title: nameSetSched,
+                        start: dateStartSched,
+                        end: dateEndSched,
+                        description: slotSched
+                    };
+                    
+//                  PUT THE LATEST INFORMATION FROM THE EVENT CALENDAR
+                    $('#calendar').fullCalendar( 'renderEvent', newEvent , 'stick');    
+                    
+                    //HIDE MODAL AFTER ASSIGN 
+                    $('#schedulePop').modal("hide");
+                }
+            });
+
+            
+            //  ------------FUNCTIONS-----------
+            $('#schedClear').click(function(){
+               //RESET VALIDATION
+                $('#schedAssignForm').bootstrapValidator('resetForm', true);
+            
+                //RESET hide button
+                $('#removeEvent').hide();
+                $('#updateassign').hide();
+                $('#assignPerson').show();
+                
+                //RESET clear value 
+                $('#nameSetSched').val("");
+                $('#slotSched').val("");
+                
+            });
+            
+            $('#assignDetails').click(function(){
+               var GetStartDate = $('#GetStartDate').val();
+               var GetEndDate = $('#GetEndDate').val();
+               
+               console.log('GetStartDate this : ' +GetStartDate);
+               console.log('GetEndDate this : ' +GetEndDate);
+               
+               if (GetStartDate == "" && GetEndDate == "") {
+                   console.log('The dates are blank!');
+                   alert('Please select start and end dates!');
+//                   location.href='staffAssign.html';
+                   
+               }if (GetStartDate != GetEndDate) {
+                   console.log('Auto populate the date from the modal!');
+                   
+                   $('#dateStartSched').val(GetStartDate);
+                   $('#dateEndSched').val(GetEndDate);
+                   
+               }else {
+//                   DONE SHOW 
+               }
+               
+            });
+            
+            // DELETE EVENT FUNCTION 
+            $('#removeEvent').click(function() {
+                 var getid = $('#thiID').val();
+                // console.log(getid);  
+                $('#calendar').fullCalendar('removeEvents',getid);
+                //HIDE MODAL AFTER DELETE
+                $('#schedulePop').modal("hide");
+            });
+
+//            UPDATE EVENT
+            $('#updateassign').click(function(){
+//                var getid = $('#thiID').val();
+//                var nameSetSched = $("#nameSetSched").val();
+//                var dateStartSched = $("#dateStartSched").val();
+//                var dateEndSched = $("#dateEndSched").val();
+//                var slotSched = $("#slotSched").val();
+//                
+                
+//                if (nameSetSched == ""  || dateStartSched == "" || dateEndSched == "" || slotSched == "") {
+//                    return;
+//                }else {
+//                     //  GET the data from pop up 
+//                    $('#displayHere').text(dateStartSched +" , "+dateEndSched+" , "+nameSetSched+" , "+slotSched );
+//                    var updateEvent = {
+//                        title: nameSetSched,
+//                        start: dateStartSched,
+//                        end: dateEndSched,
+//                        description: slotSched
+//                    };
+//                    
+////                  PUT THE LATEST INFORMATION FROM THE EVENT CALENDAR
+//                    $('#calendar').fullCalendar( 'updateEvent', updateEvent);    
+//                
+////                $('#calendar').fullCalendar('updateEvent',getid);
+//                //HIDE MODAL AFTER UPDATE
+//                $('#schedulePop').modal("hide");
+//                }
+            });
+            
+            
+            function fnclose(){
+//               location.reload();
+                location.href='staffAssign.html';
+            }
+            
+            
+            
+            function loadStaff(  ){
+                                    
+                var designation = $('#optDesignation').val();
+
+                OperationDwr.getStaffByDesignation(designation, function (data) {
+
+                    console.log( "datalen:"+data.length );
+
+                    if (data != 0){                                           
+                        var sel = $("#pName");
+                        sel.empty();
+                        sel.append('<option value="">---Select Staff---</option>');
+                        for (var i=0; i<data.length; i++) {
+                          sel.append('<option value="' + data[i].StaffID + '">' + data[i].Name + '</option>');
+                        }
+                    } else {
+                        var sel = $("#pName");
+                        sel.empty();
+                        sel.append('<option value="">---Select Staff---</option>');
+                    }
+
+                });
+            }
+            
+            
+            
+            
+            function fnAssign(){
+
+//                FORMAT
+//              start: '2017-04-14T00:00:00',
+//		end: '2017-04-15T24:00:00',
+
+                var dutySchedulerID = 0;
+               
+//                -------- START DATE start here
+                var StartDate = $('#dateStartSched').val();
+                var theSTime = " 00:00:00";
+//                concat 2
+                var theDateSTime = StartDate.concat(theSTime);
+               
+//                Last 3
+                var fromDateStr = theDateSTime;
+//                  -------- END DATE Stop here
+                
+//        -------------END DATE  Start here
+                var EndDate = $('#dateEndSched').val();
+                var theETime = " 24:00:00";
+//                Concat 2
+                var theDateETime = EndDate.concat(theETime);
+//               Last 3
+                var toDateStr = theDateETime;
+                
+                console.log('the Start date is :' +fromDateStr);
+                console.log('the last date is :' +toDateStr);
+//        -------------------END DATE stop here
+
+                var slot = $('#slotSched').val();
+                var staffId = $('#pName').val();
+                
+                var firstname = "";
+                var lastname = ""; 
+                var hpNumber = "";
+                var emailAddress = "";
+//                
+                var isDeleted = false;
+                
+                
+                
+                
+                
+                
+                if (fromDateStr != "" && toDateStr != "" && staffId != "") {
+                    console.log('pass the values to operations Dwr then ASSIGN');
+                    
+                    console.log(fromDateStr);
+                    console.log(toDateStr);
+                    
+                    OperationDwr.saveDutyScheduler( dutySchedulerID,  fromDateStr,  toDateStr,  slot,  staffId,  firstname,  lastname,  hpNumber,  emailAddress, isDeleted, function (data) {
+//                        location.reload();
+                         location.href='staffAssign.html';
+                    });
+                }else {
+                   console.log('Remain the console show!');
+                   console.log("the value of the end date: " +toDateStr);
+                }
+                
+            }
+            
+            function fnUpdate(){
+                //alert("fnUpdate");      
+                
+                var dutySchedulerID = $('#dutyschedid').val();
+                
+//                   ORIG
+//                var fromDateStr = $('#dateStartSched').val();
+//                var toDateStr = $('#dateEndSched').val();
+                
+//                 -------- START DATE start here
+                var StartDate = $('#dateStartSched').val();
+                var theSTime = " 00:00:00";
+//                concat 2
+                var theDateSTime = StartDate.concat(theSTime);
+               
+//                Last 3
+                var fromDateStr = theDateSTime;
+//                  -------- END DATE Stop here
+                
+//        -------------END DATE  Start here
+                var EndDate = $('#dateEndSched').val();
+                var theETime = " 24:00:00";
+//                Concat 2
+                var theDateETime = EndDate.concat(theETime);
+//               Last 3
+                var toDateStr = theDateETime;
+                
+                console.log('the Start date is :' +fromDateStr);
+                console.log('the last date is :' +toDateStr);
+//        -------------------END DATE stop here
+                
+                var slot = $('#slotSched').val();
+                var staffId = $('#pName').val();
+                
+                var firstname = "";
+                var lastname = ""; 
+                var hpNumber = "";
+                var emailAddress = "";
+//                
+                var isDeleted = false;
+                
+               if (fromDateStr != "" && toDateStr != "" && staffId != "") {
+                    console.log('pass the values to operations Dwr and then UPDATE!');
+                    
+                    OperationDwr.saveDutyScheduler( dutySchedulerID,  fromDateStr,  toDateStr,  slot,  staffId,  firstname,  lastname,  hpNumber,  emailAddress, isDeleted, function (data) {
+//                        location.reload();
+                         location.href='staffAssign.html';
+                    });
+
+                }else {
+                   console.log('Cannot Delete or Update!');
+                }
+                
+               
+                
+            }
+            
+            function fnDelete(){
+//                alert("fnDelete");     
+                
+                var dutySchedulerID = $('#dutyschedid').val();
+                var fromDateStr = $('#dateStartSched').val();
+                var toDateStr = $('#dateEndSched').val();
+                var slot = $('#slotSched').val();
+                var staffId = $('#pName').val();
+                
+                var firstname = "";
+                var lastname = ""; 
+                var hpNumber = "";
+                var emailAddress = "";
+//                
+                var isDeleted = true;
+                
+                OperationDwr.saveDutyScheduler( dutySchedulerID,  fromDateStr,  toDateStr,  slot,  staffId,  firstname,  lastname,  hpNumber,  emailAddress, isDeleted, function (data) {
+//                        location.reload();
+                        location.href='staffAssign.html';
+                });
+                
+//                if (fromDateStr != "" && toDateStr != "" && staffId != "") {
+//                    console.log('pass the values to operations Dwr');
+//                   
+//                }else {
+//                   console.log('Cannot Delete or Update!');
+//                }
+                
+            }
+            
+            
+//              call this ones every load page 
+            function shadeDate() {
+                console.log('get the data from the db and show shade on the calendar!');
+                OperationDwr.getHolidayDates(function (data) {
+                    console.log( "datalen:"+data.length );
+                     if(data!=null){
+//                            console.log( "datalen:"+data.length );
+                            
+                            for(var ctr0=0; ctr0<data.length; ctr0++){
+                                
+//                                console.log( "data["+ctr0+"].FromDate:"+data[ctr0].PublicHoliday);
+//                                console.log( "data["+ctr0+"].FromDate:"+data[ctr0].Name);
+                                
+                                var HdateStarted = data[ctr0].PublicHoliday;
+                                var HdateEnd = data[ctr0].PublicHoliday;
+                                var Htitle = data[ctr0].Name;
+                                
+                                console.log("======================");
+                                console.log("HdateStarted : " +HdateStarted);
+//                                console.log("HdateEnd : " +HdateEnd);
+                                console.log("Htitle : " +Htitle);
+                                console.log("======================");
+                                
+//                                try{
+                                    var holidayEvent = {
+                                        title: Htitle,
+//                                        timeFormat: 'H(:mm)',
+                                        start: HdateStarted,
+//                                        end: HdateEnd,
+                                        color  : '#000',
+                                        textColor: 'yellow'
+                                        };
+
+                //                  PUT THE LATEST INFORMATION FROM THE EVENT CALENDAR
+                                    $('#calendar').fullCalendar( 'renderEvent', holidayEvent , 'stick');   
+                                
+//                                }catch(err){ console.log(err) }
+                            }
+                            
+                        }
+                });
+            }
+            
+            
+            
+//            CALL LIST OF START DATE DUTY SCHEDULES
+            function fnStartDut() {
+                console.log('get eh list of Start Duty sched!');
+                
+                OperationDwr.getStartDutySched(function (data) {
+                    console.log( "datalen:"+data.length );
+                     if(data!=null){
+                            console.log( "datalen:"+data.length );
+                            for(var ctr0=0; ctr0<data.length; ctr0++){
+                                
+                                console.log("data["+ctr0+"].FromDate:"+data[ctr0].FromDate);
+//                                console.log( "data["+ctr0+"].FromDate:"+data[ctr0].Name);
+                                
+                                var dbStartDate = data[ctr0].FromDate;
+                                
+        //                      CHANGE FORMAT JQUERY UI 
+                                var adbStartDate = new Date(dbStartDate);
+                                var CondbStartDate = $.datepicker.formatDate('yy-mm-dd', adbStartDate);
+                                console.log('CondbStartDate ---' +CondbStartDate);
+                                
+//                                console.log("======================");
+//                                console.log("HdateStarted : " +HdateStarted);
+////                                console.log("HdateEnd : " +HdateEnd);
+//                                console.log("Htitle : " +Htitle);
+//                                console.log("======================");
+                            }
+                        }
+                });
+            }
+            
+            
+//            CALL LIST OF START DATE DUTY SCHEDULES
+            function fnEndDut() {
+                console.log('get eh list of End Duty sched!');
+                
+                OperationDwr.getEndDutySched(function (data) {
+                    console.log( "datalen:"+data.length );
+                     if(data!=null){
+                            console.log( "datalen:"+data.length );
+                            for(var ctr0=0; ctr0<data.length; ctr0++){
+                                
+                                console.log("data["+ctr0+"].FromDate:"+data[ctr0].ToDate);
+                                
+                                var dbEndDate = data[ctr0].ToDate;
+                                
+        //                      CHANGE FORMAT JQUERY UI 
+                                var adbEndDate = new Date(dbEndDate);
+                                var CondbEndDate = $.datepicker.formatDate('yy-mm-dd', adbEndDate);
+                                console.log('CondbEndDate ---' +CondbEndDate);
+                                
+                            }
+                        }
+                });
+            }
+            
+        /*]]>*/
+
+    
+                  
+    </script>
+
+    <!-- end script -->
+</body>
+
+</html>

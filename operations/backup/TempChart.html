@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Temperature & Humidity 
+                                <small>Spice 1</small>
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <i class="glyphicon glyphicon-leaf"></i> <a href="TempHumidSp1.html">Temperature & Humidity</a>
+                                </li>
+                                <li>
+                                    <a>SC3-COM-TEMP02</a>
+                                </li>
+                            </ol>
+                        </div>
+                        <!--------------- main body content ----------------->
+                        <div class="row s_row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <!--------------- content ----------------->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2 id="grid-nesting">
+                                                    Temperature
+                                                </h2>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover table-striped">
+                                                        <thead>
+                                                            <tr class="success">
+                                                                <th>NAME</th>
+                                                                <th>RECORD TIME</th>
+                                                                <th>READING</th>
+                                                            </tr>
+                                                        </thead>        
+                                                        <tbody>
+                                                            <tr th:each="tempData : ${tempDataList}">
+                                                               <td th:text="${tempData.AccessPointName}"></td>
+                                                               <td th:text="${tempData.StatusAccessTime}"></td>
+                                                               <td th:text="${tempData.Status}"></td>
+                                                               <!--<td> <a href="TempChart.html" class="btn btn-sm btn-info btn-block s_btn" onclick="TempChart()">View Chart</a> </td>-->
+                                                           </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                    <!--chart just incase--> 
+                                                    <div id="tempChart" style="width:100%; height:400px;"></div>
+                                                    <!--end chart--> 
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-------------- end content ----------------->
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                         <button class="btn btn-primary col-md-2 col-xs-12 pull-right" onclick="window.history.back();">Back</button>
+                                    </div>
+                                </div>
+                                <br/>
+                            </div>
+                        </div>
+                        <!--------------- end main body content ----------------->
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+    <!-- end script -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            $(document).ready(function(){
+                
+                  
+                   Highcharts.chart('tempChart', {
+                        title: {
+                            text: 'Average Temperature',
+                            x: -20 //center
+                        },
+//                        subtitle: {
+//                            text: 'Source: WorldClimate.com',
+//                            x: -20
+//                        }, 
+                        xAxis: {
+                            categories: ['01:00 AM','02:00 AM','03:00 AM','04:00 AM','05:00 AM','06:00 AM','07:00 AM','08:00 AM','09:00 AM','10:00 AM', 
+                                '11:00 AM', '12:00 NN', '01:00 PM', '02:00 PM', '03:00 PM',
+                                '04:00 PM', '05:00 PM','06:00 PM','07:00 PM','08:00 PM','09:00 PM','10:00 PM','11:00 PM','12:00 MN',]
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Temperature (C)'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: '°C'
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: 'SC3-COM-TEMP02',
+                            color: '#ffc64b',
+                            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                        }]
+                    });
+            });
+        /*]]>*/
+
+    
+                  
+    </script>
+</body>
+
+</html>

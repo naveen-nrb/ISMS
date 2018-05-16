@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+         <!--CSS inline code--> 
+        <style>
+            .cardDisable {
+                color:#eeeeee;
+            }
+            
+            #changePassword{
+                display:none;
+            }
+        </style>
+        
+        
+    </head>
+
+<body>
+    <!--<input type="hidden" id="staffId" th:value="${staff.staffId}"/>-->
+    <input type="hidden" id="staffId" th:value="${staffId}">
+    <!--<input type="hidden" id="staffId" th:value="${staff.StaffID}" />-->
+    
+    
+    <input type="hidden" id="staffID_" th:value="${staffRecordOne.StaffID}">
+    <input type="hidden" id="personID_" th:value="${staffRecordOne.PersonID}">
+    <input type="hidden" id="systemUserID_" th:value="${staffRecordOne.SystemUserID}">
+    
+    
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                            <div class="col-lg-12">
+                                <h2 class="page-header">
+                                   User Management
+                                    <!--<small>Spice 1</small>-->
+                                </h2>
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                    </li>
+                                    <li>
+                                            <i class="fa fa-list"></i> <a href="userMgmtTable.html">User Record List</a>
+                                    </li>
+                                    <li class="active">
+                                         <i class="fa fa-edit fa-fw"></i> <a href="#">User Record</a>
+                                    </li>
+                                </ol>
+                            </div>
+                        
+                        <div class="col-md-12">
+                             <div class="mandatorytext">
+                                 <span>All with (*) are mandatory</span>
+                             </div>
+                         </div>
+                        
+                        <div class="row s_row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    
+                            <!--    <form data-toggle="validator" role="form"> -->
+                                    
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <h2 id="grid-nesting">
+                                                Door Access
+                                            </h2>
+                                        </div> 
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">First Name<span class="mandatory">*</span></label>
+                                                        <!--<input type="text" class="form-control" id="fname" name="fname" placeholder="" th:value="${getFirstName}" maxlength='30' required>-->
+                                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="" th:value="${staffRecordOne.FirstName}" maxlength='30' required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Last Name<span class="mandatory">*</span></label>
+                                                        <!--<input type="text" class="form-control" id="lname" name="lname" th:value="${getLastName}"  placeholder="" maxlength='30' required>-->
+                                                        <input type="text" class="form-control" id="lname" name="lname" th:value="${staffRecordOne.LastName}"  placeholder="" maxlength='30' required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group numberTextBox">
+                                                        <!--GET THE STAFF NUMBER-->
+                                                        <label for="txtlabel">Staff No.<span class="mandatory">*</span></label>
+                                                        <!--<input type="text" class="form-control" id="idNumber"  name="idNumber"   placeholder="" maxlength='30' required>-->
+                                                        <input type="text" class="form-control" id="idNumber"  name="idNumber" th:value="${staffRecordOne.StaffNumber}"   maxlength='10' placeholder="" required>
+                                                    </div>
+                                                </div>
+<!--                                                 <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Middle Name</label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                    </div>
+                                                </div>-->
+                                                 
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                
+                                                <div class="col-md-3">
+                                                    <input type="hidden" id="dbDate" th:value="${staffRecordOne.ActiveDate}">
+                                                    <!--<button onclick="getDate()">getDBDAte</button>-->
+                                                    <div class="form-group">
+                                                        
+                                                        <label for="txtlabel">Activation Date/Time<span class="mandatory">*</span></label>
+                                                         <div class="form-group">
+                                                            <div class="input-group date" id="datetimepicker6">
+                                                               
+                                                                <!--<input type="text" class="form-control" id="StartDate" name="StartDate" th:value="${getCardIssueDate}" required>-->
+                                                                
+                                                                <input type="text" class="form-control" id="StartDate" name="StartDate" th:value="${staffRecordOne.ActiveDate}" required>
+                                                                <!--<input type="text" class="form-control" id="StartDate" name="StartDate" required>-->
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Expiration Date/Time<span class="mandatory">*</span></label>
+                                                        <div class="form-group">
+                                                            <div class='input-group date' id='datetimepicker7'>
+                                                                <!--<input type='text' class="form-control" id="EndDate" name="EndDate"  th:value="${getCardExpiryDate}" required>-->
+                                                                <input type='text' class="form-control" id="EndDate" name="EndDate"  th:value="${staffRecordOne.ExpiryDate}" required>
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <!--If have Staff ID AutoPopulated Data-->
+                                                <div class="col-md-3">
+                                                     <!--CARD FREE TEXT-->
+                                                        <div class="form-group">
+                                                            <label for="txtlabel">Card<span class="mandatory">*</span></label>
+                                                             <input type="text" class="form-control"  name="optCard" id="optCard" onkeypress="return isNumberCard(event)"  maxlength='10' placeholder="" th:value="${staffRecordOne.CardNo}" required>
+                                                        </div>
+                                                    <!--CARD DROPDOWN-->
+<!--                                                        <div class="form-group">
+                                                            <label for="txtlabel">Card WORKING<span class="mandatory">*</span></label>
+                                                            <select class="form-control" name="optCard" id="optCard" >
+                                                            <select class="form-control" >
+                                                                <option value="0" > Please Select Card </option>
+                                                                 selected Data 
+                                                                <option th:each="recData : ${cardDataList}" th:value="${recData.CardID}" th:text="${recData.CardNo}" th:disabled="${recData.CardStatusID!=1 && recData.CardID!=staffRecordOne.CardID}"  th:selected="${recData.CardID==staffRecordOne.CardID}" ></option>
+                                                            </select>
+                                                        </div>-->
+<!--                                                        <div class="form-group">
+                                                            <label for="txtlabel">Cards to USED*<span class="mandatory">*</span></label>
+                                                            <select class="form-control" >
+                                                                <option value="0" > Please Select Card </option>
+                                                                <option th:each="recData : ${cardDataList}" th:value="${recData.CardID}" th:text="${recData.CardNo}" th:disabled="${recData.CardStatusID!=1 && recData.CardID!=staffRecordOne.CardID}"  th:selected="${recData.CardID==staffRecordOne.CardID}" ></option>
+                                                            </select>
+                                                        </div>-->
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group numberTextBox">
+                                                        <label for="txtlabel">PIN No.<span style="font-size:10px;"> (min / max of 6 no.)</span><span class="mandatory">*</span></label>
+                                                        <!--<button type="submit" class="btn btn-primary btn-sm">S</button>-->
+                                                        <input type="password" class="form-control" th:value="${staffRecordOne.DCardPinCode}" id="pinNumber" name="pinNumber"  onkeypress="return isNumberPin(event)"  maxlength='6' placeholder=""  required>
+<!--                                                        <div class="input-group">
+                                                            <div class="icon-addon">
+                                                                <input type="number"class="form-control" placeholder="" required>
+                                                            </div>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-warning glyphicon glyphicon-refresh" type="button"></button>
+                                                            </span>
+                                                        </div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+<!--                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Note</label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                    </div>
+                                                </div>-->
+
+                                                <!--IF ALREADY HAVE VALUE son-->
+                                                <div class="col-md-6" style="display:none;">
+                                                        <div class="form-group">
+                                                            <label for="txtlabel">Designation<span class="mandatory">*</span></label>
+                                                            <select class="form-control" name="optDesignation" id="optDesignation">
+                                                                <!--<option value="0">-- Please Select Designation --</option>-->
+                                                                <option value=""> -- Please Select Designation -- </option>
+                                                                <option th:each="recData : ${designationDataList}" th:value="${recData.DesignationId}"  th:text="${recData.Name}"  th:selected="${recData.DesignationID==staffRecordOne.DesignationID}" ></option>
+                                                            </select>
+                                                        </div>
+                                                            
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                  
+                                    </div><!-- end panel body information -->
+                                    
+                                    <!-- Permission list -->
+                                    <div class="panel-body" style="border-top:1px solid #eeeeee; border-bottom:1px solid #e7e7e7;">
+                                        <div class="col-md-12">
+                                            <h2 id="grid-nesting">
+                                               Door Permission List
+                                            </h2>
+                                        </div>  
+                                        
+                                        <div class="col-md-12">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr class="success">
+                                                        <!--<th width="10%">No.</th>-->
+                                                        <th>Group Name</th>
+                                                        <th width="10%"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="doorPermissionList">
+                                                    
+                                                    
+<!--                                                    doorPermissionList
+                                                    <tr >
+                                                        <td>1</td>
+                                                        <td>Door Group one</td>
+                                                        <td><button type = "button" class = "btn btn-danger">REMOVE</button></td>
+                                                    </tr>-->
+                                                    
+                                                    
+<!--                                                    <tr>
+                                                        <td>2</td>
+                                                         <td>Door Group one</td>
+                                                        <td><button type = "button" class = "btn btn-danger">Remove</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                          <td>Door Group Three</td>
+                                                        <td><button type = "button" class = "btn btn-danger">Remove</button></td>
+                                                    </tr>-->
+
+
+                                                </tbody>
+                                            </table>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary col-md-2 col-xs-12 pull-right" data-toggle="modal" data-target="#AddGroup">ADD</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end permission list -->
+                                    
+                                    
+                                     <!-- Web Access -->
+                                     <div class="panel-body">
+                                        <div class="col-md-12">
+                                                <h2 id="grid-nesting">
+                                                    Web Access
+                                                </h2>             
+                                        </div>  
+                                         <div class="row">
+                                            <div class="container-fluid">
+                                                <div class="col-md-12">
+                                                    <div class="form-check pull-left checkBoxWeb" style="margin:5px 5px;">
+                                                        <label class="form-check-label">
+                                                            <!--sonny-->
+                                                            <!--<input class="form-check-input checkboxtext" type="checkbox" id="inlineCheckbox1" style="outline:none;" th:checked="${staffRecordOne.SystemUserID}!=0">--> 
+                                                            <button onclick="verifyStaffId();" style="display:none;">getWebAccess Verify</button>
+                                                            <span th:text="${staffRecordOne.systemUserIsDisabled}" style="display:none;"></span>
+                                                            <input type="hidden" value="" id="valueCheck" disabled> 
+                                                            <input type="hidden" value="" id="staffNoId" disabled> 
+                                                            <!--<input class="form-check-input checkboxtext" type="checkbox" id="inlineCheckbox1" style="outline:none;"  th:checked="${staffRecordOne.systemUserIsDisabled}">--> 
+                                                            <input class="form-check-input checkboxtext" type="checkbox" id="inlineCheckbox1" style="outline:none;"> 
+                                                             <!--TEST<input class="form-check-input checkboxtext" type="checkbox" id="inlineCheckbox1" style="outline:none;">--> 
+                                                               &nbsp;  Enable Web Access
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>
+                                         
+                                        <div class="col-md-12">
+                                            <div class="col-md-4">
+<!--                                                <div class="form-group">
+                                                    <label for="txtlabel">System ID<span class="mandatory">*</span></label>
+                                                    <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                </div>-->
+                                                 <div class="form-group" >
+                                                    <label for="txtlabel">System User<span class="mandatory">*</span></label>
+                                                    <select class="form-control clWebAccess" id="systemId" name="systemId" disabled>
+                                                        <option value="0">-- Select System User --</option>
+                                                        <option th:each="recData : ${userTypeDataList}" th:value="${recData.SystemUserTypeID}" th:text="${recData.Name}" th:selected="${recData.SystemUserTypeID==staffRecordOne.UserType}" ></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-4">
+                                                <div class="form-group numberTextBox">
+                                                    <label for="txtlabel">Mobile Number<span class="mandatory">*</span></label>
+                                                    <!--<input type="text" class="form-control" id="mobileNum" name="mobileNum" th:value="${getMobilePh}"  onkeypress="return isNumber(event)"  maxlength='8' placeholder="" required>-->
+                                                    <input type="text" class="form-control clWebAccess" id="mobileNum" name="mobileNum" th:value="${staffRecordOne.MobilePh}" onkeypress="return isNumber(event)"  maxlength='8' placeholder="" required disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Email Address<span class="mandatory">*</span></label>
+                                                    <!--<input type="email" class="form-control" id="email" name="email" placeholder=""  th:value="${getEMailAddress}"  data-error="Email address is invalid" required >-->
+                                                    <!--<input type="email" class="form-control" id="email" name="email" placeholder="" th:value="${getEMailAddress}" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"  required >-->
+                                                    <input type="email" class="form-control clWebAccess" id="email" name="email" placeholder="" th:value="${staffRecordOne.EMailAddress}" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"  required disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Login ID<span class="mandatory">*</span></label>
+                                                    <input type="text" class="form-control clWebAccess" id="LogId" name="LogId" placeholder="" disabled th:value="${staffRecordOne.UserID}" >
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Password<span class="mandatory">*</span>
+                                                        <span style="font-size:12px;" id="changePassword">(change password?
+                                                        <input class="form-check-input checkboxtext clWebAccess" checked='' name="check1" type="checkbox" id="inlineCheckbox2" style="outline:none;" th:checked="${staffRecordOne.SystemUserID}!=0">   
+                                                        )
+                                                        </span>
+                                                    </label>
+                                                    <input type="password" class="form-control clWebAccess" id="password"  name="password" placeholder=""   disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Confirm Password<span class="mandatory">*</span></label>
+                                                    <input type="password" class="form-control clWebAccess" id="confirmPass" name="confirmPass" placeholder=""  disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <!--End Web Access -->
+                                    
+                                 
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <button   class="btn btn-success col-md-2 col-xs-12 pull-right" onclick="saveStaffInfo('1')">SAVE</button>
+                                        <!--<button   class="btn btn-success col-md-2 col-xs-12 pull-right" onclick="validation();">test Validation</button>-->
+                                        <!--<button  type="submit" class="btn btn-success col-md-2 col-xs-12 pull-right" data-toggle="modal" data-target="#SavePop">Save</button>-->
+                                    </div>
+                                </div>
+                              <!--  </form> -->   
+                                
+                                <br/>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    
+    
+    <!--MODAL SECTION--> 
+    <div class="modal fade" id="SavePop" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>
+                            Save Successful!
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    <!--MODAL SECTION Save pop--> 
+    <div class="modal fade" id="AddGroup" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Access Group</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <div style="max-height: 200px; overflow:auto;">
+                            <table  class="table-striped table-hover" width="100%">
+                                <tbody>
+                                    <tr th:each="recData : ${doorListDataList}">
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <!--<input class="doorList" type="checkbox" th:id="'chkDoor_'+${recData.AccessPointId}" th:value="${recData.AccessPointId}" th:text="${recData.Name}" >-->
+                                                    <input class="doorList" type="checkbox" th:id="'chkDoor_'+${recData.AccessPointGroupID}" th:value="${recData.AccessPointGroupID}" th:text="${recData.Name}" th:checked="${recData.StaffID}!=0" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>                                           
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="putCheckBoxToTable()" >Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+        
+    <!--TIMER-->
+    <span id="SecondsUntilExpire"></span>
+    
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+   <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            verifyStaffId();
+            fnTimer(); 
+            getDate();
+            
+            
+            function CheckPassword(inputtxt) {   
+                var letterNumber = /^[0-9a-zA-Z]+$/;  
+//                if((inputtxt.value.match(letterNumber))   
+//                 {  
+//                  return true;  
+//                 }  
+//               else  
+//                 {   
+//                  alert("message");   
+//                  return false;   
+//                }    
+            }  
+            
+//            $('#inlineCheckbox2').removeAttr('checked');
+            
+//            GET PARAM
+//            $.urlParam = function(name){
+//                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+//                return results[1] || 0;
+//            }  
+            
+//            var HaveRecrod = $.urlParam('staffId');
+            var haveRecord = document.getElementById('idNumber').value;
+//            console.log("=========staffId=========");  
+//            console.log($.urlParam('staffId'));  
+            
+            if (haveRecord != "") {
+                $('#changePassword').css('display','inline');
+            }else {
+                console.log('hide the checkbox!');
+            }
+            
+//             if (HaveRecrod != ""){
+//                console.log('Show the check box for Edit!');
+//                $('#changePassword').css('display','inline');
+//             }
+//            END GET PARAM
+           
+            $('#inlineCheckbox1').click(function() {
+               if (this.checked) {
+                   $('input.clWebAccess').removeAttr("disabled"); 
+                   $('select.clWebAccess').removeAttr("disabled");
+                   
+                   var staffNo = $('#idNumber').val();
+                   console.log('=====');
+                   console.log(staffNo);
+                   $('#LogId').val(staffNo);
+                   
+                   console.log("put check also on change password checkbox!");
+                   $('#inlineCheckbox2').prop('checked', 'true');
+//                   $('#inlineCheckbox2').attr('checked','checked');
+                   
+               }else {
+                   console.log('you uncheck teh web access!');
+                   $('#inlineCheckbox2').removeAttr('checked');
+                   $('input.clWebAccess').attr("disabled", true);
+                   $('select.clWebAccess').attr("disabled", true);
+               }
+            });
+            
+            $('#inlineCheckbox2').click(function() {
+               if (this.checked) {
+                   $('#password').removeAttr("disabled"); 
+                   $('#confirmPass').removeAttr("disabled"); 
+               }else {
+                   $('#password').attr("disabled", true);
+                   $('#confirmPass').attr("disabled", true);
+               }
+            });
+            
+            
+            var limit = 4;
+            $('input:checkbox.doorList').on('click', function(evt) {
+                
+                var count = 0;
+                $('input:checkbox.doorList').each(function () {
+                    if(this.checked){
+                        count++;
+                    }
+                });
+                if(count > limit) {
+                   this.checked = false;
+                   alert("Max Limit Exceeded.");
+                }
+            });
+
+            
+            if($('#staffID_').val()!=0){
+                putCheckBoxToTable();
+                
+            }
+            if($('#systemUserID_').val()!=0){
+                $('input.clWebAccess').removeAttr("disabled"); 
+                $('select.clWebAccess').removeAttr("disabled"); 
+            }
+            
+            
+            var selectCount = 0;
+            function getFloorAccessGroup(locIndicator){
+                
+//                OperationDwr.getAccessPoint(locIndicator, function (faGrpList) {
+//                }
+            }
+            
+            
+            
+            //IF THERE WAS DATA
+            var logidValue = $('#LogId').val();
+            if (logidValue != "") {
+//                console.log('disable password confirm password');
+                $('#inlineCheckbox2').trigger( "click" );
+            }else {
+//                console.log('Nothing! disabled password!');
+            }
+            
+            
+        });
+        
+        
+            function isNumber(evt) {
+                console.log(evt);
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+            
+            
+            function isNumberPin(evt) {
+                console.log(evt);
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+            
+            
+            function isNumber(evt) {
+//     evt = (evt) ? evt : window.event;
+                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                    var strnum = String.fromCharCode(evt.which);
+
+                    var strvalue = document.getElementById("mobileNum").value;
+                    var a = 9;
+                    var b = 8;
+
+                    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+//                                    console.log("You are trying to input LETTER");
+                        $('#mobileNum').val('');
+                        return false;
+                    }
+                    if (document.getElementById("mobileNum").value[0] != a && document.getElementById("mobileNum").value[0] != b) {
+                        $('#mobileNum').val('');
+//                                    return false;
+//                                  console.log("you need to input 9 or 8 first!");
+                    }
+                    console.log(strvalue);
+//                                    console.log(numlength);
+                    return true;
+                }
+                
+            
+            function isNumberCard(evt) {
+                console.log(evt);
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+            
+                
+        
+            function putCheckBoxToTable(){
+                
+                $("#doorPermissionList").empty();
+                
+                $('input:checkbox.doorList').each(function () {
+//                    var sThisVal = (this.checked ? $(this).val() : "");
+                    if(this.checked){
+                        //$(this).val();
+//                        $("input[name='PrePayment']")[0].nextSibling.nodeValue;
+                        
+//                        console.log("ID +"+ $(this).val());
+//                        console.log("GROUP NAME: +"+$(this)[0].nextSibling.nodeValue);
+                        
+                        var id = $(this).val();
+                        var text = $(this)[0].nextSibling.nodeValue;
+                        
+                        
+                        console.log("====Id:" +id);
+                        console.log("====Text:" +text);
+                        
+                        
+//                        var htmlstr = "<tr><td>"+id+"</td><td>"+text+"</td><td><button type=\"button\" class=\"btn btn-danger\"  onclick=\"removeDoor("+id+")\"  >REMOVE</button></td></tr>";
+                        var htmlstr = "<tr><td>"+text+"</td><td><button type=\"button\" class=\"btn btn-danger\"  onclick=\"removeDoor("+id+")\"  >REMOVE</button></td></tr>";
+                        
+                        
+                        
+                        
+                        $("#doorPermissionList").append(htmlstr);
+                        
+                    }
+               });
+                
+            }
+            
+            function removeDoor(id){
+                $('#chkDoor_'+id).prop('checked', false);
+                putCheckBoxToTable();
+            }
+            
+            // EMAIL VALIDATION
+//             $('#email').
+               
+        
+            //   DATEPICKER START DATE
+                $('#datetimepicker6').datetimepicker({ 
+                    minDate:new Date(),
+                    format: 'YYYY-MM-DD'
+                });
+
+                //DATEPICKER END DATE
+                $('#datetimepicker7').datetimepicker({
+                    minDate:new Date(),
+                     format: 'YYYY-MM-DD',
+                    useCurrent: false //Important! See issue #1075
+                });
+                
+                //EMAIL VALIDATE 
+                
+                
+                
+//                //BOOTSTRAP VALIDATOR
+                $("#datetimepicker6").on("dp.change", function (e) {
+                    $('#datetimepicker6').bootstrapValidator('revalidateField', 'StartDate');
+                    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+                });
+                $("#datetimepicker7").on("dp.change", function (e) {
+                    $('#datetimepicker7').bootstrapValidator('revalidateField', 'EndDate');
+                    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+                });
+
+                
+        //NOT ALLOWED TO COPY AND PASTE FROM mobileNum
+        window.onload = function() {
+            var myInput = document.getElementById('mobileNum');
+            var myInputemail = document.getElementById('email');
+            var myInputLogId = document.getElementById('LogId');
+            var myidNumber = document.getElementById('idNumber');
+            var myStartDate = document.getElementById('StartDate');
+            var myEndDate = document.getElementById('EndDate');
+            var myoptCard = document.getElementById('optCard');
+            
+            myInput.onpaste = function(e) {
+              e.preventDefault();
+            }
+            
+            myInputemail.onpaste = function(e) {
+              e.preventDefault();
+            }
+            
+            myInputLogId.onpaste = function(e) {
+              e.preventDefault();
+            }
+            
+            myidNumber.onpaste = function(e) {
+              e.preventDefault();
+            }
+            
+            myStartDate.onpaste = function(e) {
+              e.preventDefault();
+            }
+            
+            myEndDate.onpaste = function(e) {
+              e.preventDefault();
+            }
+            
+            myoptCard.onpaste = function(e) {
+              e.preventDefault();
+            }
+            
+        }
+
+       function validation() {
+//           alert('HELLO!');
+           
+           //VALIDATION 
+            //STAFF SECTION
+            var fname = $('#fname').val();
+            var lname = $('#lname').val();
+            var idNumber = $('#idNumber').val();
+            var mobileNum = $('#mobileNum').val();
+            var email = $('#email').val();
+            var StartDate = $('#StartDate').val();
+            var EndDate = $('#EndDate').val();
+            var pinNumber = $('#pinNumber').val();
+            var pinLength = pinNumber.length;
+            var optCard = $('#optCard').val(); // SELECT val = 0 
+            var optDesignation = $('#optDesignation').val(); // SELECT val = 0 
+            
+            //WEB ACCESS 
+            var inlineCheckbox1  = $('#inlineCheckbox1').val();
+            var systemId  = $('#systemId').val(); // SELECT val = 0 
+            var LogId  = $('#LogId').val();
+            var password  = $('#password').val();
+            var confirmPass  = $('#confirmPass').val();
+            
+            if (fname == "" && lname == "" && idNumber == ""){
+                alert("Please Fill in all mandtory fields!")
+                return;
+            }else if(fname == ""){
+                alert("Please Enter First Name")
+                $('#fname').focus();
+                return;
+            }else if(lname == ""){
+                alert("Please Enter Last Name")
+                $('#lname').focus();
+                return;
+            }else if(idNumber == ""){
+                alert("Please Enter Staff Number")
+                $('#idNumber').focus();
+                return;
+            }
+            else if(systemId == 0){
+                alert("Please Select System User")
+                $('#optDesignation').focus();
+                return;
+            }
+            else if(mobileNum == ""){
+                alert("Please Enter Mobile Number")
+                $('#mobileNum').focus();
+                return;
+            }
+            else if(email == ""){
+                alert("Please Enter Email Address")
+                $('#email').focus();
+                return;
+            }else if(StartDate == ""){
+                alert("Please Enter Start Date")
+                $('#StartDate').focus();
+                return;
+            }else if(EndDate == ""){
+                alert("Please Enter End Date")
+                $('#EndDate').focus();
+                return;
+            }
+             else if(optCard == 0){
+                alert("Please Enter Card")
+                $('#optCard').focus();
+                return;
+            }
+            else if(optCard == ""){
+                alert("Please Enter Card")
+                $('#optCard').focus();
+                return;
+            }
+            else if(pinNumber == ""){
+                alert("Please Enter PIN Number")
+                $('#pinNumber').focus();
+                return;
+            }else if(pinLength <= 5) {
+                console.log("=============");
+                console.log(pinNumber.length);
+                alert('PIN number must enter mininmum and maximum of 6 digits')
+                $('#pinNumber').focus();
+                return;
+            }
+//            else if(optDesignation == 0){
+//                alert("Please Select Designation")
+//                $('#optDesignation').focus();
+//                return;
+//            }
+            else if(LogId == ""){
+                alert("Please Enter LogId");
+                $('#LogId').focus();
+                return;
+            }
+             else if(password == ""){
+                alert("Please Enter Password");
+                $('#password').focus();
+                return;
+            }
+            else if (password != confirmPass){                                    
+                alert("Your password and confirmation password do not match.\n Please try again.");                                    
+                $('#password').val("");
+                $('#confirmPass').val("");                                    
+                $('#password').focus();                                    
+                return;
+            }
+            
+            
+            
+       }
+
+
+      function saveStaffInfo(smsFlag)
+        {
+           //VALIDATION 
+            //STAFF SECTION
+            var fname = $('#fname').val();
+            var lname = $('#lname').val();
+            var idNumber = $('#idNumber').val();
+            var mobileNum = $('#mobileNum').val();
+            var email = $('#email').val();
+            var StartDate = $('#StartDate').val();
+            var EndDate = $('#EndDate').val();
+            var pinNumber = $('#pinNumber').val();
+            var pinLength = pinNumber.length;
+            var optCard = $('#optCard').val(); // SELECT val = 0 
+            var optDesignation = $('#optDesignation').val(); // SELECT val = 0 
+            
+            //WEB ACCESS 
+            var inlineCheckbox1  = $('#inlineCheckbox1').val(); // CHECK BOX
+            var systemId  = $('#systemId').val(); // SELECT val = 0 
+            var LogId  = $('#LogId').val();
+            var password  = $('#password').val();
+            var confirmPass  = $('#confirmPass').val();
+            
+            if (fname == "" && lname == "" && idNumber == ""){
+                alert("Please Fill in all mandtory fields!")
+                return;
+            }else if(fname == ""){
+                alert("Please Enter First Name")
+                $('#fname').focus();
+                return;
+            }else if(lname == ""){
+                alert("Please Enter Last Name")
+                $('#lname').focus();
+                return;
+            }else if(idNumber == ""){
+                alert("Please Enter Staff Number")
+                $('#idNumber').focus();
+                return;
+            }
+//            else if(mobileNum == ""){
+//                alert("Please Enter Mobile Number")
+//                $('#mobileNum').focus();
+//                return;
+//            }
+//            else if(email == ""){
+//                alert("Please Enter Email Address")
+//                $('#email').focus();
+//                return;
+//            }
+            else if(StartDate == ""){
+                alert("Please Enter Start Date")
+                $('#StartDate').focus();
+                return;
+            }else if(EndDate == ""){
+                alert("Please Enter End Date")
+                $('#EndDate').focus();
+                return;
+            }else if(pinNumber == ""){
+                alert("Please Enter PIN Number")
+                $('#pinNumber').focus();
+                return;
+            }else if(pinLength <= 5) {
+                console.log("=============");
+                console.log(pinNumber.length);
+                alert('PIN number must enter mininmum and maximum of 6 digits')
+                $('#pinNumber').focus();
+                return;
+            }else if(optCard == 0){
+                alert("Please Enter Card")
+                $('#optCard').focus();
+                return;
+            }
+            else if(optCard == ""){
+                alert("Please Enter Card")
+                $('#optCard').focus();
+                return;
+            }
+//            else if(optCard == 0){
+//                alert("Please Select Available Card")
+//                $('#optCard').focus();
+//                return;
+//            }
+//            else if(optDesignation == 0){
+//                alert("Please Select Designation")
+//                $('#optDesignation').focus();
+//                return;
+//            } 
+
+
+            var wbAccess = $('#inlineCheckbox1').prop('checked'); 
+            var changepassword = $('#inlineCheckbox2').prop('checked'); 
+            
+            if(wbAccess == true){  
+                console.log('Validate!');
+//                validation();
+//                
+                    if (fname == "" && lname == "" && idNumber == ""){
+                        alert("Please Fill in all mandtory fields!")
+                        return;
+                    }else if(fname == ""){
+                        alert("Please Enter First Name")
+                        $('#fname').focus();
+                        return;
+                    }else if(lname == ""){
+                        alert("Please Enter Last Name")
+                        $('#lname').focus();
+                        return;
+                    }else if(idNumber == ""){
+                        alert("Please Enter Staff Number")
+                        $('#idNumber').focus();
+                        return;
+                    }
+                    else if(systemId == 0){
+                        alert("Please Select System User")
+                        $('#optDesignation').focus();
+                        return;
+                    }
+                    else if(mobileNum == ""){
+                        alert("Please Enter Mobile Number")
+                        $('#mobileNum').focus();
+                        return;
+                    }
+                    else if(email == ""){
+                        alert("Please Enter Email Address")
+                        $('#email').focus();
+                        return;
+                    }else if(StartDate == ""){
+                        alert("Please Enter Start Date")
+                        $('#StartDate').focus();
+                        return;
+                    }else if(EndDate == ""){
+                        alert("Please Enter End Date")
+                        $('#EndDate').focus();
+                        return;
+                    }
+                     else if(optCard == 0){
+                        alert("Please Enter Card")
+                        $('#optCard').focus();
+                        return;
+                    }
+                    else if(optCard == ""){
+                        alert("Please Enter Card")
+                        $('#optCard').focus();
+                        return;
+                    }
+                    else if(pinNumber == ""){
+                        alert("Please Enter PIN Number")
+                        $('#pinNumber').focus();
+                        return;
+                    }
+        //            else if(optDesignation == 0){
+        //                alert("Please Select Designation")
+        //                $('#optDesignation').focus();
+        //                return;
+        //            }
+        
+                    else if (theSelectedId == "") { //EDIT
+                        console.log("validtate the password! must enter one password first!")
+                        if(LogId == ""){
+                            alert("Please Enter LogId");
+                            $('#LogId').focus();
+                            return;
+                        }else if(password == ""){
+                            alert("Please Enter Password");
+                            $('#password').focus();
+                            return;
+                        }
+                        else if (password != confirmPass){                                    
+                            alert("Your password and confirmation password do not match.\n Please try again.");                                    
+                            $('#password').val("");
+                            $('#confirmPass').val("");                                    
+                            $('#password').focus();                                    
+                            return;
+                        }
+                    }
+//                    else if(LogId == ""){
+//                        alert("Please Enter LogId");
+//                        $('#LogId').focus();
+//                        return;
+//                    }
+//                     else if(password == ""){
+//                        alert("Please Enter Password");
+//                        $('#password').focus();
+//                        return;
+//                    }
+                    else if (password != confirmPass){                                    
+                        alert("Your password and confirmation password do not match.\n Please try again.");                                    
+                        $('#password').val("");
+                        $('#confirmPass').val("");                                    
+                        $('#password').focus();                                    
+                        return;
+                    }
+                    
+                    
+                    if(changepassword==true || theSelectedId == ""){
+                    
+                        if (password.length<9 ){                                    
+                            alert("Your password is less than 9 characters.\n Please try again.");                                    
+                            $('#password').val("");
+                            $('#confirmPass').val("");                                    
+                            $('#password').focus();                                    
+                            return;
+                        }
+                        if (confirmPass.length<9){                                    
+                            alert("Your password is less than 9 characters.\n Please try again.");                                    
+                            $('#password').val("");
+                            $('#confirmPass').val("");                                    
+                            $('#password').focus();                                    
+                            return;
+                        }
+
+                        var str = $('#password').val();
+//                        var patt = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/);
+                        var patt = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/);
+                        var res = patt.test(str);
+                        console.log('res value : ' +res);
+                        if (res != true) {
+    //                            (/^
+    //                            (?=.*\d)                //should contain at least one digit
+    //                            (?=.*[a-z])             //should contain at least one lower case
+    //                            (?=.*[A-Z])             //should contain at least one upper case
+    //                            [a-zA-Z0-9]{8,}         //should contain at least 8 from the mentioned characters
+    //                            $/)
+
+                            alert("Your password :\n"+
+                                "   should contain at least one digit \n" +  
+                                "   should contain at least one lower case \n" +  
+                                "   should contain at least one upper case \n" + 
+                                "   should contain at least one special character \n" + 
+                                "   should contain at least 9 from the mentioned characters \n" 
+
+                            );
+
+
+                            $('#password').val("");
+                            $('#confirmPass').val("");                                    
+                            $('#password').focus();                                    
+                            return;
+
+
+                        }else{
+                            console.log('you have input correct password requirements');
+                        }
+                    
+                    }
+                    
+                    
+            }else {
+                console.log("no validation!");
+            }
+                
+            
+            console.log("---------------------------------");
+            console.log(smsFlag);
+            console.log("---------------------------------");
+            
+            var gekIdArr = [];
+            var ctr = 0;
+            $('input:checkbox.doorList').each(function () {
+                    if(this.checked){
+                        var id = $(this).val();
+                        gekIdArr[ctr]=id;
+                        ctr++;
+                }
+           });
+           
+            var dataArray = [];
+            
+            dataArray[0] =$('#idNumber').val(); // Staff Number;
+            dataArray[1] =$('#fname').val();
+            dataArray[2] =$('#lname').val();
+            dataArray[3] =$('#mobileNum').val();
+            dataArray[4] =$('#email').val();
+            dataArray[5] =$('#StartDate').val();
+            dataArray[6] =$('#EndDate').val();
+            dataArray[7] =$('#pinNumber').val();
+            dataArray[8] =$('#optCard').val();
+            dataArray[9] =$('#optDesignation').val();
+            dataArray[10] =$('#staffID_').val();
+            dataArray[11] =$('#personID_').val();
+            
+            
+            
+            var tamIdArr = [];
+            var fpLRArr=[];
+            
+            fpLRArr[0] ="" //localStorage.getItem("fpTemplateL");
+            fpLRArr[1] ="" //localStorage.getItem("fpImageL");
+
+            fpLRArr[2] ="" //localStorage.getItem("fpTemplateR");
+            fpLRArr[3] ="" //localStorage.getItem("fpImageR");
+
+            fpLRArr[4] ="" //localStorage.getItem("lqt");
+            fpLRArr[5] ="100" //localStorage.getItem("rqt");
+            
+            var photo='';
+            var smsFlag=0;
+            var accessTmeArr=[];
+            
+        
+            var webAccess = [];
+            webAccess[0] = $('#systemId').val();
+            webAccess[1] = $('#LogId').val();
+            webAccess[2] = $('#password').val();
+         //   webAccess[3] = confirmPassword;
+            webAccess[3] = wbAccess;    //true or false
+           
+           
+           console.log('======dataArray======');
+           console.log(dataArray);
+           console.log('=================');
+           
+           console.log('=======accessTmeArr=======');
+           console.log(accessTmeArr);
+           console.log('=================');
+           
+           console.log('=======webAccess=======');
+           console.log(webAccess);
+           console.log('=================');
+           
+//            gekIdArr[0]=1430;
+            
+//            alert(gekIdArr);
+            console.log("Pass this together : " + dataArray[0]);
+            
+            OperationDwr.saveStaffInfo(dataArray, gekIdArr, tamIdArr, fpLRArr, photo, smsFlag, accessTmeArr, webAccess, function () {
+                
+                console.log("---------dataArray-------------");
+                console.log(dataArray);
+                console.log("-----------gekIdArr-----------");
+                console.log(gekIdArr);
+                console.log("----------tamIdArr------------");
+                console.log(tamIdArr);
+                console.log("----------fpLRArr------------");
+                console.log(fpLRArr);
+                console.log("----------photo------------");
+                console.log(photo);
+                console.log("-----------smsFlag-----------");
+                console.log(smsFlag);
+                console.log("----------accessTmeArr------------");
+                console.log(accessTmeArr);
+                console.log("---------webAccess-------------");
+                console.log(webAccess);
+                
+                alert("Save Successfully");
+                
+                 location.href = '../operations/userMgmtTable.html';
+//                 
+//                reSetInfo();
+                
+
+            });
+            
+//            OperationDwr.getTest(function () {
+//                alert("Save Successfully");
+//             //   reSetInfo();
+       //     });
+
+        }
+        
+//         function changePassword()
+//                {
+//                     var newPassword=$("#newPassword").val();
+//                     var confirmPassword=$("#confirmPassword").val();
+//
+//                     if(newPassword!=confirmPassword)
+//                     {    
+//                        alert("Your password and confirmation password do not match.\n Please try again.")
+//                        return;   
+//                     }   
+//
+//
+//
+//                      OperationDwr.changePassword(newPassword, function (data) {
+//                       if(data==1)
+//                        alert("Password change Successfully");
+//                       else
+//                        alert("Password change Unsuccessfully");   
+//
+//                    });
+//
+//                }
+//        
+        
+     /*   function reSetInfo()
+                            {
+
+                                $('#idNumber').val('');
+                                $('#fname').val('');
+                                $('#lname').val('');
+                                $('#mobileNum').val('');
+                                $('#email').val('');
+                                $('#StartDate').val('');
+                                $('#EndDate').val('');
+                                $('#pinNumber').val('');
+                                //rdoGender
+                                $("#nationality").val('0');
+                                $("#org").val('0');
+                                $('#txtDob').val('');
+                                $('#mb').val('');
+                                gekAgArray = [];
+                                tamAgIdArray = [];
+                                localStorage.clear();
+                                lr = "";
+                                fpTemp = "";
+                                fpImg = "";
+                                timeOut = "";
+                                $("#gekAccessGrpList").html("");
+                                $("#tamAccessGrpList").html("");
+
+                                $("#lfp").attr("src", "");
+                                $("#rfp").attr("src", "");
+
+                                $('#date-end-gek').val('');
+                                $('#date-end-tam').val('');
+//                                $('#gek24').prop('checked', false);
+//                                $('#tam24').prop('checked', false);
+                                $('#gek24').prop('checked', true);
+                                $('#tam24').prop('checked', true);
+                                $("#photoImg").attr("src", "");
+
+
+                                $('#staffId').val('');
+                                $('#personId').val('');
+                                $("#photoImg").attr("src", "");
+
+                                $('#userTypeId').val('');
+                                $('#userId').val('');
+                                $('#newPassword').val('');
+                                $('#confirmPassword').val('');
+                                $('#disableLogin').prop('checked', false);
+
+
+
+                            } */
+                            
+           var theSelectedId = $('#staffId').val();
+           
+           if (theSelectedId == "") {
+//               validate Password Must enter first password
+                
+           }
+           console.log("--------ID SELECTED----------");
+           console.log(theSelectedId);
+           console.log("--------ID SELECTED----------");
+           
+           
+           
+           
+
+            $('#idNumber').blur(function(){
+                var currentIdVal = $(this).val();
+                console.log('currentIdVal  idNumber: ' +currentIdVal);
+                console.log('staff: ' +$('#staffId').val());
+            
+                OperationDwr.getExistinStaffNumE(currentIdVal, $('#staffId').val(), function (staffnum) {
+                    console.log( "data value "+staffnum );
+                     
+                        if(staffnum == true){
+                            alert('Staff number is already taken!');
+                            $('#idNumber').val('');
+                            $('#idNumber').focus();
+                        }else {
+                            console.log('The  staff number available');
+                        }
+                     
+                });
+
+            });
+            
+            $('#optCard').blur(function(){
+                var currentCardVal = $(this).val();
+                console.log('currentCardVal  cardNumber ' +currentCardVal);
+                console.log('staff: ' +$('#staffId').val());
+            
+                OperationDwr.getExistinCardNumE(currentCardVal, $('#staffId').val(), function (cardnum) {
+                    console.log( "data value "+cardnum );
+                     
+                        if(cardnum == true){
+                            alert('Card number is already taken!');
+                            $('#optCard').val('');
+                            $('#optCard').focus();
+                        }else {
+                            console.log('The  staff number available');
+                        }
+                     
+                });
+
+            });
+            
+            
+            $('#LogId').blur(function(){
+                var currentuserIdVal = $(this).val();
+                console.log('currentuserIdVal  User ID ' +currentuserIdVal);
+                console.log('staff: ' +$('#staffId').val());
+            
+                OperationDwr.getExistinLoginIdE(currentuserIdVal, $('#staffId').val(), function (logidnum) {
+                    console.log( "data value "+logidnum );
+                     
+                        if(logidnum == true){
+                            alert('Login ID is already taken!');
+                            $('#LogId').val('');
+                            $('#LogId').focus();
+                        }else {
+                            console.log('The  staff number available');
+                        }
+                     
+                });
+
+            });
+            
+            
+            
+            function verifyStaffId() {
+                console.log('VERIFY STAFF ID THEN READ WEBACCESS!'); 
+                 var getUrlParameter = function getUrlParameter(sParam) { 
+                     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                        sURLVariables = sPageURL.split('&'),
+                        sParameterName,
+                        i;
+                 
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : sParameterName[1];
+                        }
+                    }
+                
+                }
+                
+                var staffId = getUrlParameter('staffId');
+                $('#staffNoId').val(staffId);
+//                console.log('++++STAFF ID+++ ' +staffId);
+                
+                if (staffId != undefined) {
+                    //HAVE STAFF ID
+                    //CHECK IF HAVE WEB ACCESS OR DONT HAVE  
+//                    console.log('HAVE STAFF ID ...' +staffId); 
+                    
+                    OperationDwr.getWebAccess(staffId, function(data) {
+//                        console.log('++++data!++++');
+//                        console.log(data);
+                        
+                        for (var i=0; i<data.length; i++) {
+                           var row = data[i];
+                           
+                           var webAccess = row.IsDisabled;
+                           
+                                //webaccess diable is TRUE = uncheck the checkbox dbvalue = 1
+                                //webaccess diable is FALSE = check the checkbox dbvalue = 0
+                                if(webAccess == true || webAccess == false){ 
+                                     //REGISTERED AND HAVE CURRENT WEB ACCESS
+                                     console.log('REGISTERED AND HAVE CURRENT WEB ACCESS');
+                                     console.log('webAccess : ' +webAccess);
+                                     
+                                        if(webAccess == true) {
+                                            //uncheck the checkbox
+                                            //Update
+                                            $('#inlineCheckbox1').prop( "checked", false );
+                                            $('#valueCheck').val("1"); 
+                                            
+                                            console.log('you uncheck teh web access!');
+                                            $('#inlineCheckbox2').removeAttr('checked');
+                                            $('input.clWebAccess').attr("disabled", true);
+                                            $('select.clWebAccess').attr("disabled", true);
+                                            
+                                        }else {
+                                             //check the checkbox
+                                             //Update
+                                             $('#inlineCheckbox1').prop( "checked", true );
+                                             $('#valueCheck').val("0");
+                                             
+                                        }
+                                     
+                                }else {
+                                   
+                                    //REGISTERED AND DONT HAVE WEB ACCESS
+                                    console.log('REGISTERED AND DONT HAVE WEB ACCESS');
+                                    console.log('webAccess : ' +webAccess);
+                                    
+                                }
+                           
+                        }
+                        
+                    });
+                    
+                    
+                }else{ 
+                     //NOTHING UNCHECK THE CHECKBOX 
+                    console.log('NO STAFF ID CREATE NEW ID');
+                }
+                
+            }
+            
+            
+//         $('#inlineCheckbox1').on('click',function() { 
+//            var isDisabled = $('#valueCheck').val();
+//            var staffId = $('#staffNoId').val();
+//            var valLogId = $('#LogId').val();
+//    
+//            if (isDisabled != "" && valLogId != "" && staffId != ""){
+//                
+//                if (isDisabled == "1") { 
+//                    OperationDwr.updateWebAccessEnabled(staffId, function(){
+//                    //UPDATE TO 0 VALUE
+//                    $('#valueCheck').val("0");
+//                      
+//                        $('#inlineCheckbox2').prop('checked', 'true');
+//                    })
+//                }
+//                
+//                if(isDisabled == "0") { 
+//                    OperationDwr.updateWebAccessDisabled(staffId, function(){
+//                    //UPDATE TO 1 VALUE
+//                    $('#valueCheck').val("1");
+//                    
+//                        console.log('you uncheck teh web access!');
+//                        $('#inlineCheckbox2').removeAttr('checked');
+//                        $('input.clWebAccess').attr("disabled", true);
+//                        $('select.clWebAccess').attr("disabled", true);
+//                    })
+//                }
+//                                          
+//            }else{
+//                console.log("YOU NEED TO FILLED and SAVE FIRST!");
+//            }  
+//            
+//         });
+           
+           function getDate() {
+               var xDate = $('#dbDate').val(); 
+               var strDate = xDate.slice(0,10); 
+               $('#StartDate').val(strDate); 
+           }
+    
+        /*]]>*/
+    </script>
+
+    <!-- end script -->
+</body>
+
+</html>

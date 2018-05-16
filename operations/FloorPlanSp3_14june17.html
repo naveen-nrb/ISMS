@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+        
+        <!--CSS inline code--> 
+        <style>
+            
+            
+        /*status of the floorPlan Icon*/     
+        .ThisIcon {
+            padding:3px 3px;
+        }
+            
+        .StatusIconNormal {
+            background-color:#A9DFBF;
+        }
+        
+        .StatusIconAlert {
+            background-color:#F5B7B1;
+        }
+        
+         #draggable {
+            width:auto;
+          }
+          
+          
+          .tooltiptext {
+                /*visibility: hidden;*/
+                visibility: visible;
+/*                width: 250px;
+                background-color: black;
+                color: #fff;
+                text-align: left;
+                border-radius: 6px;
+                padding: 5px 5px;
+                position:absolute !important;*/
+            }
+            
+            
+            
+            
+            .fixed {
+                top:305px;
+                left:178px;
+            }
+            
+            .fixed2 {
+                top:100px;
+                left:500px;
+            }
+           
+            
+        </style>
+        
+    </head>
+
+<body>
+    <div id="wrapper">
+        
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        
+        <div id="page-wrapper">
+                <!-- DESKTOP VIEW -->
+                <div class="container-fluid s_pageWrap" >
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Floor Plan 
+                                <small>Spice 3</small>
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <i class="glyphicon glyphicon-picture"></i> <a href="#">Floor Plan Spice 3</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!-- table -->
+                        
+                    <div class="row s_row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body" id="desktop">
+                                    
+                                   
+<!--                                    <div class="col-md-2">
+                                        <h2 id="grid-nesting">
+                                            Spice 3
+                                        </h2>
+                                    </div>  -->
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="deviceList">Select option to view (Spice3)</label>
+                                            <select class="form-control" id='deviceList' onchange="loadDevice()">
+                                                <option value="0">View All Devices</option>
+                                                <option th:each="tempData : ${deviceDataList}" th:value='${tempData.AccessPointDeviceTypeID}' th:text='${tempData.Name}'>Device List</option>
+                                            </select> 
+                                        </div>
+                                        
+<!--                                        <div class="form-group">
+                                            <label for="txtlabel">Select Device<span class="mandatory"></span></label>
+                                            <select class="form-control" id="devicelist" name="devicelist" required onchange="loadStaff();">
+                                                <option value =" ">Select Device...</option>
+                                                <option th:each="tempData : ${deviceDataList}" 
+                                                th:value="${tempData.DesignationID}" 
+                                                th:text="${tempData.Name}" th:select="${tempData.AccessPointDeviceTypeID}">Select Name...</option>
+                                            </select>
+                                        </div>-->
+                                        
+                                    </div>
+                                    
+                                    <!--<div class="col-md-5 col-md-push-2 tooltiptext" id="thisToolTip">-->
+                                    <div class="col-md-5 col-md-push-2 tooltiptext" id="idtheBox">
+                                        <div class="container-fluid s_infopanel">
+                                             <b>NAME:</b> <span id="dispFullName"></span>
+                                             <br/>
+                                             <b>STATUS:</b> <span id="dispStatus"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <br/><br/>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="FloorPlan">
+                                                   
+                                                   
+                                                    <div id="containment-wrapper" style="width:670px; margin-left:auto; margin-right: auto;"> 
+                                                        <!--<img style="width:100" src="../resources/sys/images/SingaporeFloorPlan.png" />-->
+                                                        <img width='670' src="../resources/sys/images/SingaporeFloorPlan.png" />
+                                                      
+                                                         <!--UPS-->
+                                                        <!--<div th:each="tempDeviceData : ${alldeviceDataList}" th:value="${tempDeviceData.AccessPointDeviceTypeID}" th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '17'" class="ThisIcon fixed2 StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">-->
+                                                            <div th:each="tempDeviceData : ${alldeviceDataList}" th:value="${tempDeviceData.AccessPointDeviceTypeID}"
+                                                                 th:class="'draggable'" th:classappend="(${tempDeviceData.AccessPointDeviceTypeID ne 1} ? 'blank' : 'RightBtn')"
+                                                                 th:attr="status=${tempDeviceData.LastStatus},did=${tempDeviceData.AccessPointID},type=${tempDeviceData.AccessPointDeviceTypeID},pLeft=${tempDeviceData.LocationLeft},pTop=${tempDeviceData.locationTop},dName=${tempDeviceData.name}" onmouseout="getinfovalueOut(this)"  onmouseover="getinfovalue(this)">
+
+                                                                <!--LIST OF DEVICES-->
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '1'" img src="../resources/sys/svg/opened-door-aperture.png" width="20"/>
+                                                                <!--<img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '1'" th:class='RightBtn' img src="../resources/sys/svg/opened-door-aperture.svg" width="20" />-->
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '7'"  img src="../resources/sys/svg/cctv.png" width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '17'" img src="../resources/sys/svg/thermometer.png"  width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '18'" img src="../resources/sys/svg/humidity.png" width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '19'" img src="../resources/sys/svg/fan-tool.png" width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '20'" img src="../resources/sys/svg/fan-tool.png" width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '21'" img src="../resources/sys/svg/server.png" width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '22'" img src="../resources/sys/svg/socket.png" width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '23'" img src="../resources/sys/svg/sea.png" width="20"/>
+                                                                <img th:if="${#strings.trim(tempDeviceData.AccessPointDeviceTypeID)} == '24'" img src="../resources/sys/svg/fire-alarm.png" width="20"/>
+                                                            </div>
+                                                        
+<!--
+                                                          static  TEST ENVIRONMENT
+                                                        UPS Device
+                                                        <div class="ThisIcon fixed2 StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                        <div class="ThisIcon fixed2 StatusIconNormal" id="draggable">
+                                                           <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                            
+                                                          Door must have right click and Open Door Function   TEST ENVIRONMENT
+                                                        <div class="ThisIcon fixed StatusIconNormal RightBtn" id="draggableClick" onmouseover="getinfovalue(this)">
+                                                            <div class="ThisIcon fixed StatusIconNormal RightBtn" did='1234'>
+                                                           <img src="../resources/sys/svg/opened-door-aperture.svg" width="20"/>
+                                                        </div>
+-->  
+                                                        
+                                                        
+                                                        <div style="position:absolute; left:-500px;">
+                                                            <!--<input  type='number' th:if="${allowAccessMap[usertypeid+'_209']}"  id='putDoorDID' disabled/>-->
+                                                            <input  type='number' id='putDoorDID' disabled/>
+                                                            <button type="button" id="RightBtn" class="btn btn-default" >Menu on right click (hide this)</button>
+                                                        </div>
+
+                                                    </div>
+                                                
+                                                </div>
+                                                <!-- end floorplan -->
+                                            <br/><br/>
+                                            </div>
+                                            <p><b>Legend : <span style='color:red; font-size:13px;'>(The best view of this page is 1024 x 768, Lower than this may not be applicable)</span></b></p>
+                                            <div class="col-md-12 s_ledger">
+                                                <div class="row">
+                                                    <div class="container-fluid pull-right" th:if="${allowAccessMap[usertypeid+'_208']}">
+                                                        <input type="checkbox" id="draggableCheck" unchecked> DRAG ICON
+                                                        <button class="btn btn-primary" onclick="saveDD()">Save</button>
+                                                    </div>
+                                                    <div class="container-fluid pull-right"><button class="btn btn-primary" onclick="call()" style="visibility:hidden;">Call Updated Status</button></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class='col-md-12'>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/opened-door-aperture.svg"/>  - DOOR</span></div>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/cctv.svg"/> - CCTV</span></div>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/thermometer.svg"/> - TEMPERATURE</span></div>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/humidity.svg"/> - HUMIDITY</span></div>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/fan-tool.svg"/> - FCU / CRAC</span></div>
+                                                        <!--<div class="col-md-2"><span><img src="../resources/sys/svg/fan-tool.svg"/>  CRAC</span></div>-->
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/server.svg"/> - UPS</span></div>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/socket.svg"/> - PDU</span></div>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/sea.svg"/> - WATER FLOOD</span></div>
+                                                        <div class="col-md-4"><span class='iconListLedger'><img src="../resources/sys/svg/fire-alarm.svg"/> - FIRE ALARM</span></div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <br/>
+                                
+                               <!--<div id="hiddenblock" style="background-color:transparent; height:300px; width:500px; position:absolute; top:-50px; left:0; z-index:0;"></div>-->
+                                
+                               <!--put the mobile view here -->
+                                <div class="panel-body" id="mobile">
+                                    <center>
+                                        <h3>
+                                           Browser must be maximized for this page and can only be supported  for desktop.
+                                       </h3>
+                                    </center>
+                                </div>
+                                <br/>
+                                
+                                
+                                <!-- end mobile view -->
+                                
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                        <!-- end table -->
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- END DESKTOP VIEW -->
+                <!-- /.container-fluid -->
+                
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+     <script src="../resources/sys/js/jquery-ui.min.js"></script>
+     <script src="../resources/sys/js/BootstrapMenu.js"></script>
+     <script th:inline="javascript">
+        /*<![CDATA[*/
+        
+            $(window).load(function(){
+//                console.log('load this Call Disable!');
+                 $('.draggable').draggable('disable');
+            });
+            $('#draggableCheck').change(function(){
+               var x = $(this).prop( "checked" );
+               console.log("the value now is : " +x);
+               if (x == true) {
+                   console.log('The icon draggabel!');
+                   $('.draggable').draggable('enable');
+               }else {
+                   console.log('The NOT draggabel!');
+                   $('.draggable').draggable('disable');
+               }
+            });
+        
+            var positions = JSON.parse(localStorage.positions || "{}");
+            
+            var obj;
+            var objArray = [];
+            
+            function saveDD() {
+                var a = new Array();
+
+                $('.draggable').each(function (i, o) {
+                    var arr = {
+                        id: $(o).attr('did'),
+                        left: $(o).attr('pleft'),
+                        top: $(o).attr('ptop')
+                    };
+//                     console.log(arr);
+                    a.push(arr);
+                });
+               
+//                alert('save location of the icons');
+//                console.log("----BEFORE DWR CALL-----");
+//                console.log(a);
+                
+                OperationDwr.saveFloorAccessPoint(a,function(data){
+                    
+                    if(data === 1){
+                        alert("Unable to save. Please contact to ATT Systems.");
+                    }else{
+                        alert("Saving successful.");
+                    }
+//                console.log("----AFTER DWR CALL-----");
+//                console.log(a);
+//                console.log(data);
+                });
+            }
+            
+//            AUTO READ STATUS EVERY SECOND CALL THIS FUNCTION  DWR 
+            setInterval(function(){ 
+//                console.log('call this function every 8 seconds!');
+                 call();
+                }, 1000);
+
+             function call() {
+//                console.log("you have click the icon");
+//                console.log("Updating the status!");
+                            OperationDwr.getFloorPlanLastStatusSp3(function(data){
+//                                console.log(data);
+                                    $.each(data, function (id, lstate){
+                                        $(".draggable[did="+ id +"]").attr('status', lstate);
+                                    });
+                                    $(".draggable").each(function (i, obj) { 
+//                                        console.log('============================');
+//                                        console.log(i);
+//                                        console.log(obj);
+                                        var listStat = $(obj).attr('status');
+                                        
+                                        // CURRENT STATUS 
+                                        //39 Door opened,16 Door closed, 68 Controller Online,
+                                        //69 Controller Offline, 81 CCTV Camera Standby
+                                        
+                                        if (listStat == '68' || listStat == '16' || listStat == '2') {
+//                                            console.log('GREEN!');
+                                             $(this).removeClass('StatusIconAlert');
+                                             $(this).addClass('StatusIconNormal');
+                                        }else{
+//                                             console.log('RED!');
+                                             $(this).removeClass('StatusIconNormal');
+                                             $(this).addClass('StatusIconAlert');
+                                             
+                                        };
+                                        
+                                        if (listStat == '69' || listStat == '39' || listStat == '81' || listStat == '84') {
+//                                            console.log('RED!');
+                                             $(this).removeClass('StatusIconNormal');
+//                                             $(this).addClass('StatusIconAlert');
+                                             $(this).css('background-color','#F5B7B1');
+                                         };
+										
+										
+//                                        if (listStat == '69') {
+////                                            console.log('RED!');
+//                                             $(this).addClass('StatusIconAlert');
+//                                             $(this).removeClass('StatusIconNormal');
+//                                        }
+//                                        if (listStat == '68') {
+////                                             console.log('GREEN!');
+//                                             $(this).removeClass('StatusIconAlert');
+//                                             $(this).addClass('StatusIconNormal');
+//                                        }
+//                                        if (listStat == '39') {
+////                                            console.log('RED!');
+//                                             $(this).addClass('StatusIconAlert');
+//                                             $(this).removeClass('StatusIconNormal');
+//                                        }
+//                                        if (listStat == '16') {
+////                                            console.log('GREEN!');
+//                                             $(this).removeClass('StatusIconAlert');
+//                                             $(this).addClass('StatusIconNormal');
+//                                        }
+//                                        if (listStat == '81') {
+////                                            console.log('GREEN!');
+//                                             $(this).removeClass('StatusIconAlert');
+//                                             $(this).addClass('StatusIconNormal');
+//                                        }
+                                        
+                                        //OTHER DEVICE FCU CRAC UPS PDU WATER FLOOD FIRE ALARM
+                                        if (listStat == '16' || listStat == '39' || listStat == '112' || listStat == '117' || listStat == '118' || listStat == '119' || listStat == '121' || listStat == '122' || listStat == '123' || listStat == '124' || listStat == '125' || listStat == '120') {
+//                                            console.log('GREEN!');
+                                             $(this).removeClass('StatusIconAlert');
+                                             $(this).addClass('StatusIconNormal');
+                                        }else{
+//                                             console.log('RED!');
+                                             $(this).addClass('StatusIconAlert');
+                                             $(this).removeClass('StatusIconNormal');
+                                        }
+                                        if (listStat == '1' || listStat == '109' || listStat == '110' || listStat == '111' || listStat == '113' || listStat == '114' || listStat == '115' || listStat == '116' || listStat == '126') {
+//                                            console.log('RED!');
+                                             $(this).addClass('StatusIconAlert');
+                                             $(this).removeClass('StatusIconNormal');
+                                        }else{
+//                                            console.log('GREEN!');
+                                             $(this).removeClass('StatusIconAlert');
+                                             $(this).addClass('StatusIconNormal');
+                                        }
+                                        
+                                        
+                                        
+//                                        IF NULL VALUE 
+                                        if ("undefined" == typeof listStat){
+                                            console.log('the property is not available...');
+                                            $(this).css('background-color','#F5B7B1');
+                                        };
+                                        
+                                    })
+                            });
+            }
+            
+            
+            $(function () {
+                
+//                    $('#idtheBox').hide();
+                
+                    var d = $(".draggable").each(function (i, obj) {
+                       $(obj).css('left', $(obj).attr('pleft') + 'px');
+                       $(obj).css('top', $(obj).attr('ptop') + 'px');
+                       
+//                       STATUS OF THE DEVICE 
+                        //sonny
+                       var listStat = $(obj).attr('status');
+                        if (listStat == '68') {
+                            $(this).addClass('StatusIconNormal');
+                        }
+                        
+                        if (listStat != '68') {
+                            $(this).addClass('StatusIconAlert');
+                        }
+//                       console.log("----DRAGGABLE-----");
+//                       console.log(i);
+//                       console.log('+++++++++++++++')
+//                       console.log(obj);
+//                       console.log("-----END DRAGGABLE-----");
+                   });
+
+                    d.draggable({
+                        containment: "#containment-wrapper",
+                        scroll: false,
+                        stop: function (event, ui) {
+                            
+//                            console.log("------EVENT AND UI-------");
+//                            console.log(event);
+//                            console.log(ui);
+//                            console.log("------EVENT AND UI-------");
+                            
+                            positions[this.id] = ui.position;
+    //                        localStorage.positions = JSON.stringify(positions);
+                            $(this).attr('pleft', ui.position.left);
+                            $(this).attr('ptop', ui.position.top);
+                        }
+                    });
+
+ //               PUT DID DOOR ON RIGHT CLICK
+                 $('.RightBtn').on('contextmenu', function() {
+                    var bid = $(this).attr('did');
+                    console.log("call right click :" +bid);
+//                    PASS THE DID ID to container
+                    document.getElementById('putDoorDID').value = bid;
+                 });
+                  
+
+
+                    
+                  
+                    
+                    var usertypid = $('#userTypeId').val();
+                    
+                    if (usertypid == '3' || usertypid == '4' ) {
+                        console.log('This is allow to open door!');
+                        //                RIGHT CLICK SECTION 
+                        var actions = [{
+                          name: 'Open Door',
+                          onClick: function() {
+    //                        console.log("'Action' clicked!");
+                                 var id = $('#putDoorDID').val();
+    //                             var id  = "1432";
+
+                                console.log('passthe id value to the DWR :' +id);
+                                if (id == null){
+                                    alert('Your account is not allowed to open any of the doors');
+                                }else{
+
+                                }
+
+                                 int = id;
+    //                              console.log("OPEN DOOR pass to DWR: " +id);
+                               try{
+                                    OperationDwr.openDoor(id,function (id) {
+                                        // no return
+    //                                console.log("OPEN DOOR : " +id);
+                                        });
+                                    }catch(err){
+    //                            console.log("DWR-setAirconState-ON:ERROR:"+err)
+                                 }
+
+                          }
+                        }];
+                    
+                        var menu2 = new BootstrapMenu('.RightBtn', {
+                          menuEvent: 'right-click',
+                          menuSource: 'element',
+                          menuPosition: 'belowLeft',
+                          actions: actions
+                        });
+                    
+                    }else{
+                        var actions = [];
+                        var menu2 = new BootstrapMenu('.none', {
+                          });
+                        console.log('Not allowed to open door!');
+                        
+                    }
+
+                    
+                    
+                    
+                    
+                    
+            });
+            
+            
+            function loadDevice() {
+               var deviceId = $('#deviceList').val();
+//                console.log("The value where =" + deviceId);
+//                $(".draggable[value="+ deviceId +"]").show();
+                $(".draggable[value="+ deviceId +"]").css('visibility', 'visible');
+//                $(".draggable[value!="+ deviceId +"]").hide();
+                $(".draggable[value!="+ deviceId +"]").css('visibility', 'hidden');
+                
+                if (deviceId == '0'){     
+//                     $(".draggable").show();
+                      $(".draggable").css('visibility', 'visible');
+                }else {
+//                    console.log('nothing to do');
+                }
+            }
+            
+            function openthis() {
+                b = 39;
+                console.log("Open the Door : " +b);
+            }
+            
+            // BOX STATUS
+            var gO;
+            function getinfovalue(o) {
+//                    console.log("xxxxxxxxxxxxxxxxxxxx");
+//                    console.log(o);
+//                    console.log("xxxxxxxxxxxxxxxxxxxx");
+                    $('#idtheBox').fadeIn("fast");
+                   gO = o;
+                   $('#dispFullName').html($(o).attr('dName'));
+//                   $('#dispIp').html($(o).attr('d-ipAdd'));
+//                   $('#dispController').html($(o).attr('d-cName'));
+                   var wStatus =  $(o).attr('status');
+//                   $('#dispStatus').html($(o).attr('status'));
+//                    console.log(wStatus);
+                    //DOOR AND CCTV
+                    if (wStatus == '68') {$('#dispStatus').html('CAMERA ONLINE').css('color','green');}
+                    if (wStatus == '69') {$('#dispStatus').html('CAMERA OFFLINE').css('color','red');}
+                    if (wStatus == '39') {$('#dispStatus').html('DOOR OPEN').css('color','green');}
+                    if (wStatus == '16') {$('#dispStatus').html('DOOR CLOSED').css('color','green');}
+                    if (wStatus == '1') {$('#dispStatus').html('DOOR OPEN TOO LONG').css('color','red');}
+                    if (wStatus == '81') {$('#dispStatus').html('CCTV CAMERA STANDBY').css('color','red');}
+                    if (wStatus == '84') {$('#dispStatus').html('CAMERA OFF').css('color','red');}
+                    if (wStatus == '2') {$('#dispStatus').html('DOOR CLOSED').css('color','green');}
+                    
+                    // DEVICE FCU CRAC UPS PDU WATER FLOOD FIRE ALARM
+//                    if (wStatus == '00') {$('#dispStatus').html('OFF').css('color','red');}
+//                    if (wStatus == '01') {$('#dispStatus').html('ON').css('color','green');}
+                    // DEVICES ALARM 
+                    
+                    if (wStatus == '109') {$('#dispStatus').html('TEMPERATURE ALARM').css('color','red');}
+                    if (wStatus == '110') {$('#dispStatus').html('HUMIDITY ALARM').css('color','red');} 
+                    if (wStatus == '111') {$('#dispStatus').html('FCU ALARM').css('color','red');}
+                    if (wStatus == '113') {$('#dispStatus').html('UPS ALARM').css('color','red');}
+                    if (wStatus == '114') {$('#dispStatus').html('PDU ALARM').css('color','red');}
+                    if (wStatus == '115') {$('#dispStatus').html('WATER FLOOD ALARM').css('color','red');}
+                    if (wStatus == '116') {$('#dispStatus').html('FIP ALARM').css('color','red');} 
+                    if (wStatus == '126') {$('#dispStatus').html('CRAC ALARM').css('color','red');}
+                    
+                    // DEVICES NORMAL 
+                    if (wStatus == '120') {$('#dispStatus').html('CRAC OFF').css('color','green');}
+                    if (wStatus == '112') {$('#dispStatus').html('CRAC ON').css('color','green');}
+                    if (wStatus == '127') {$('#dispStatus').html('CRAC NORMAL').css('color','green');}
+                    if (wStatus == '117') {$('#dispStatus').html('FIP NORMAL').css('color','green');}
+                    if (wStatus == '118') {$('#dispStatus').html('TEMPERATURE NORMAL').css('color','green');}
+                    if (wStatus == '119') {$('#dispStatus').html('HUMIDITY NORMAL').css('color','green');}
+                    if (wStatus == '121') {$('#dispStatus').html('FCU NORMAL').css('color','green');}
+                    if (wStatus == '122') {$('#dispStatus').html('UPS NORMAL').css('color','green');}
+                    if (wStatus == '123') {$('#dispStatus').html('PDU NORMAL').css('color','green');}
+                    if (wStatus == '124') {$('#dispStatus').html('WATER FLOOD NORMAL').css('color','green');}
+                    if (wStatus == '125') {$('#dispStatus').html('NORMAL').css('color','green');}
+                    
+                    if (wStatus == '53' || wStatus == '28' || wStatus == '91' || wStatus == '61' || wStatus == '58'){
+                        $('#dispStatus').html('OTHER ALARM').css('color','red');
+                    }
+                    
+                    
+                    
+//                    if (wStatus !== '110' || wStatus !== '111' || wStatus !== '113' || wStatus !== '114' || wStatus !== '115' || wStatus !== '116' || wStatus !== '120' || 
+//                        wStatus !== '112' || wStatus !== '117' || wStatus !== '118' || wStatus !== '119' || wStatus !== '121' || wStatus !== '122' || wStatus !== '123' || 
+//                        wStatus !== '124' || wStatus !== '125'){
+//                        $('#dispStatus').html('OTHER ALARM').css('color','red');
+//                    }
+                    
+                   
+                    
+                    //MANUAL ID's
+                    //39 Door opened,
+//                    16 Door closed, 
+//                    68 Controller Online,
+//                    69 Controller Offline, 
+//                    81 CCTV Camera Standby
+//                    109 Temprature Alarm
+//                    110 Humidity Alarm 
+//                    111 FCU Alarm
+//                    
+//                    113 UPS Alarm
+//                    114 PDU Alarm 
+//                    115 WaterFlood Alarm
+//                    116 FAP Alarm 
+//                    117 FAPStatus
+//                    118 Temprature Normal
+//                    119 Humidity Normal
+//                    
+//                    
+//                    126 CRAC Alarm
+//                    127 CRAC Normal
+//                    112 CRAC On
+//                    120 CRAC Off
+//                    
+//                    121 FCU Normal
+//                    122 UPS Normal
+//                    123 PDU Normal
+//                    124 WaterFlood Normal
+//                    125 FAP Normal
+                    
+                    
+                    
+                    // FOR TEMP AND HUMID ANALOG READING
+//                    if (wStatus == '81') {$('#dispStatus').html('CCTV CAMERA STANDBY').css('color','red');}
+                   
+           }
+           
+            function getinfovalueOut() {
+//                 $('#idtheBox').fadeOut("fast");
+                   $('#dispFullName').html(' ');
+                   $('#dispStatus').html(' ');
+            }
+            
+            
+          /*]]>*/
+    </script>
+    <!-- end script -->
+    
+    
+    
+</body>
+
+    <input type="hidden" th:value="${usertypeid}" id="userTypeId"/>
+</html>

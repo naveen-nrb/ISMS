@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+
+    </head>
+
+<body class="s_body">
+    
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+    <script type="text/javascript">
+       $(document).ready(function() {
+//           alert("Ready!");
+            $('#s_loginOTP').hide();
+            
+            $('#InCorrect').hide();
+            $('#EnterOTP').hide();
+            $('#EnterOTP2').hide();
+            $('#plsEnter').show();
+       });
+    </script>
+    <!-- end script -->
+    
+    
+    <div class="logoheaderBg">
+        <!--white background-->
+    </div>
+    <div class="clientLogo">
+        <img  src="../resources/sys/images/spLogo.png"/>
+        <input id="ipaddress" name="ipaddress" type="hidden" th:value="${ipaddress}" />
+    </div>
+    
+        <div class="s_loginBox">
+            <div class="s_panel">
+                <div class="s_panelHeading">
+                    <h1 class="s_paneltitle"><span style="color:red">I</span>SEMS</h1>
+                    <span class="s_panelSubTitle">Integrated Security & Environmental Monitoring System</span>
+                    <br/><br/>
+                    <span class="s_panelThird" id='plsEnter'>Please Enter LoginID & Password</span>
+                    <span class="s_panelThird" id='InCorrect'>Please Enter LoginID & Password</span>
+                    <span class="s_panelThird" id='EnterOTP'>Please Enter OTP</span>
+                    <span class="s_panelThird" id='EnterOTP2'>Please Input the Correct OTP</span>
+                </div>
+                
+                <!-- user name Password -->
+                <div class="panel-body s_loginBody" id="s_loginBody2">
+                    <br/><br/><br/><br/><br/><br/><br/>
+                    <form role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Login" name="Login" type="Login" id='inputLogin' autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password" value="" id='inputLoginPass'>
+                            </div>
+                            <a href="#" class="btn btn-lg btn-primary btn-block s_btn" onclick="submitLog()">Submit</a>
+                        </fieldset>
+                    </form>
+                </div>
+                
+                <div class="panel-body" id='s_loginOTP'>
+                    <br/><br/><br/><br/><br/><br/><br/>
+                    <form role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="OTP Number" name="password" type="password"  id='inputOTP' autofocus>
+                            </div>
+                            <div style="text-align: right !important;"><a class="btn btn-link"><span style="color:#4dd4f9;">Re-send OTP</span></a></div> <br/>
+                            <a href="#" class="btn btn-lg btn-primary btn-block s_btn" onclick='login()'>Login</a>
+                            <a href="#" class="btn btn-lg btn-danger btn-block s_btn" onclick='cancelOTP()'>Cancel</a>
+                        </fieldset>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    
+    
+    
+    <div class="clear"></div>
+    
+    <div class="footerBg">
+        <div class="col-md-12">
+            <p>powered by: ATT SecuriTech & ATT InfoSoft</p><br/>
+            <p>Version: 0.0.1 / Last Updated: Nov 29, 2016</p>
+        </div>
+    </div>
+    
+    <div class="backgroundimage">
+        <img  src="../resources/sys/images/SP_image1.jpg"/>
+    </div>
+
+</body>
+
+</html>

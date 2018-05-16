@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+     <!-- store the value of the camera -->
+    <input type='hidden' id='tmp_IPcamId' name='tmp_IPcamId' />
+    <input type="hidden" id="idrtsp" name="idrtsp"  style="bottom:0px; left: 0px; position:absolute;"/> 
+
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Floor Plan 
+                                <small>Spice 1</small>
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <i class="glyphicon glyphicon-picture"></i> <a href="#">Floor Plan Spice 1</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!-- table -->
+                    <div class="row s_row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <!------------------- start Panel _ body --------------------->
+                                  
+                                    <!------------- ENd panel -body ------------------------>
+                                    <br/><br/>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            
+                                            <div class="col-md-12">
+                                                <div class="FloorPlan">
+                                                   <img style="width:100%" src="../resources/sys/images/SingaporeFloorPlan.png"/>
+                                                </div>
+                                                
+                                            <br/><br/>
+                                            </div>
+                                            Ledger :
+                                            <div class="col-md-12 s_ledger">
+                                                <div class="row">
+                                                    <div class="container-fluid pull-right">
+                                                         <button class="btn btn-primary" onclick="saveDD()">Save</button> 
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/server.svg"/>  UPS</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/cctv.svg"/>  CCTV</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fan-tool.svg"/>  Aircon</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fire-alarm.svg"/>  Fire Alarm</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/opened-door-aperture.svg"/>  Door</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                <!------------------- end Panel _ body --------------------->
+                                        
+                                </div>
+                                <br/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                        <!-- end table -->
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+   <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function(){
+            
+//            alert("hellO!");
+             var objArr = new Array();
+
+////                                      back up real code
+//                                    var d = $("[id=draggable]").attr("id", function (i) {
+//                                        return "draggable_" + i;
+//                                    });
+
+                var d = $(".draggable").each(function (i, obj) {
+                    $(obj).css('left', $(obj).attr('pleft') + 'px');
+                    $(obj).css('top', $(obj).attr('ptop') + 'px');
+                });
+                
+
+                d.draggable({
+                    containment: "#containment-wrapper",
+                    scroll: false,
+                    stop: function (event, ui) {
+                        positions[this.id] = ui.position;
+//                        localStorage.positions = JSON.stringify(positions);
+                        $(this).attr('pleft', ui.position.left);
+                        $(this).attr('ptop', ui.position.top);
+                    }
+                });
+
+            
+        });
+        var positions = JSON.parse(localStorage.positions || "{}");
+
+        //from here
+        var obj;
+        var objArray = [];
+        var bb;
+        var gO;
+        
+            function getinfovalue(o) {
+
+                    $('#idtheBox').fadeIn("fast");
+
+                   gO = o;
+                   $('#dispFullName').html($(o).attr('d-fullName'));
+                   $('#dispIp').html($(o).attr('d-ipAdd'));
+                   $('#dispController').html($(o).attr('d-cName'));
+                   $('#dispStatus').html($(o).attr('d-Ls'));
+    //            $('#infoNameId').text(data.name);
+           }
+            function getinfovalueOut() {
+//                 $('#idtheBox').fadeOut("fast");
+                alert('the mouse is out!');
+            }
+            
+            function showIPCamId(camid){
+                $('#tmp_IPcamId').val(camid);
+            }
+            
+            function saveDD() {
+                var a = new Array();
+
+                $('.draggable').each(function (i, o) {
+                    var arr = {
+                        id: $(o).attr('did'),
+                        left: $(o).attr('pleft'),
+                        top: $(o).attr('ptop')
+                    };
+                    a.push(arr);
+                    console.log("save! location");
+                });
+//                OperationDwr.saveFloorAccessPoint(a,function(data){
+//                    if(data === 1){
+//                        alert("Unable to save. Please contact to ATT Systems.");
+//                    }else{
+//                        alert("Saving successful.");
+//                    }
+//                });
+            }
+            
+            $('input[type="checkbox"]').click(function () {
+                    if ($('#idlockicon').is(":checked")) {
+    //                                            lock icons
+    //                                            alert("Checkbox is checked.");
+    //                                              $('.coverLock').show();
+                        $(".divDrag").draggable('disable');
+                        $(".divDrag2").draggable('disable');
+
+
+                        $("#idtooltip").css({"display": "block"});
+                        $("#idtooltip2").css({"display": "block"});
+
+
+                    }
+                    else if ($('#idlockicon').is(":not(:checked)")) {
+    //                                            unlock and drag icons
+    //                                            alert("Checkbox is unchecked.");
+    //                                                $('.coverLock').hide();
+                        $(".divDrag").draggable('enable');
+                        $(".divDrag2").draggable('enable');
+
+                        $("#idtooltip").css({"display": "none"});
+                        $("#idtooltip2").css({"display": "none"});
+
+                    }
+                });
+        
+        /*]]>*/          
+    </script>
+    <!-- end script -->
+</body>
+
+</html>

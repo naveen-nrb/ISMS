@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+        
+        <!--CSS inline code--> 
+        <style>
+            
+        .ThisIcon {
+            padding:3px 3px;
+        }
+            
+        .StatusIconNormal {
+            background-color:#A9DFBF;
+        }
+        
+        .StatusIconAlert {
+            background-color:#F5B7B1;
+        }
+        
+         #draggable {
+            width:auto;
+          }
+          
+          
+          .tooltiptext {
+                /*visibility: hidden;*/
+                visibility: inline;
+/*                width: 250px;
+                background-color: black;
+                color: #fff;
+                text-align: left;
+                border-radius: 6px;
+                padding: 5px 5px;
+                position:absolute !important;*/
+            }
+            
+            
+            .fixed {
+                top:305px;
+                left:178px;
+            }
+            
+            .fixed2 {
+                top:100px;
+                left:500px;
+            }
+            
+        </style>
+        
+    </head>
+
+<body>
+   
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Floor Plan 
+                                <small>Spice 3</small>
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <i class="glyphicon glyphicon-picture"></i> <a href="#">Floor Plan Spice 3</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!-- table -->
+                    <div class="row s_row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="col-md-2">
+                                        <h2 id="grid-nesting">
+                                            Spice 3
+                                        </h2>
+                                    </div>  
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="deviceList">Select option to view</label>
+                                            <select class="form-control" id='deviceList' onchange="loadDevice()">
+                                                <option value='0'>View All Devices</option>
+                                                <option th:each="tempData : ${deviceDataList}" th:value='${tempData.AccessPointDeviceTypeID}' th:text='${tempData.Name}'>Device List</option>
+                                            </select> 
+                                        </div>
+                                        
+<!--                                        <div class="form-group">
+                                            <label for="txtlabel">Select Device<span class="mandatory"></span></label>
+                                            <select class="form-control" id="devicelist" name="devicelist" required onchange="loadStaff();">
+                                                <option value =" ">Select Device...</option>
+                                                <option th:each="tempData : ${deviceDataList}" 
+                                                th:value="${tempData.DesignationID}" 
+                                                th:text="${tempData.Name}" th:select="${tempData.AccessPointDeviceTypeID}">Select Name...</option>
+                                            </select>
+                                        </div>-->
+                                        
+                                    </div>
+                                    
+                                    <div class="col-md-5 col-md-push-2 tooltiptext" id="thisToolTip">
+                                        <div class="container-fluid s_infopanel">
+                                             <b>Device Name:</b>  <span>SC3-OPS/COMPUTER-RN-DR</span>
+                                             <br/>
+                                             <b>Status:</b>  <span>Closed</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <br/><br/>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="FloorPlan">
+                                                   <img style="width:100%" src="../resources/sys/images/SingaporeFloorPlan.png"/>
+                                                   
+                                                    <!--<div id="MapContainer" th:each="tempData : ${accesspoints}">--> 
+                                                    <div id="MapContainer" > 
+                                                        
+                                                         <!--Loop--> 
+<!--                                                        <div th:if="==11" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                           <img   src="../resources/sys/svg/server.svg" width="20"/>
+                                                           <img th:if="==11"  src="../resources/sys/svg/server.svg" width="20"/>
+                                                           <img th:if="==11"  src="../resources/sys/svg/server.svg" width="20"/>
+                                                           <img th:if="==11"  src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>-->
+                                                        
+
+                                                         <!--UPS-->
+<!--                                                        <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '17'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         HUMIDITY
+                                                       <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '18'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         FCU
+                                                         <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '19'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         AirCOn
+                                                         <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '20'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/fan-tool.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         UPS
+                                                         <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '21'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         PDU
+                                                         <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '22'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         WATER FLOOD
+                                                         <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '23'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                         
+                                                         FIRE ALARM
+                                                         <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '24'" class="ThisIcon StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">
+                                                            <img src="../resources/sys/svg/fire-alarm.svg" width="20"/>
+                                                        </div>-->
+                                                         
+                                                        
+                                                        <!--DOOR--> 
+                                                        <!--<div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '1'" class="ThisIcon StatusIconNormal RightBtn"  id="draggableClick" onmouseover="getinfovalue(this)">-->
+<!--                                                        <div th:if="${#strings.trim(tempData.AccessPointDeviceTypeID)} == '1'" class="ThisIcon StatusIconNormal"  id="draggable" onmouseover="getinfovalue(this)">
+                                                           <img src="../resources/sys/svg/opened-door-aperture.svg" width="20"/>
+                                                        </div>-->
+                                                        
+                                                   
+                                                        
+<!--                                                         CCTV Device 
+                                                        <div class="ThisIcon StatusIconNormal" id="draggable2" onmouseover="getinfovalue(this)">
+                                                           <img src="../resources/sys/svg/cctv.svg" width="20"/>
+                                                        </div>
+                                                        
+                                                         Aircon Device 
+                                                        <div class="ThisIcon StatusIconNormal" id="draggable3" onmouseover="getinfovalue(this)">
+                                                           <img src="../resources/sys/svg/fan-tool.svg" width="20"/>
+                                                        </div>
+                                                        
+                                                          Fire Alarm Device 
+                                                        <div class="ThisIcon StatusIconNormal" id="draggable4" onmouseover="getinfovalue(this)">
+                                                           <img src="../resources/sys/svg/fire-alarm.svg" width="20"/>
+                                                        </div>-->
+                                                         
+                                                             
+<!--                                                        UPS Device-->
+                                                        <!--<div class="ThisIcon fixed2 StatusIconNormal" id="draggable" onmouseover="getinfovalue(this)">-->
+                                                        <div class="ThisIcon fixed2 StatusIconNormal" id="draggable">
+                                                           <img src="../resources/sys/svg/server.svg" width="20"/>
+                                                        </div>
+                                                            
+                                                          <!--Door must have right click and Open Door Function-->  
+                                                        <!--<div class="ThisIcon fixed StatusIconNormal RightBtn" id="draggableClick" onmouseover="getinfovalue(this)">-->
+                                                        <div class="ThisIcon fixed StatusIconNormal RightBtn" id="draggableClick">
+                                                           <img src="../resources/sys/svg/opened-door-aperture.svg" width="20"/>
+                                                        </div>
+                                                        
+<!--                                                        Right Click 
+                                                        <button type="button" id="RightBtn" class="btn btn-default">Menu on right click</button>-->
+                                                         
+                                                    </div>
+                                                
+                                                </div>
+                                            <br/><br/>
+                                            </div>
+                                            Ledger :
+                                            <div class="col-md-12 s_ledger">
+                                               <div class="row">
+                                                    <div class="container-fluid pull-right">
+                                                         <button class="btn btn-primary" onclick="saveDD()">Save</button> 
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/server.svg"/>  UPS</span>
+                                                </div>
+<!--                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/cctv.svg"/>  CCTV</span>
+                                                </div>-->
+                                                <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fan-tool.svg"/>  Aircon</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fire-alarm.svg"/>  Fire Alarm</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/opened-door-aperture.svg"/>  Door</span>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <br/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                        <!-- end table -->
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+     <script src="../resources/sys/js/jquery-ui.min.js"></script>
+     <script src="../resources/sys/js/BootstrapMenu.js"></script>
+     <script th:inline="javascript">
+        /*<![CDATA[*/
+            $(function () {
+//                if ($('#idlockicon').is(":checked")) {
+//                    $(".divDrag").draggable('disable');
+//                    $(".divDrag2").draggable('disable');
+//                };
+                
+                $( "#draggable" ).draggable();
+                $( "#draggable2" ).draggable();
+                $( "#draggable3" ).draggable();
+                $( "#draggable4" ).draggable();
+                $( "#draggableClick" ).draggable();
+                
+
+                
+//                RIGHT CLICK SECTION 
+                   
+                    
+                    var actions = [{
+                      name: 'Open Door',
+                      
+                      onClick: function() {
+//                        toastr.info("'Action' clicked!");
+                             var id  = "1432";
+                             int = id;
+                             
+//                            var name = " SC3-COMPUTER-RM-DR";
+                              console.log("OPEN DOOR pass to DWR: " +id);
+                           try{
+                                OperationDwr.openDoor(id,function (id) {
+//                                    console.log("OPEN DOOR : " +id);
+                                    });
+                                }catch(err){
+    //                        console.log("DWR-setAirconState-ON:ERROR:"+err)
+                             }
+                            
+                      }
+//                        }, {
+//                      name: 'test',
+//                      onClick: function() {
+//                        toastr.info("'Another action' clicked!");
+//                      }
+                    }];
+
+                    var menu2 = new BootstrapMenu('.RightBtn', {
+                      menuEvent: 'right-click',
+                      menuSource: 'element',
+                      menuPosition: 'belowLeft',
+                      actions: actions
+                    });
+
+                
+            });
+            
+            
+            function loadDevice() {
+               var deviceId = $('#deviceList').val();
+               
+               console.log(deviceId);
+               
+               
+               
+               
+            }
+            
+            
+          /*]]>*/
+    </script>
+    <!-- end script -->
+    
+    
+    
+</body>
+
+</html>

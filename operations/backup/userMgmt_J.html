@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    <input type="hidden" id="staffId"/>
+    <!--<input type="hidden" id="staffId" th:value="${staff.StaffID}" />-->
+    <!--<input type="hidden" id="personId" th:value="${person.PersonID}" />-->
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                            <div class="col-lg-12">
+                                <h2 class="page-header">
+                                   User Management
+                                    <!--<small>Spice 1</small>-->
+                                </h2>
+                                <ol class="breadcrumb">
+                                    <li>
+                                        <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                    </li>
+                                    <li>
+                                            <i class="fa fa-list"></i> <a href="userMgmtTable.html">Management List</a>
+                                    </li>
+                                    <li class="active">
+                                         <i class="fa fa-edit fa-fw"></i> <a href="#">User Management</a>
+                                    </li>
+                                </ol>
+                            </div>
+                        
+                        <div class="col-md-12">
+                             <div class="mandatorytext">
+                                 <span>All with (*) are mandatory</span>
+                             </div>
+                         </div>
+                        
+                        <div class="row s_row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    
+                            <!--    <form data-toggle="validator" role="form"> -->
+                                    
+                                    <div class="panel-body">
+                                        <div class="col-md-12">
+                                            <h2 id="grid-nesting">
+                                                Information
+                                            </h2>
+                                        </div> 
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">First Name<span class="mandatory">*</span></label>
+                                                        <input type="text" class="form-control" id="fname" name="fname" placeholder="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Last Name<span class="mandatory">*</span></label>
+                                                        <input type="text" class="form-control" id="lname" name="lname" placeholder="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group numberTextBox">
+                                                        <!--GET THE STAFF NUMBER-->
+                                                        <label for="txtlabel">Staff No.<span class="mandatory">*</span></label>
+                                                        <input type="text" class="form-control" id="idNumber" name="idNumber" placeholder="" required>
+                                                    </div>
+                                                </div>
+<!--                                                 <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Middle Name</label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                    </div>
+                                                </div>-->
+                                                 
+                                            </div>
+
+
+                                            <div class="col-md-12">
+                                                <div class="col-md-3">
+                                                    <div class="form-group numberTextBox">
+                                                        <label for="txtlabel">Mobile Number<span class="mandatory">*</span></label>
+                                                        <input type="number" class="form-control" id="mobileNum" name="mobileNum" placeholder="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Email Address<span class="mandatory">*</span></label>
+                                                        <input type="email" class="form-control" id="email" name="email" placeholder="" data-error="Email address is invalid" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Activation Date/Time<span class="mandatory">*</span></label>
+                                                         <div class="form-group">
+                                                            <div class="input-group date" id="datetimepicker6">
+                                                                <input type="text" class="form-control" id="StartDate" name="StartDate" required>
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Expiration Date/Time<span class="mandatory">*</span></label>
+                                                        <div class="form-group">
+                                                            <div class='input-group date' id='datetimepicker7'>
+                                                                <input type='text' class="form-control" id="EndDate" name="EndDate" required>
+                                                                <span class="input-group-addon">
+                                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="col-md-3">
+                                                    <div class="form-group numberTextBox">
+                                                        <label for="txtlabel">PIN Number<span class="mandatory">*</span></label>
+                                                        <!--<button type="submit" class="btn btn-primary btn-sm">S</button>-->
+                                                        <input type="text" class="form-control" id="pinNumber" name="pinNumber" placeholder="" required>
+<!--                                                        <div class="input-group">
+                                                            <div class="icon-addon">
+                                                                <input type="number"class="form-control" placeholder="" required>
+                                                            </div>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-warning glyphicon glyphicon-refresh" type="button"></button>
+                                                            </span>
+                                                        </div>-->
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label for="txtlabel">Card<span class="mandatory">*</span></label>
+                                                            <select class="form-control" name="optCard" id="optCard" >
+                                                                <option value="0" >-- Please Select Card --</option>
+                                                                <option th:each="recData : ${cardDataList}" th:value="${recData.CardID}" th:text="${recData.CardNo}"  ></option>
+                                                            </select>
+                                                        </div>
+                                                            
+                                                </div>
+<!--                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="txtlabel">Note</label>
+                                                        <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                    </div>
+                                                </div>-->
+                                                <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="txtlabel">Designation<span class="mandatory">*</span></label>
+                                                            <select class="form-control" name="optDesignation" id="optDesignation" >
+                                                                <option value="0" >-- Please Select Designation --</option>
+                                                                <option th:each="recData : ${designationDataList}" th:value="${recData.DesignationId}" th:text="${recData.Name}"  ></option>
+                                                            </select>
+                                                        </div>
+                                                            
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                  
+                                    </div><!-- end panel body information -->
+                                    
+                                    <!--------------------------------- Permission list ------------------------------------------->
+<!--                                    <div class="panel-body" style="border-top:1px solid #eeeeee; border-bottom:1px solid #e7e7e7;">
+                                        <div class="col-md-12">
+                                            <h2 id="grid-nesting">
+                                               Door Permission List
+                                            </h2>
+                                        </div>  
+                                        
+                                        <div class="col-md-12">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr class="success">
+                                                        <th width="10%">No.</th>
+                                                        <th>Group Name</th>
+                                                        <th width="10%"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="doorPermissionList">
+                                                    
+                                                    
+                                                    doorPermissionList
+                                                    <tr >
+                                                        <td>1</td>
+                                                        <td>Door Group one</td>
+                                                        <td><button type = "button" class = "btn btn-danger">REMOVE</button></td>
+                                                    </tr>
+                                                    
+                                                    
+                                                    <tr>
+                                                        <td>2</td>
+                                                         <td>Door Group one</td>
+                                                        <td><button type = "button" class = "btn btn-danger">Remove</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                          <td>Door Group Three</td>
+                                                        <td><button type = "button" class = "btn btn-danger">Remove</button></td>
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button type="button" class="btn btn-primary col-md-2 col-xs-12 pull-right" data-toggle="modal" data-target="#AddGroup">ADD</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    <!---------------------------------------------- end permission list ------------------------------------------->
+                                    <div class="ss_mainContentBody" style="border: 1px solid #ddd;" id="gekLoc" > <!-- Main Box -->
+                                                <div class="ss_headerTitlePage" style="float:left;">
+                                                    <h1 style="margin-left:20px;">DOOR Access List</h1>
+                                                </div>
+
+                                                <div class="custom-border personTable"> 
+                                                    <div class="container-fluid">
+
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="row ss_row">
+<!--                                                                <div class="col-md-3" id="date-start-gek-main">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label ss_customLabelForm" for="inputLarge"><b>Start Date / Start Time</b></label>
+                                                                        <input class="form-control input-lg" type="text"  id="date-start-gek">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="checkbox">
+                                                                            <label class="control-label ss_customLabelForm">
+                                                                                <input type="checkbox" disabled checked> 24 hours
+                                                                            </label>
+                                                                        </div>
+                                                                        <p class="help-block">24 hours access for this person</p>
+                                                                    </div>
+                                                                </div>-->
+                                                                <div class="col-md-3"  style="display:none !important; background-color:red;">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label ss_customLabelForm" for="inputLarge"><b>End Date / End Time</b></label>
+                                                                        <input class="form-control input-lg" type="text"  id="date-end-gek">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group"  style="display:none !important; background-color:red;">
+                                                                        <div class="checkbox">
+                                                                            <label class="control-label ss_customLabelForm">
+                                                                                <input type="checkbox" disabled checked> 24 hours
+                                                                            </label>
+                                                                        </div>
+                                                                        <!--<p class="help-block">24 hours access for this person</p>-->
+                                                                    </div>
+                                                                </div>    
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- table list here -->
+                                                        <!--<table class="table-bordered table-striped table-hover table-condensed results4">-->
+                                                        <div class="ss_responsiveTable">
+                                                            <!--<table class="table-bordered table-striped table-hover" width="100%">-->
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                    <tr style="background-color:#009688;">
+                                                                        <th width="5%">ID</th>
+                                                                        <th width="50%">Group Name</th>
+                                                                        <!--<th width="20%"></th>-->
+                                                                        <th></th>
+                                                                    </tr>
+
+                                                                </thead>
+                                                                <tbody id="tamAccessGrpList">
+                                                                    <tr th:each="floorAccessGroupObj : ${floorAccessGroupListTAM}">
+                                                                        <td data-label="ID" th:text="${floorAccessGroupObj.AccessPointGroupID}"></td>
+                                                                        <td data-label="Group Name" th:text="${floorAccessGroupObj.Name}" ></td>                                                            
+
+                                                                        <td width="1%" id="checkbox-align" align="center" class="ss_acknowledgebtn">
+                                                                            <button type="button"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ss_ButtonDelete" th:value="${floorAccessGroupObj.AccessPointGroupID}" onclick="removeAccessGrp('TAM', this.value)">Remove</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+
+                                                        <br/>
+                                                        <div class="row ss_row container-fluid" style="text-align:right;">
+                                                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ss_ButtonNew" data-toggle="modal" data-target="#mymodalAddPermissionTam">
+                                                                <span class="glyphicon glyphicon-plus"></span> Add
+                                                            </button>
+                                                        </div>
+                                                        <br/>
+
+                                                    </div><!-- container fluid -->
+
+                                                </div>
+                                            </div>
+                                            <!-- end Permission List GEK -->
+                                    
+                                    
+                                    
+                                    
+                                    
+                                     <!-- Web Access -->
+                                     <div class="panel-body">
+                                        <div class="col-md-12">
+                                                <h2 id="grid-nesting">
+                                                    Web Access
+                                                </h2>
+                                        </div>  
+                                         <div class="row">
+                                            <div class="container-fluid">
+                                                <div class="col-md-12">
+                                                    <div class="form-check pull-left checkBoxWeb" style="margin:5px 5px;">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input checkboxtext" type="checkbox" id="inlineCheckbox1"> 
+                                                               &nbsp;  Enable Web Access
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>
+                                         
+                                        <div class="col-md-12">
+                                            <div class="col-md-3">
+<!--                                                <div class="form-group">
+                                                    <label for="txtlabel">System ID<span class="mandatory">*</span></label>
+                                                    <input type="text" class="form-control" id="txtlabel" placeholder="">
+                                                </div>-->
+                                                 <div class="form-group">
+                                                    <label for="txtlabel">System ID<span class="mandatory">*</span></label>
+                                                    <select class="form-control" id="systemId" name="systemId">
+                                                        <!--<option>System Administrator</option>-->
+                                                        <option th:each="recData : ${userTypeDataList}" th:value="${recData.SystemUserTypeID}" th:text="${recData.Name}" ></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Log ID<span class="mandatory">*</span></label>
+                                                    <input type="text" class="form-control" id="LogId" name="LogId" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Password<span class="mandatory">*</span></label>
+                                                    <input type="password" class="form-control" id="password"  name="password" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="txtlabel">Confirm Password<span class="mandatory">*</span></label>
+                                                    <input type="password" class="form-control" id="confirmPass" name="confirmPass" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <!--End Web Access -->
+                                    
+                                 
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <button   class="btn btn-success col-md-2 col-xs-12 pull-right" onclick="saveStaffInfo('1')">SAVE</button>
+                                        <!--<button  type="submit" class="btn btn-success col-md-2 col-xs-12 pull-right" data-toggle="modal" data-target="#SavePop">Save</button>-->
+                                    </div>
+                                </div>
+                              <!--  </form> -->   
+                                
+                                <br/>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    
+    
+    <!--MODAL SECTION--> 
+    <div class="modal fade" id="SavePop" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>
+                            Save Successful!
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    <!------------------------------MODAL SECTION Save pop- DOOR LIST-----------------------------------------> 
+    <div class="modal fade" id="AddGroup" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Access Group</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <div style="max-height: 200px; overflow:auto;">
+                            <table  class="table-striped table-hover" width="100%">
+                                <tbody>
+                                    <tr th:each="recData : ${doorListDataList}">
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <!--<input class="doorList" type="checkbox" th:id="'chkDoor_'+${recData.AccessPointId}" th:value="${recData.AccessPointId}" th:text="${recData.Name}" >-->
+                                                    <input class="doorList" type="checkbox" th:id="'chkDoor_'+${recData.AccessPointGroupID}" th:value="${recData.AccessPointGroupID}" th:text="${recData.Name}" >
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>                                           
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="putCheckBoxToTable()" >Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------------------ END MODAL SECTION Save pop------------------------------------------> 
+    
+    <div class="modal fade" id="mymodalAddPermissionTam" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Permission - test</h4>
+                </div>
+                <div class="modal-body" style="padding-top:0px;">
+                    <div class="form-group">
+                        <table style="background-color:#f0f0f0; width: 100%;" id="tamDeny">
+                            <tr>
+                                <td style="text-align:center;">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Deny All
+                                        </label>
+                                    </div>  
+                                </td>
+                                <td  style="text-align:center;">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Access All
+                                        </label>
+                                    </div>  
+                                </td>
+                                <td  style="text-align:center;">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Common Access
+                                        </label>
+                                    </div>  
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="clear"></div>
+
+                        <div style="max-height: 200px; overflow:auto;">
+                            <table  class="table-bordered table-striped table-hover" width="100%">
+                                <tbody id="tamAG">
+                                </tbody>
+                            </table>
+                        </div>                                           
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ss_ButtonNew" onclick="getAccessGp('TAM')">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <!--end MODAL SECTION--> 
+    
+    
+    
+    
+    
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+   <script th:inline="javascript">
+        /*<![CDATA[*/
+            
+             var floorAccessGroupListGEK = /*[[${floorAccessGroupListGEK}]]*/ 'value';
+            var floorAccessGroupListTAM = /*[[${floorAccessGroupListTAM}]]*/ 'value';
+        
+        
+            /************************ DOOR PERMISSION *******************************/
+//            function putCheckBoxToTable(){
+//                
+//                $("#doorPermissionList").empty();
+//                
+//                $('input:checkbox.doorList').each(function () {
+////                    var sThisVal = (this.checked ? $(this).val() : "");
+//                    if(this.checked){
+//                        //$(this).val();
+////                        $("input[name='PrePayment']")[0].nextSibling.nodeValue;
+//                        
+////                        console.log("+"+$(this).val());
+////                        console.log("+"+$(this)[0].nextSibling.nodeValue);
+//                        
+//                        var id = $(this).val();
+//                        var text = $(this)[0].nextSibling.nodeValue;
+//                        
+////                        var htmlstr = "<tr><td>"+id+"</td><td>"+text+"</td><td><button type=\"button\" class=\"btn btn-danger\"  onclick=\"removeDoor("+id+")\"  >REMOVE</button></td></tr>";
+//                        var htmlstr = "<tr><td>"+text+"</td><td><button type=\"button\" class=\"btn btn-danger\"  onclick=\"removeDoor("+id+")\"  >REMOVE</button></td></tr>";
+//                        
+//                        $("#doorPermissionList").append(htmlstr);
+//                        
+//                    }
+//               });
+//                
+//            }
+//            
+//            function removeDoor(id){
+//                $('#chkDoor_'+id).prop('checked', false);
+//                putCheckBoxToTable();
+//            }
+        
+            /************************ END DOOR PERMISSION *******************************/
+        
+        
+            //   DATEPICKER START DATE
+                $('#datetimepicker6').datetimepicker({ 
+                    minDate:new Date(),
+                    format: 'YYYY-MM-DD'
+                });
+
+                //DATEPICKER END DATE
+                $('#datetimepicker7').datetimepicker({
+                    minDate:new Date(),
+                     format: 'YYYY-MM-DD',
+                    useCurrent: false //Important! See issue #1075
+                });
+
+//                //BOOTSTRAP VALIDATOR
+//                $("#datetimepicker6").on("dp.change", function (e) {
+//                    $('#datetimepicker6').bootstrapValidator('revalidateField', 'startdateSched');
+//                    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+//                });
+//                $("#datetimepicker7").on("dp.change", function (e) {
+//                    $('#datetimepicker7').bootstrapValidator('revalidateField', 'enddateSched');
+//                    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+//                });
+
+      function saveStaffInfo(smsFlag)
+        {
+            
+            console.log("---------------------------------");
+            console.log(smsFlag);
+            console.log("---------------------------------");
+            
+            var gekIdArr = [];
+            var ctr = 0;
+            $('input:checkbox.doorList').each(function () {
+                    if(this.checked){
+                        var id = $(this).val();
+                        gekIdArr[ctr]=id;
+                        ctr++;
+                }
+           });
+           
+            var dataArray = [];
+            
+            dataArray[0] =$('#idNumber').val(); // Staff Number;
+            dataArray[1] =$('#fname').val();
+            dataArray[2] =$('#lname').val();
+            dataArray[3] =$('#mobileNum').val();
+            dataArray[4] =$('#email').val();
+            dataArray[5] =$('#StartDate').val();
+            dataArray[6] =$('#EndDate').val();
+            dataArray[7] =$('#pinNumber').val();
+            dataArray[8] =$('#optCard').val();
+            dataArray[9] =$('#optDesignation').val();
+            
+            
+            
+            var tamIdArr = [];
+            var fpLRArr=[];
+            
+            fpLRArr[0] ="" //localStorage.getItem("fpTemplateL");
+            fpLRArr[1] ="" //localStorage.getItem("fpImageL");
+
+            fpLRArr[2] ="" //localStorage.getItem("fpTemplateR");
+            fpLRArr[3] ="" //localStorage.getItem("fpImageR");
+
+            fpLRArr[4] ="" //localStorage.getItem("lqt");
+            fpLRArr[5] ="100" //localStorage.getItem("rqt");
+            
+            var photo='';
+            var smsFlag=0;
+            var accessTmeArr=[];
+            
+        
+            var webAccess = [];
+            webAccess[0] = $('#systemId').val();
+            webAccess[1] = $('#LogId').val();
+            webAccess[2] = $('#password').val();
+         //   webAccess[3] = confirmPassword;
+           
+           
+           console.log('======dataArray======');
+           console.log(dataArray);
+           console.log('=================');
+           
+           console.log('=======accessTmeArr=======');
+           console.log(accessTmeArr);
+           console.log('=================');
+           
+           console.log('=======webAccess=======');
+           console.log(webAccess);
+           console.log('=================');
+           
+            gekIdArr[0]=1430;
+            
+//            alert(gekIdArr);
+            console.log("Pass this together : " + dataArray[0]);
+            
+            OperationDwr.saveStaffInfo(dataArray, gekIdArr, tamIdArr, fpLRArr, photo, smsFlag, accessTmeArr, webAccess, function () {
+                
+                console.log("---------dataArray-------------");
+                console.log(dataArray);
+                console.log("-----------gekIdArr-----------");
+                console.log(gekIdArr);
+                console.log("----------tamIdArr------------");
+                console.log(tamIdArr);
+                console.log("----------fpLRArr------------");
+                console.log(fpLRArr);
+                console.log("----------photo------------");
+                console.log(photo);
+                console.log("-----------smsFlag-----------");
+                console.log(smsFlag);
+                console.log("----------accessTmeArr------------");
+                console.log(accessTmeArr);
+                console.log("---------webAccess-------------");
+                console.log(webAccess);
+                
+                alert("Save Successfully");
+                
+//                 location.href = '../operations/userMgmtTable.html';
+//                 
+//                reSetInfo();
+                
+
+            });
+            
+//            OperationDwr.getTest(function () {
+//                alert("Save Successfully");
+//             //   reSetInfo();
+
+       //     });
+
+        }
+        var gekcount = 0;
+        var tamcount = 0;
+        function getFloorAccessGroup(locIndicator)
+        {
+    //   alert(locIndicator);
+            OperationDwr.getAccessPoint(locIndicator, function (faGrpList) {
+                var htmlag = '';
+
+                if (locIndicator == 'GEK')
+                {
+                    gekcount = 0;
+                } else if (locIndicator == 'TAM')
+                {
+                    tamcount = 0;
+
+                }
+
+                count = 0;
+
+                for (i = 0; i < faGrpList.length; i++)
+                {
+                    var map = faGrpList[i];
+                    htmlag = ' <tr> '
+                            + '  <td style="vertical-align: middle;"> '
+                            + ' <div >'
+                            + '                <label> '
+                            + '                    <input type="checkbox"  id="' + locIndicator + count + '" value="' + map.AccessPointGroupId + '" style="width:20px; height:20px;">&nbsp;' + map.Name
+                            + '                </label> '
+                            + '            </div> '
+                            + '        </td> '
+                            + '  </tr> '
+
+                    if (locIndicator == 'GEK')
+                    {
+    //                                            console.log(htmlag);
+
+                        $("#gekAG").append(htmlag);
+                        gekcount++;
+
+                    } else if (locIndicator == 'TAM')
+                    {
+                        $("#tamAG").append(htmlag);
+                        tamcount++;
+
+                    }
+                    count++;
+                }
+            });
+        }
+
+        function empty(e) {
+            switch (e) {
+                case "":
+                case 0:
+                case "0":
+                case null:
+                case false:
+                case typeof this == "undefined":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        
+        function removeAccessGrp(locIndicator, val){
+            var commonArray = [];
+            if (locIndicator == 'GEK')
+            {
+                commonArray = gekAgArray;
+
+            } else if (locIndicator == 'TAM')
+            {
+                commonArray = tamAgIdArray
+            }
+                for (var t = 0; t < commonArray.length; t++){
+                    var tam = commonArray[t];
+                        if (tam.floorAccessGroupID == val){
+                            commonArray.splice(t, 1);
+                            break;
+                            }
+                }
+
+
+            if (locIndicator == 'GEK'){
+                gekAgArray = commonArray;
+            } else if (locIndicator == 'TAM'){
+                tamAgIdArray = commonArray
+            }
+            getAccessGpGenFromJs(locIndicator);
+        }
+        
+        
+        function getAccessGpGenFromJs(ind){
+            var commonArray = [];
+            if (ind == 'GEK')
+            {
+                commonArray = gekAgArray;
+                $("#gekAccessGrpList").html("");
+            } else if (ind == 'TAM')
+            {
+                commonArray = tamAgIdArray;
+                $("#tamAccessGrpList").html("");
+            }
+
+            var fagHtml = "";
+
+            for (i = 0; i < commonArray.length; i++){
+                var map = commonArray[i];
+
+                fagHtml = '<tr id="gekag' + map.floorAccessGroupID + '">'
+                        + ' <td data-label="ID">' + map.floorAccessGroupID + '</td> '
+                        + '               <td data-label="Group Name">' + map.name + '</td> '
+
+                        + '               <td width="1%" id="checkbox-align" align="center" class="ss_acknowledgebtn"> '
+                        + '                   <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ss_ButtonDelete" value=\'' + map.floorAccessGroupID + '\' onclick="removeAccessGrp(\'' + ind + '\',this.value)">Remove</button> '
+                        + '               </td> '
+                        + '           </tr>';
+
+                if (ind == 'GEK')
+                    $("#gekAccessGrpList").append(fagHtml);
+                else if (ind == 'TAM')
+                    $("#tamAccessGrpList").append(fagHtml);
+            }
+        }
+        
+        
+        function getAccessGp(ind){
+            dwr.engine.setAsync(false);
+
+            var agCheckCount = 0;
+            var acGid = [];
+
+            var cot = 0;
+            if (ind == 'GEK')
+                cot = gekcount;
+            else if (ind == 'TAM')
+                cot = tamcount;
+
+            for (j = 0; j < cot; j++)
+            {
+                //   var id='gek'+j+':checked';
+                var id = '';
+                if (ind == 'GEK')
+                    id = 'GEK' + j
+                else if (ind == 'TAM')
+                    id = 'TAM' + j
+
+                if ($('#' + id).prop('checked') == true)
+                {
+                    acGid[agCheckCount] = $("#" + id).val();
+                    agCheckCount++;
+                }
+            }
+//                                GEK Max 4 Access List
+            if (gekAgArray.length == 4)
+            {
+                alert('Exceed maximun access group. \n Maximun allow access groups are 4 groups.');
+                return;
+            }
+            if (parseInt(gekAgArray.length) + parseInt(acGid.length) > 4)
+            {
+                alert('Exceed maximun access group. \n Maximun allow access groups are 4 groups.');
+                return;
+            }
+
+//                                TAM Max 4 Access List
+             if (tamAgIdArray.length == 4)
+            {
+                alert('Exceed maximun access group. \n Maximun allow access groups are 4 groups.');
+                return;
+            }
+
+            if (parseInt(tamAgIdArray.length) + parseInt(acGid.length) > 4)
+            {
+                alert('Exceed maximun access group. \n Maximun allow access groups are 4 groups.');
+                return;
+            }
+
+
+
+            if (acGid.length == 0)
+            {
+                alert('Please select access group');
+                return;
+
+            }
+            if (acGid.length > 4)
+            {
+                alert('Exceed maximun access group. \n Maximun allow access groups are 4 groups.');
+                return;
+            }
+            OperationDwr.getFloorAccessGroupPerson(ind, acGid, function (faGrpList) {
+//                                    dwr.engine.setAsync(false);
+                //  alert(faGrpList.length)
+                var fagHtml = "";
+
+                for (i = 0; i < faGrpList.length; i++)
+                {
+
+                    var map = faGrpList[i];
+
+                    var obj = new Object();
+                    obj.floorAccessGroupID = map.FloorAccessGroupID;
+                    obj.name = map.Name;
+
+                    var existFlag = 0;
+                    if (ind == 'GEK')
+                    {
+                        for (var g = 0; g < gekAgArray.length; g++)
+                        {
+                            if (gekAgArray[g].floorAccessGroupID == obj.floorAccessGroupID)
+                            {
+                                existFlag = 1;
+                                break;
+                            }
+                        }
+                        if (existFlag == 0)
+                        {
+                            gekAgArray.push(obj);
+                        }
+
+                    } else if (ind == 'TAM')
+                    {
+                        for (var g = 0; g < tamAgIdArray.length; g++)
+                        {
+                            if (tamAgIdArray[g].floorAccessGroupID == obj.floorAccessGroupID)
+                            {
+                                existFlag = 1;
+                                break;
+                            }
+                        }
+                        if (existFlag == 0)
+                        {
+                            tamAgIdArray.push(obj);
+                        }
+                    }
+
+                    if (existFlag == 0)
+                    {
+                        fagHtml = '<tr id="gekag' + map.FloorAccessGroupID + '">'
+                                + ' <td data-label="ID">' + map.FloorAccessGroupID + '</td> '
+                                + '               <td data-label="Group Name">' + map.Name + '</td> '
+
+                                + '               <td width="1%" id="checkbox-align" align="center" class="ss_acknowledgebtn"> '
+                                + '                   <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent ss_ButtonDelete" value=\'' + map.FloorAccessGroupID + '\' onclick="removeAccessGrp(\'' + ind + '\',this.value)">Remove</button> '
+                                + '               </td> '
+                                + '           </tr>';
+                        if (ind == 'GEK')
+                            $("#gekAccessGrpList").append(fagHtml);
+                        else
+                            $("#tamAccessGrpList").append(fagHtml);
+                    }
+
+                }
+
+                if (ind == 'GEK')
+                    $('#mymodalAddPermissionGek').modal('hide');
+                else if (ind == 'TAM')
+                    $('#mymodalAddPermissionTam').modal('hide');
+                for (jj = 0; jj < cot; jj++)
+                {
+
+                    //   var id='gek'+j+':checked';
+                    var id = '';
+                    if (ind == 'GEK')
+                        id = 'GEK' + jj
+                    else if (ind == 'TAM')
+                        id = 'TAM' + jj
+
+                    $('#' + id).attr('checked', false);
+                }
+            });
+        }
+        getFloorAccessGroup('GEK');
+        getFloorAccessGroup('TAM');
+        
+       
+        
+     /*   function reSetInfo()
+                            {
+
+                                $('#idNumber').val('');
+                                $('#fname').val('');
+                                $('#lname').val('');
+                                $('#mobileNum').val('');
+                                $('#email').val('');
+                                $('#StartDate').val('');
+                                $('#EndDate').val('');
+                                $('#pinNumber').val('');
+                                //rdoGender
+                                $("#nationality").val('0');
+                                $("#org").val('0');
+                                $('#txtDob').val('');
+                                $('#mb').val('');
+                                gekAgArray = [];
+                                tamAgIdArray = [];
+                                localStorage.clear();
+                                lr = "";
+                                fpTemp = "";
+                                fpImg = "";
+                                timeOut = "";
+                                $("#gekAccessGrpList").html("");
+                                $("#tamAccessGrpList").html("");
+
+                                $("#lfp").attr("src", "");
+                                $("#rfp").attr("src", "");
+
+                                $('#date-end-gek').val('');
+                                $('#date-end-tam').val('');
+//                                $('#gek24').prop('checked', false);
+//                                $('#tam24').prop('checked', false);
+                                $('#gek24').prop('checked', true);
+                                $('#tam24').prop('checked', true);
+                                $("#photoImg").attr("src", "");
+
+
+                                $('#staffId').val('');
+                                $('#personId').val('');
+                                $("#photoImg").attr("src", "");
+
+                                $('#userTypeId').val('');
+                                $('#userId').val('');
+                                $('#newPassword').val('');
+                                $('#confirmPassword').val('');
+                                $('#disableLogin').prop('checked', false);
+
+
+
+                            } */
+    
+    
+        /*]]>*/
+    </script>
+
+    <!-- end script -->
+</body>
+
+</html>

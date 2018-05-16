@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta http-equiv="refresh" content="30">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                DashBoard
+<!--                                <small>Spice 1 and Spice 3</small>-->
+                                    <span class="onDutyText"><b>On Duty Engineer:</b><span th:text="${username}">John Smith</span></span>  
+                            </h2>
+                            
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!-- table -->
+                    <div class="row s_row">
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3 id="grid-nesting">Spice 1</h3>
+                                    
+                                    <!--CRAC-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">CRAC</h4>
+                                            <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${cracDataList}">
+                                                    <span th:text="${tempData.Name}"></span>:
+<!--                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alert</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ---------------------------------
+                                    <!--FCU-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">FCU</h4>
+                                             <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${upsDataList}">
+                                                    <span th:text="${tempData.AccessPointName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alert</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--UPS-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">UPS</h4>
+                                            <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${upsDataList}">
+                                                    <span th:text="${tempData.AccessPointName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alert</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--WATER-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">WATER</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='waterStatusSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${waterDataList}">
+                                                    <span th:text="${tempData.AccessPointName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusRed">Alert</span>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                     <!--HUMIDITY-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">HUMIDITY</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${humidDataList}">
+                                                    <span th:text="${tempData.AccessPointName}"></span>:
+                                                    <span th:text="${tempData.Status}" class="statusGreen"></span>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                     
+                                    <!--TEMPERATURE-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">TEMPERATURE</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${tempDataList}">
+                                                    <span th:text="${tempData.AccessPointName}"></span>:
+                                                    <span th:text="${tempData.Status}" class="statusGreen"></span>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <!--ELECTRICAL-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">ELECTRICAL</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='pduSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${pduDataList}">
+                                                    <span th:text="${tempData.AccessPointName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alarm</span>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <!--FIRE ALARM-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg1">FIRE ALARM</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm"  onclick="location.href='fireAlarmSp1.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6" th:each="tempData : ${fmDataList}">
+                                                    <span th:text="${tempData.AccessPointName}"></span>:
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '00'" class="statusGreen">Normal</span>
+                                                    <span th:if="${#strings.trim(tempData.Status)} == '01'" class="statusRed">Alert</span>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!--Spice 3--> 
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h3 id="grid-nesting">Spice 3</h3>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">CRAC</h4>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    SC3-COM-CRAC1-1: <span class="statusGreen">Online</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    SC3-COM-CRAC1-2: <span class="statusGreen">Online</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    SC3-COM-CRAC1-3: <span class="statusGreen">Online</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    SC3-OPS-CRAC4: <span class="statusGreen">Online</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    SC3-SNC6-CRAC2-1: <span class="statusGreen">Online</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    SC3-SNC6-CRAC2-2: <span class="statusGreen">Online</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    SC3-SNC6-CRAC2-3: <span class="statusGreen">Online</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    SC3-UPS-CRAC3-1: <span class="statusGreen">Online</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    SC3-UPS-CRAC3-2: <span class="statusGreen">Online</span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <!--SC3-UPS-CRAC3-1: <span class="statusGreen">Online</span>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--UPS-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">UPS</h4>
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                    <span>SC3-UPS1: <span class="statusGreen">Normal</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                   <span>SC3-SERVER-UPS: <span class="statusGreen">Normal</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--CARD ACCESS-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">CARD ACCESS</h4>
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                     <span>SC3-COMPUTER-RM-DR: <span class="statusGreen">Closed</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span>SC3-OPS-RM-DR: <span class="statusGreen">Closed</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span>SC3-NCC-RM-DR: <span class="statusGreen">Closed</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                   <span>SC3-OPS/COMPUTER-RN-DR:<span class="statusGreen">Closed</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span>SC3-OPS/NCC-RM-DR: <span class="statusGreen">Closed</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                   <span>SC3-NCC/OPS-RM-DR:<span class="statusGreen">Closed</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span>SC3-NCC/SNC6-RM-DR: <span class="statusGreen">Closed</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                   <span>SC3-BACK-EMER-EXIT-DR:<span class="statusGreen">Closed</span></span>
+                                                </div>
+                                            </div>
+                                             <div class="row">
+                                                <div class="col-md-6">
+                                                    <span>SC3-MEDIA-RM-DR: <span class="statusGreen">Closed</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                   <span>SC3-UPS-RM-DR:<span class="statusGreen">Closed</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--WATER-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">WATER</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='waterStatusSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                     <span>SC3-COM-WD1-1: <span class="statusGreen">Normal</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span>SC3-COM-WD1-2: <span class="statusGreen">Normal</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                     <!--HUMIDITY-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">HUMIDITY</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                     <span>SC3-COM-HUM1: <span class="statusGreen">50</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span>SC3-COM-HUM2: <span class="statusGreen">50</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     
+                                    <!--TEMPERATURE-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">TEMPERATURE</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='TempHumidSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                     <span>SC3-COM-TEMP1: <span class="statusGreen">30</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span>SSC3-COM-TEMP2: <span class="statusGreen">30</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                     
+                                    <!--ELECTRICAL-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">ELECTRICAL</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm"  onclick="location.href='pduSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                     <span>SC3-OPS-PDU1: <span class="statusGreen">On</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span>SC3-OPS-PDU2: <span class="statusGreen">On</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--FIRE ALARM-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="s_header4 s_header4Center headerbg2">FIRE ALARM</h4>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="s_btnfloat">
+                                                       <button type="button" class="btn btn-link btn-sm" onclick="location.href='fireAlarmSp3.html'">View All</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                              <div class="row">
+                                                <div class="col-md-6">
+                                                     <span>SC3-OPS-FM200: <span class="statusGreen">Normal</span></span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                        <!--blank-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- end table -->
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+    <!-- end script -->
+</body>
+
+</html>

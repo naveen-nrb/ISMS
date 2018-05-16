@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    <!--TEMP POST-->
+    <form id="frmTemp" action="TempChart.html" >
+        <input type="hidden" name="tempDeviceId" id="tempDeviceId" />
+        <input type="hidden" name="tempDeviceName" id="tempDeviceName" />
+    </form>
+    
+    <form id="frmHumid" action="HumidChart.html" >
+        <input type="hidden" name="humidDeviceId" id="humidDeviceId" />
+        <!--<input type="hidden" name="humidDeviceName" id="humidDeviceName" />-->
+    </form>
+    
+    
+    
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Temperature & Humidity 
+                                <small>Spice 3</small>
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <i class="glyphicon glyphicon-leaf"></i> <a href="#">Temperature & Humidity</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!--------------- main body content ----------------->
+                        <div class="row s_row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <!--------------- content ----------------->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2 id="grid-nesting">
+                                                Temperature
+                                                </h2>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover table-striped">
+                                                        <thead>
+                                                            <tr class="success">
+                                                                <th width="50%">NAME</th>
+                                                                <th>RECORD TIME</th>
+                                                                <th>READING</th>
+                                                                <th width="3%">CHART</th>
+                                                                <th th:if="${allowAccessMap[usertypeid+'_207']}" width="10%">SMS ALERT</th>
+                                                                <!--<th width="10%">SMS ALERT</th>-->
+                                                            </tr>
+                                                        </thead>        
+                                                        <tbody  id="ListTemp">
+                                                            <tr th:each="tempData : ${tempDataList}" id="ListId">
+                                                               <td th:text="${tempData.DeviceName}"></td>
+                                                               <td th:text="${tempData.StatusAccessTime}"></td>
+                                                               <td th:text="${tempData.Status}" class="statusGreen"></td>
+                                                               <td> <a href="#" class="btn btn-sm btn-info btn-block s_btn" id="thistempId" th:attr="dName=${tempData.DeviceName},aId=${tempData.AccessPointID}" onclick='setTempChart(this)'>View Chart</a> </td>
+                                                               <!--<td> <a href="#" class="btn btn-sm btn-info btn-block s_btn" th:id="$(tempData.AccessPointID)" th:onclick="'setTempChart(__${tempData.AccessPointID}__)'" >View Chart</a> </td>-->
+                                                               <!--<td> <a href="#" class="btn btn-sm btn-info btn-block s_btn" th:onclick="'setTempChart(__${tempData.AccessPointID}__, __${#strings.trim(tempData.DeviceName)}__ )'" >View Chart</a> </td>-->
+<!--                                                               <td>
+                                                                    <button type = "button" class = "btn  btn-success col-xs-12"  th:if="${#strings.trim(tempData.smsAlert)} == '1'">ENABLE</button>
+                                                                    <button type = "button" class = "btn  btn-danger col-xs-12"   th:if="${#strings.trim(tempData.smsAlert)} == '0'">DISABLE</button>
+                                                                </td>-->
+                                                               
+                                                               <td th:if="${allowAccessMap[usertypeid+'_207']}" >
+                                                                    <input th:if="${tempData.smsAlert} != null" th:onchange="'smsAlertState(__${tempData.AccessPointID}__, __(${tempData.smsAlert}==1)__ )'" type="checkbox" data-toggle="toggle" data-on="Enable" data-off="Disable" id="autoManualID" th:checked="${tempData.smsAlert}==1" th:value="${tempData.smsAlert}" >
+                                                                    <input th:if="${tempData.smsAlert} == null" th:onchange="'smsAlertState(__${tempData.AccessPointID}__, false )'" type="checkbox" data-toggle="toggle" data-on="Enable" data-off="Disable" id="autoManualID" th:checked="false" th:value="${tempData.smsAlert}" >
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-------------- end content ----------------->
+                                    </div>
+                                    <div class="panel-body">
+                                        <!--------------- content ----------------->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2 id="grid-nesting">
+                                                Humidity
+                                                </h2>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-hover table-striped">
+                                                        <thead>
+                                                            <tr class="success">
+                                                                <th width="50%">NAME</th>
+                                                                <th>RECORD TIME</th>
+                                                                <th>READING</th>
+                                                                <th width="3%">CHART</th>
+                                                                <th th:if="${allowAccessMap[usertypeid+'_207']}" width="10%">SMS ALERT</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr th:each="tempData : ${humidDataList}">
+                                                               <td th:text="${tempData.DeviceName}"></td>
+                                                               <td th:text="${tempData.StatusAccessTime}"></td>
+                                                               <td th:text="${tempData.Status}" class="statusGreen"></td>
+                                                               <td> <a href="#" class="btn btn-sm btn-info btn-block s_btn" th:onclick="'setHumidChart(__${tempData.AccessPointID}__)'">View Chart</a> </td>
+                                                               <!--<td> <a href="#" class="btn btn-sm btn-info btn-block s_btn" th:onclick="'setHumidChart(__${tempData.AccessPointID}__, __${#strings.toString(tempData.DeviceName)}__ )'">View Chart</a> </td>-->
+                                                               <!--<td> <a href="#" class="btn btn-sm btn-info btn-block s_btn" onclick="setValue(123,'TEST')" >TEST</a> </td>-->
+<!--                                                               <td>
+                                                                    <button type = "button" class = "btn  btn-success col-xs-12"  th:if="${#strings.trim(tempData.smsAlert)} == '1'">ENABLE</button>
+                                                                    <button type = "button" class = "btn  btn-danger col-xs-12"   th:if="${#strings.trim(tempData.smsAlert)} == '0'">DISABLE</button>
+                                                                </td>-->
+                                                               
+                                                                <td th:if="${allowAccessMap[usertypeid+'_207']}" >
+                                                                    <input th:if="${tempData.smsAlert} != null" th:onchange="'smsAlertState(__${tempData.AccessPointID}__, __(${tempData.smsAlert}==1)__ )'" type="checkbox" data-toggle="toggle" data-on="Enable" data-off="Disable" id="autoManualID" th:checked="${tempData.smsAlert}==1" th:value="${tempData.smsAlert}" >
+                                                                    <input th:if="${tempData.smsAlert} == null" th:onchange="'smsAlertState(__${tempData.AccessPointID}__, false )'" type="checkbox" data-toggle="toggle" data-on="Enable" data-off="Disable" id="autoManualID" th:checked="false" th:value="${tempData.smsAlert}" >
+                                                                </td>
+                                                               
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-------------- end content ----------------->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--------------- end main body content ----------------->
+                    </div>
+                    <!-- /.row -->
+                     <div class="row">
+                        <div class="container-fluid">
+                            <div class="col-md-12">
+                                <span th:text="'Generation Time : '+${generationTime}" ></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+             $(document).ready(function(){
+                 
+//                       the table 
+                var tableTemp = document.getElementById('ListTemp');
+                var tempList = tableTemp.rows.length;
+                    
+                    for(var i=0; i<tempList; i++) {
+//                        console.log(i);
+                        $('#ListId').attr('id', 'temp'+i);
+                    }
+                   
+            });
+            
+            
+            function setTempChart(x){
+//                console.log(x);
+               var theAccessPointId = $(x).attr('aId');
+               var theName = $(x).attr('dName');
+               
+               console.log(theAccessPointId);
+               console.log(theName);
+                
+                $('#tempDeviceId').val(theAccessPointId)
+                $('#tempDeviceName').val(theName);
+
+                $('#frmTemp').submit();
+                
+//                location.href='TempChart.html?xxxx='+id;
+//                location.href='TempChart.html';
+            }
+            
+            
+            function setHumidChart(id){
+                
+                console.log("------------");
+                console.log(id);
+                console.log("-----------");    
+                
+                $('#humidDeviceId').val(id);
+                $('#frmHumid').submit();
+               
+//                location.href='HumidChart.html';
+            }
+            
+            function setValue(i,o) {
+                console.log('--------test--------');
+                console.log(i);
+                console.log(o);
+                console.log('--------end test--------');
+            }
+            
+            function smsAlertState(name, on1off0){
+//                alert("DWR-smsAlertState:name:"+name+" on1off0:"+on1off0);
+                try{
+                    console.log("DWR-smsAlertState:name:"+name+" on1off0:"+on1off0)
+                    OperationDwr.saveSensorSMSEnableDisable(name, (on1off0?0:1), function (data) {
+//                           console.log("DWR-saveSensorSMSEnableDisable:"+data)
+                    });
+                }catch(err){
+                    console.log("DWR-saveSensorSMSEnableDisable:ERROR:"+err)
+                }
+            }
+         /*]]>*/
+    </script>
+</body>
+
+</html>

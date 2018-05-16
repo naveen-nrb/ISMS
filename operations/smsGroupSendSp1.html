@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                SMS Group 
+                                <!--<small>Spice 1</small>-->
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li class="active">
+                                   <i class="glyphicon glyphicon-phone"></i> <a href="#">Sms Group</a>
+                                </li>
+                            </ol>
+                        </div>
+                            
+
+                        <!--------------- main body content ----------------->
+                        <div class="row s_row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">    
+                                        <!--------------- content ----------------->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h2 id="grid-nesting">
+                                                   Send SMS
+                                                </h2>
+                                                <br/>
+                                                <div class="container-fluid">	
+                                                    <ul class="nav nav-tabs">
+                                                        <li>
+                                                            <a  href="smsGroupSp1.html">SMS Group</a>
+                                                        </li>
+                                                        <li class="active">
+                                                            <a href="#">Send SMS</a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="smsGroupConfigSp1.html">SMS Config</a>
+                                                        </li>
+                                                    </ul>
+                                                    <br/>
+                                                         <!--container of the SMS group-->
+                                                         <div class="col-md-4 col-md-offset-4">
+                                                            <div class="form-group">
+                                                                 <label for="txtlabel">Send Type<span class="mandatory">*</span></label>
+                                                                <form>
+                                                                    <label class="radio-inline">
+                                                                      <input type="radio" name="optradio">By Group
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                      <input type="radio" name="optradio">By Mobile Number(s)
+                                                                    </label>
+                                                                 </form>
+                                                            </div>
+                                                        </div>
+                                                         
+                                                         <div class="col-md-4 col-md-offset-4">
+                                                            <div class="form-group">
+                                                                 <label for="txtlabel">SMS Group<span class="mandatory">*</span></label>
+                                                                <select class="form-control">
+                                                                    <option>Group One</option>
+                                                                    <option>Group Two</option>
+                                                                    <option>Group Three</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-md-4 col-md-offset-4">
+                                                            <div class=" ">
+                                                                <label for="txtlabel">Mobile Number<span class="mandatory">*</span></label>
+                                                                <input type="text" class="form-control" id="txtlabel" placeholder="" required>
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-md-4 col-md-offset-4">
+                                                            <div class="form-group">
+                                                                <label for="txtlabel">Message<span class="mandatory"></span></label>
+                                                                <input type="text" class="form-control" id="txtlabel" placeholder="" required>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end container of the SMS group-->
+                                                        <br/>
+                                                        <div class="col-md-4 col-md-offset-4">
+                                                            <button type="button" class="btn btn-primary col-md-4 col-xs-12 pull-right" >Send</button>
+                                                        </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                        <!-------------- end content ----------------->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--------------- end main body content ----------------->
+                       
+                        
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    
+    
+    <!--MODAL SECTION--> 
+    <div class="modal fade" id="SavePop" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <span>
+                            Save Successful!
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>-->
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    <!--MODAL SECTION Save pop--> 
+    <div class="modal fade" id="AddGroup" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Access Group</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <div style="max-height: 200px; overflow:auto;">
+                            <table  class="table-striped table-hover" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> Door Group 1
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox">  Door Group 2
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>                                           
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end MODAL SECTION--> 
+    
+    
+    
+    
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+            $(document).ready(function(){
+                
+                      $('#dataTables-recordList').DataTable({
+                            responsive: true,
+                             "bLengthChange" : false //thought this line could hide the LengthMenu
+                        });
+//                 alert("Hello!");
+    
+                
+            });
+           
+        /*]]>*/
+    </script>
+
+    <!-- end script -->
+</body>
+
+</html>

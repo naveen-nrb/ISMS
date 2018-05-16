@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+        <title th:replace="fragments/frag :: link"></title>
+        <style>
+            .errorDiv{
+                border:2px solid brown;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                background-color: #CFD8DC;
+                padding:8px;
+                color:#555;
+                height: 300px;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }.errorMain{
+                /*width: 100%;*/
+                background-color: white;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                padding:16px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- main content -->
+        <div class="container errorMain shadow-right-bot">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-danger">Oops!!! Internal Error.</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    <h3>Please send this screen to us for further assist. Thank you.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <pre class="errorDiv" th:text="${error}"></pre>
+                </div>
+            </div>
+        </div>
+        <!-- main content end -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+        <div th:replace="fragments/frag :: script"></div>
+        <script>
+            //<!--
+            $(function () {
+                $('table').dataTable();
+
+                $(".menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
+
+            });
+            //-->
+        </script>
+    </body>
+
+</html>

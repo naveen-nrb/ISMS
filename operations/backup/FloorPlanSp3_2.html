@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+        <title th:replace ="fragments/frag :: css"></title>
+        
+    </head>
+
+<body>
+    <div id="wrapper">
+        <!--navigation-->
+        <div th:replace="fragments/frag :: nav"></div>
+        <div id="page-wrapper">
+
+                <div class="container-fluid s_pageWrap">
+
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="page-header">
+                                Floor Plan 
+                                <small>Spice 3</small>
+                            </h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <i class="fa fa-dashboard"></i>  <a href="index.html">Home</a>
+                                </li>
+                                <li>
+                                    <i class="glyphicon glyphicon-picture"></i> <a href="#">Floor Plan Spice 3</a>
+                                </li>
+<!--                                <li class="active">
+                                    <i class="fa fa-file"></i> Blank Page
+                                </li>-->
+                            </ol>
+                        </div>
+                        <!-- table -->
+                    <div class="row s_row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="col-md-2">
+                                        <h2 id="grid-nesting">
+                                            Spice 3
+                                        </h2>
+                                    </div>  
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="ViewSelect">Select option to view</label>
+                                            <select id="ViewSelect" class="form-control">
+                                                <option>View All Devices</option>
+                                                <option>UPS</option>
+                                                <option>CCTV</option>
+                                                <option>Aircon</option>
+                                                <option>Fire Alarm</option>
+                                                <option>Doors</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-5 col-md-push-2" id="id_info">
+                                        <div class="container-fluid s_infopanel">
+                                             <b>Device Name:</b>  <span>SC3-OPS/COMPUTER-RN-DR</span>
+                                             <br/>
+                                             <b>Status:</b>  <span>Closed</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="clear"></div>
+                                    
+                                    <br/><br/>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="FloorPlan">
+                                                   
+                                                   <!--<img style="width:100%" src="../resources/sys/images/SingaporeFloorPlan.png"/>-->
+                                                   
+                                                    <div id="MapContainer"> 
+                                                        
+                                                        <div th:style="'background-color: '+${ap.color}+'!important;'"
+                                                         th:class="'draggable tooltip '+${ap.AccessPointDeviceTypeID eq 1 ? 'divDrag2':'divDrag'}" 
+                                                         th:each="ap : ${accesspoints}" 
+                                                         th:attr="did=${ap.accesspointid},type=${ap.AccessPointDeviceTypeID},pLeft=${ap.LocationLeft},pTop=${ap.locationTop}"
+                                                         th:oncontextmenu="'showIPCamId('+${ap.accesspointid}+')'"
+                                                         >
+                                                                 
+                                                            <div id="context" data-toggle="context" th:attr="data-target=${ap.name == 'Door' ? '' : '#context-menu3'},d-fullName=${ap.fullName},d-ipAdd=${ap.ipAddress},d-cName=${ap.cname},d-Ls=${ap.ls}" onmouseout="getinfovalueOut(this)" onmouseover="getinfovalue(this)">    
+                                                             <div style="font-size:10px !important; color:#fff; background-color:#000;" th:text="${ap.name}"></div>
+                                                          </div>
+
+                                                                <!--<img src="../resources/sys/images/CCCTVICOn_small.png" widht="10"/>-->
+                                                                 <span class="tooltiptext positionToolTip" id="thisToolTip">
+                                                                    <ul>
+                                                                        <li th:inline="text">Name : [[${ap.fullName}]]</li>
+                                                                        <li th:inline="text">IP : [[${ap.ipAddress}]]</li>
+                                                                        <li th:inline="text">CONTROLLER : [[${ap.cname}]]</li>
+                                                                        <li th:inline="text">STATUS : [[${ap.ls}]]</li>
+                                                                    </ul>
+                                                                </span>
+
+                                                        </div>
+                                                    </div>          
+                                                    
+                                                   
+                                            <br/><br/>
+                                            </div>
+                                            Ledger :
+                                            <div class="col-md-12 s_ledger">
+                                               
+                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/server.svg"/>  UPS</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <span><img src="../resources/sys/svg/cctv.svg"/>  CCTV</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fan-tool.svg"/>  Aircon</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/fire-alarm.svg"/>  Fire Alarm</span>
+                                                </div>
+                                                 <div class="col-md-2">
+                                                   <span><img src="../resources/sys/svg/opened-door-aperture.svg"/>  Door</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <br/>
+                            </div>
+                        </div>
+                        
+                    </div>
+                        <!-- end table -->
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+        </div>
+            <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- script -->
+    <div th:replace ="fragments/frag :: script"></div>
+     <script th:inline="javascript">
+        /*<![CDATA[*/
+        
+          
+          /*]]>*/
+    </script>
+    <!-- end script -->
+    
+    
+    
+</body>
+
+</html>
